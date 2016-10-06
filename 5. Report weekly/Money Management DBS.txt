@@ -1,0 +1,73 @@
+1/ Account:
+- Username
+- Password
+- Email
+2/ Income
+- Amount of money
+- Date
+- Wallet
+- Description
+- Catogories
+3/ Expense
+- Amount of money
+- Date
+- Wallet
+- Description
+- Catogories
+4/ Debt & Loan
+- Type: Debt & Loan
+- Amount of money
+- Date
+- Wallet
+- Description
+- Catogories
+5/ Income Catogories
+- Ti?n luong (Theo tháng). (Salary).
+- Ti?n thu?ng. (Gift)
+- Ti?n lãi. (Interest Money)
+- Bán d?. (Selling)
+- Kho?n khác. (Others)
+6/ Expense Catogories
+- Hóa don (Bill & Utilities)
+- Giao thông (Transportation)
+- Mua s?m (Shopping)
+- Gi?i trí (Entertainment)
+- Du l?ch (Travel)
+- S?c kh?e (Health & Fitness)
+- Ð?u tu (Investment)
+- Giáo d?c (Education)
+- B?o hi?m (Insurances)
+- Kho?n khác (Others)
+7/ Invesment
+- Catogories
+- Amount of money
+- Date
+- Wallet
+- Description
+8/ Wallet
+- Name
+- Date
+- Currency
+- Type of Wallet
+- Start Amount
+- Description
+9/Savings
+- Status
+- Name
+- Goal
+- Starting amount
+- Starting Date
+- Ending Date
+- Currency
+- Wallet
+10/Budget
+- Type (Expense, Loan)
+- Categories
+- Duration
+- Wallet
+- Notifications Status (On/Off)
+
+
+
+
+
