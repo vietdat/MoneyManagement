@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1032179611972",
+    "firebase_url": "https://moneymanagement-b9542.firebaseio.com",
+    "project_id": "moneymanagement-b9542",
+    "storage_bucket": "moneymanagement-b9542.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032179611972:android:56f584ddb82c899b",
+        "android_client_info": {
+          "package_name": "com.hcmut.moneymanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032179611972-ssoj73jr8t8o7084dajgh4qqgdm8j3ft.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hcmut.moneymanagement",
+            "certificate_hash": "0024F37FFA75AE8E267C10D5C64DA2ED3C83DE34"
+          }
+        },
+        {
+          "client_id": "1032179611972-n2592sbn0lt04ibtnstrjum25q8073eq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrTbiX_ZTJDKlmk9zUJZ5Qg9rACgOkokc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032179611972-n2592sbn0lt04ibtnstrjum25q8073eq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
