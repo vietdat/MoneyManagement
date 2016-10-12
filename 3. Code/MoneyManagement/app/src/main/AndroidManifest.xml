@@ -32,7 +32,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.creen.Login" />
-        <activity android:name=".signup.screen.SignUp"></activity>
+        <activity android:name=".signup.screen.SignUp" />
+        <activity android:name=".forgotpassword.screen.forgotpassword"></activity>
     </application>
 
 </manifest>

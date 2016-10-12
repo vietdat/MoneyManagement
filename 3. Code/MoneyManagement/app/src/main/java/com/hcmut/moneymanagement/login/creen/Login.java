@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hcmut.moneymanagement.MainActivity;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.forgotpassword.screen.forgotpassword;
 import com.hcmut.moneymanagement.signup.screen.SignUp;
 
 public class Login extends Activity implements View.OnClickListener{
@@ -26,6 +27,7 @@ public class Login extends Activity implements View.OnClickListener{
     private EditText editTextPassword;
     private Button buttonSignIn;
     private TextView textViewSignup;
+    private TextView textForgotPassword;
 
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
@@ -47,11 +49,13 @@ public class Login extends Activity implements View.OnClickListener{
         editTextPassword = (EditText) findViewById(R.id.input_password);
         buttonSignIn = (Button) findViewById(R.id.btn_login);
         textViewSignup = (TextView) findViewById(R.id.link_signup);
+        textForgotPassword = (TextView) findViewById(R.id.textview_forgotpass);
 
         progressDialog = new ProgressDialog(this);
 
         buttonSignIn.setOnClickListener(this);
         textViewSignup.setOnClickListener(this);
+        textForgotPassword.setOnClickListener(this);
     }
 
     private void userLogin() {
@@ -78,7 +82,7 @@ public class Login extends Activity implements View.OnClickListener{
         //we will first show a progress dialog
 
 
-        progressDialog.setMessage("Registering user..,,");
+        progressDialog.setMessage("Registering user...");
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -105,6 +109,11 @@ public class Login extends Activity implements View.OnClickListener{
         if(view == textViewSignup) {
             finish();
             startActivity(new Intent(this,SignUp.class));
+        }
+
+        if(view == textForgotPassword) {
+            finish();
+            startActivity(new Intent(this,forgotpassword.class));
         }
     }
 }

@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.login.creen.Login;
 
@@ -25,6 +26,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextUserName;
     private EditText editTextPassword;
+    private EditText editTextConfirmPassword;
     private EditText editTextEmail;
     private TextView textViewSignUpLink;
     private Button btnSignUp;
@@ -42,6 +44,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         editTextUserName = (EditText) findViewById(R.id.input_name);
         editTextPassword = (EditText) findViewById(R.id.input_password);
+        editTextConfirmPassword = (EditText) findViewById(R.id.input_confirm_password);
         editTextEmail = (EditText) findViewById(R.id.input_email);
         btnSignUp = (Button) findViewById(R.id.btn_signup);
         textViewSignUpLink = (TextView) findViewById(R.id.link_login);
@@ -53,10 +56,10 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    public void userSignUp() {
+       private void userSignUp() {
         Log.d(TAG, "Sign up");
 
-        if(!validate()){
+        if (!validate()) {
             onSignupFailed();
             return;
         }
@@ -88,7 +91,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    public void onSignupSuccess(String email, String password) {
+    private void onSignupSuccess(String email, String password) {
         btnSignUp.setEnabled(true);
         setResult(RESULT_OK, null);
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -105,11 +108,10 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                         }
                         else  {
                             Toast.makeText(SignUp.this,"Successful!",Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(SignUp.this,Login.class));
                         }
                     }
                 });
-
-        startActivity(new Intent(this,Login.class));
     }
 
     @Override
@@ -125,7 +127,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     }
 
     //If sign up fail => call it.
-    public void onSignupFailed() {
+    private void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
         btnSignUp.setEnabled(true);
@@ -138,9 +140,18 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         String name = editTextUserName.getText().toString();
         String email = editTextEmail.getText().toString();
         String password = editTextPassword.getText().toString();
+        String confirmPassword = editTextConfirmPassword.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
             editTextUserName.setError("at least 3 characters");
+            valid = false;
+        } else {
+            editTextUserName.setError(null);
+        }
+
+        FirebaseUser user = mAuth.getInstance().getCurrentUser();
+        if(email.equals(user.getEmail().trim())) {
+            editTextUserName.setError("Email already used! Want to login or recover your password?");
             valid = false;
         } else {
             editTextUserName.setError(null);
@@ -158,6 +169,13 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             valid = false;
         } else {
             editTextPassword.setError(null);
+        }
+
+        if (!password.equals(confirmPassword)){
+            editTextConfirmPassword.setError("Password and confirm password don't match");
+            valid = false;
+        } else {
+            editTextConfirmPassword.setError(null);
         }
 
         return valid;

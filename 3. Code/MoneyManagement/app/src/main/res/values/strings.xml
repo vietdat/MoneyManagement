@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MoneyManagement</string>
+    <string name="feedback_forgotpassword_title">Success</string>
+    <string name="feedback_forgotpassword_message">A link to reset your password has been sent. Please Check your email.</string>
 </resources>

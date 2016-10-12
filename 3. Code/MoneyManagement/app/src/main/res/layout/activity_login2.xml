@@ -44,6 +44,15 @@
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
 
+        <TextView android:id="@+id/textview_forgotpass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="Forgot password?"
+            android:gravity="right"
+            android:textSize="16dip"
+            android:textColor="@android:color/holo_blue_dark"/>
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_login"
             android:layout_width="fill_parent"
