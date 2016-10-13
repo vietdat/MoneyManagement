@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.login.creen;
+package com.hcmut.moneymanagement.login.screen;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -16,8 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.hcmut.moneymanagement.MainActivity;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.activity.transaction.Transactions;
 import com.hcmut.moneymanagement.forgotpassword.screen.forgotpassword;
 import com.hcmut.moneymanagement.signup.screen.SignUp;
 
@@ -42,7 +42,7 @@ public class Login extends Activity implements View.OnClickListener{
         if(firebaseAuth.getCurrentUser() != null){
             //profile activity here
             finish();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), Transactions.class));
         }
 
         editTextEmail = (EditText) findViewById(R.id.input_email);
@@ -93,7 +93,7 @@ public class Login extends Activity implements View.OnClickListener{
                         if(task.isSuccessful()){
                             //start the profile activity
                             finish();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), Transactions.class));
                         }
                     }
                 });

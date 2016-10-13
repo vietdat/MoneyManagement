@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.login.creen;
+package com.hcmut.moneymanagement.login.screen;
 
 import android.content.Context;
 import android.content.SharedPreferences;

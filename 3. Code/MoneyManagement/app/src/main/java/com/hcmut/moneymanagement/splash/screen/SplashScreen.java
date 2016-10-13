@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.login.creen.LoginScreen;
+import com.hcmut.moneymanagement.login.screen.LoginScreen;
 
 /**
  * Created by Admin on 29-Sep-16.

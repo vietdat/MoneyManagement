@@ -2,4 +2,15 @@
     <string name="app_name">MoneyManagement</string>
     <string name="feedback_forgotpassword_title">Success</string>
     <string name="feedback_forgotpassword_message">A link to reset your password has been sent. Please Check your email.</string>
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>home</item>
+        <item>home2</item>
+        <item>home3</item>
+    </string-array>
+    <string name="action_settings">Settings</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

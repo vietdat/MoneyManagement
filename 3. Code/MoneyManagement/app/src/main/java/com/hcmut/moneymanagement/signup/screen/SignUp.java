@@ -18,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.login.creen.Login;
+import com.hcmut.moneymanagement.login.screen.Login;
 
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
 

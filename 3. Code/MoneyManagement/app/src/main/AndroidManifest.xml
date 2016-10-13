@@ -24,16 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.creen.LoginScreen">
+        <activity android:name=".login.screen.LoginScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.creen.Login" />
+        <activity android:name=".login.screen.Login" />
         <activity android:name=".signup.screen.SignUp" />
-        <activity android:name=".forgotpassword.screen.forgotpassword"></activity>
+        <activity android:name=".forgotpassword.screen.forgotpassword" />
+        <activity android:name=".activity.transaction.Transactions"></activity>
     </application>
 
 </manifest>

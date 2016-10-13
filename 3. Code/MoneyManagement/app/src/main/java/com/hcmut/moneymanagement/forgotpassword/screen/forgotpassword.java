@@ -18,7 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.login.creen.Login;
+import com.hcmut.moneymanagement.login.screen.Login;
 
 public class forgotpassword extends AppCompatActivity implements View.OnClickListener {
 
