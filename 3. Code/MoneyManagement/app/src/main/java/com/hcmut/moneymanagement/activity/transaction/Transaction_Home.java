@@ -69,6 +69,7 @@ public class Transaction_Home extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if(view == addButton) {
+
             Intent intent = new Intent();
             intent.setClass(getActivity(), AddTransactionActivity.class);
             getActivity().startActivity(intent);
