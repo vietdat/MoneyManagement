@@ -14,9 +14,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.NavDrawItem.Adapter.NavigationDrawerAdapter;
 import com.hcmut.moneymanagement.activity.NavDrawItem.model.NavDrawerItem;
-import com.hcmut.moneymanagement.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +85,7 @@ public class FragmentDrawer extends Fragment {
 
             }
         }));
+
 
         return layout;
     }

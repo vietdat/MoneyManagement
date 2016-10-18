@@ -16,9 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.login.screen.Login;
+import com.hcmut.moneymanagement.models.UserModel;
 
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
@@ -107,16 +107,43 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                             Toast.makeText(SignUp.this,"Auth fail",Toast.LENGTH_LONG).show();
                         }
                         else  {
-                            Toast.makeText(SignUp.this,"Successful!",Toast.LENGTH_LONG).show();
-
                             //login
                             //call function initUserData
                             //call function write: viet user name.
 
+                            autoCreateNewDataBase();
+                            Toast.makeText(SignUp.this,"Successful!",Toast.LENGTH_LONG).show();
+                            finish();
                             startActivity(new Intent(SignUp.this,Login.class));
                         }
                     }
                 });
+    }
+
+    public void autoCreateNewDataBase() {
+        //auto login
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+        final String userName = editTextUserName.getText().toString().trim();
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            //call function initUserData
+                            //call function write: viet user name.
+                            UserModel userModel = new UserModel();
+
+                            userModel.initUserData();
+                            userModel.write("user_id",userName);
+                        }
+                    }
+                });
+
+
+        //Log out
+        mAuth.signOut(); //End user session
     }
 
     @Override
@@ -154,13 +181,13 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
             editTextUserName.setError(null);
         }
 
-        FirebaseUser user = mAuth.getInstance().getCurrentUser();
-        if(email.equals(user.getEmail().trim())) {
-            editTextUserName.setError("Email already used! Want to login or recover your password?");
-            valid = false;
-        } else {
-            editTextUserName.setError(null);
-        }
+//        FirebaseUser user = mAuth.getInstance().getCurrentUser();
+//        if(email.equals(user.getEmail().trim())) {
+//            editTextUserName.setError("Email already used! Want to login or recover your password?");
+//            valid = false;
+//        } else {
+//            editTextUserName.setError(null);
+//        }
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("enter a valid email address");

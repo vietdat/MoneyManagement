@@ -21,12 +21,13 @@
         android:id="@+id/addNewWallet"
         android:src="@drawable/ic_add"
         app:borderWidth="2dp"
-        android:layout_margin="2dp"
         app:fabSize="normal"
         app:rippleColor="@color/colorPrimaryDark"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp">
 
     </android.support.design.widget.FloatingActionButton>
 </RelativeLayout>
