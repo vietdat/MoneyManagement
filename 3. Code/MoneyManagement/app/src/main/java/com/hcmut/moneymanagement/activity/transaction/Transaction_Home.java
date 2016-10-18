@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.hcmut.moneymanagement.CustomListView.Adapter.MyArrayAdapter;
-import com.hcmut.moneymanagement.CustomListView.Model.ListViewModel;
+import com.hcmut.moneymanagement.activity.CustomListView.Adapter.MyArrayAdapter;
+import com.hcmut.moneymanagement.activity.CustomListView.Model.ListViewModel;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.AddTransactionActivity.AddTransactionActivity;
 

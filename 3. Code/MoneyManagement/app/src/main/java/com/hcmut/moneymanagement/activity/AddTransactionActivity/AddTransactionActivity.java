@@ -11,10 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
-import com.hcmut.moneymanagement.NavDrawItem.activity.FragmentDrawer;
+import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.transaction.Transaction_Home;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
@@ -29,8 +28,9 @@ public class AddTransactionActivity extends AppCompatActivity
     private FragmentDrawer drawerFragment;
     private Calendar calendar;
     private EditText dateView;
-    private int year, month, day;
-
+    private MaterialBetterSpinner typeTransaction;
+    private MaterialBetterSpinner wallet;
+    private MaterialBetterSpinner category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +46,25 @@ public class AddTransactionActivity extends AppCompatActivity
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
 
-        //Type of transaction
-        addTypeTransaction();
 
-        //date
+        init();
+
+
+    }
+
+    private void  init(){
+        //init
         dateView = (EditText) findViewById(R.id.input_date);
-        calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
+        typeTransaction = (MaterialBetterSpinner) findViewById(R.id.typeTransaction);
+        category = (MaterialBetterSpinner) findViewById(R.id.category);
+        wallet = (MaterialBetterSpinner) findViewById(R.id.wallet);
+
+        Controller_AddTransaction add_default = new Controller_AddTransaction(this,typeTransaction,category,wallet);
+
+        add_default.showTypeTransaction();
+        add_default.showCategorys();
+        add_default.showWallets();
+
     }
 
     @Override
@@ -65,7 +75,7 @@ public class AddTransactionActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_add_transaction, menu);
         return true;
     }
 
@@ -74,15 +84,6 @@ public class AddTransactionActivity extends AppCompatActivity
         displayView(position);
     }
 
-    //menu income, expense
-    private void addTypeTransaction() {
-        String[] SPINNERLIST = {"Income", "Expense", "Saving"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
-        MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner)
-                findViewById(R.id.android_material_design_spinner);
-        materialDesignSpinner.setAdapter(arrayAdapter);
-    }
 
     //navigation
     private void displayView(int position) {
