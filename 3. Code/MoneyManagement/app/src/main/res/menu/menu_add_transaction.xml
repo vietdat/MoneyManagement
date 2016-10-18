@@ -5,7 +5,7 @@
     tools:context=".activity.AddTransactionActivity.AddTransactionActivity">
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/done"
         android:title="@string/done"
         android:orderInCategory="100"
         app:showAsAction="never" />

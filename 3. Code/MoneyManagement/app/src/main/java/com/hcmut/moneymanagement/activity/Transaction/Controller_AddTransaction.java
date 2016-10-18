@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.AddTransactionActivity;
+package com.hcmut.moneymanagement.activity.Transaction;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;

@@ -1,10 +1,6 @@
-package com.hcmut.moneymanagement.activity.AddTransactionActivity;
+package com.hcmut.moneymanagement.activity.Transaction;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -13,20 +9,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.transaction.Transaction_Home;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import java.util.Calendar;
-
-public class AddTransactionActivity extends AppCompatActivity
-                                    implements FragmentDrawer.FragmentDrawerListener,
-                                                OnClickListener {
+public class AddTransactionActivity extends AppCompatActivity implements OnClickListener {
 
     private Toolbar mToolbar;
-    private FragmentDrawer drawerFragment;
-    private Calendar calendar;
     private EditText dateView;
     private MaterialBetterSpinner typeTransaction;
     private MaterialBetterSpinner wallet;
@@ -39,13 +27,8 @@ public class AddTransactionActivity extends AppCompatActivity
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
-        drawerFragment = (FragmentDrawer)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
-        drawerFragment.setDrawerListener(this);
-
+        String title = getString(R.string.add_transaction_title);
+        getSupportActionBar().setTitle(title);
 
         init();
 
@@ -78,37 +61,6 @@ public class AddTransactionActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.menu_add_transaction, menu);
         return true;
     }
-
-    @Override
-    public void onDrawerItemSelected(View view, int position) {
-        displayView(position);
-    }
-
-
-    //navigation
-    private void displayView(int position) {
-        Fragment fragment = null;
-        String title = getString(R.string.app_name);
-        switch (position) {
-            case 0:
-                fragment = new Transaction_Home();
-                title = getString(R.string.transaction_title);
-                break;
-            default:
-                break;
-        }
-
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_body, fragment);
-            fragmentTransaction.commit();
-
-            // set the toolbar title
-            getSupportActionBar().setTitle(title);
-        }
-    }
-
 
     public void onStart(){
         super.onStart();

@@ -108,6 +108,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                         }
                         else  {
                             Toast.makeText(SignUp.this,"Successful!",Toast.LENGTH_LONG).show();
+
+                            //login
+                            //call function initUserData
+                            //call function write: viet user name.
+
                             startActivity(new Intent(SignUp.this,Login.class));
                         }
                     }

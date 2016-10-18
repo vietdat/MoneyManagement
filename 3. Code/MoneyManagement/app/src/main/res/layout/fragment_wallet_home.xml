@@ -8,7 +8,7 @@
 
 
     <ListView
-        android:id="@+id/transaction_home_list"
+        android:id="@+id/wallet_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:divider="#b5b5b5"
@@ -18,9 +18,10 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/addNewTransaction"
+        android:id="@+id/addNewWallet"
         android:src="@drawable/ic_add"
         app:borderWidth="2dp"
+        android:layout_margin="2dp"
         app:fabSize="normal"
         app:rippleColor="@color/colorPrimaryDark"
         android:layout_alignParentBottom="true"

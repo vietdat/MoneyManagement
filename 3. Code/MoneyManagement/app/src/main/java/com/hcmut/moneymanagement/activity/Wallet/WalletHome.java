@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Transaction;
+package com.hcmut.moneymanagement.activity.Wallet;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,20 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.CustomListView.Adapter.MyArrayAdapter;
 import com.hcmut.moneymanagement.activity.CustomListView.Model.ListViewModel;
-import com.hcmut.moneymanagement.R;
 
 import java.util.ArrayList;
 
-public class Transaction_Home extends Fragment implements View.OnClickListener {
 
+public class WalletHome extends Fragment implements View.OnClickListener {
     ListView lv;
     FloatingActionButton addButton;
-
-    public Transaction_Home() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,14 +29,14 @@ public class Transaction_Home extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_transaction__home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_wallet_home, container, false);
 
-        lv = (ListView) rootView.findViewById(R.id.transaction_home_list);
-        addButton = (FloatingActionButton) rootView.findViewById(R.id.addNewTransaction);
+        lv = (ListView) rootView.findViewById(R.id.wallet_list);
+        addButton = (FloatingActionButton) rootView.findViewById(R.id.addNewWallet);
 
         final ArrayList<ListViewModel> arr = new ArrayList<>();
-        ListViewModel income = new ListViewModel("ic_profile", "Income", "Thong tin ve thu nhap cua ban");
-        ListViewModel expense = new ListViewModel("ic_profile", "Expense", "Thong tin ve chi tieu cua ban");
+        ListViewModel income = new ListViewModel("ic_profile", "vi so 1", "vi so 1");
+        ListViewModel expense = new ListViewModel("ic_profile", "vi so 2", "vi so 2");
 
         arr.add(income);
         arr.add(expense);
@@ -70,10 +66,11 @@ public class Transaction_Home extends Fragment implements View.OnClickListener {
         if(view == addButton) {
 
             Intent intent = new Intent();
-            intent.setClass(getActivity(), AddTransactionActivity.class);
+            intent.setClass(getActivity(), AddNewWalletActivity.class);
             getActivity().startActivity(intent);
         }
 
 
     }
+
 }

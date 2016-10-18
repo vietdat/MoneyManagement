@@ -1,7 +1,6 @@
 package com.hcmut.moneymanagement.models;
 
 import com.google.firebase.database.FirebaseDatabase;
-import com.hcmut.moneymanagement.objects.User;
 import com.hcmut.moneymanagement.objects.Wallet;
 
 

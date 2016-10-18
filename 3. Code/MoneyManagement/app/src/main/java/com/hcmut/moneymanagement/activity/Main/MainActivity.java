@@ -7,19 +7,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.transaction.Transaction_Home;
-import com.hcmut.moneymanagement.models.UserModel;
+import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
+import com.hcmut.moneymanagement.activity.Wallet.WalletHome;
+import com.hcmut.moneymanagement.activity.Transaction.Transaction_Home;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
@@ -47,29 +42,29 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         // display the first navigation drawer view on app launch
         displayView(0);
 
-        final UserModel userModel = new UserModel();
-        //userModel.initUserData();
-        userModel.write("username", "Nguyễn Hoàng Anh");
+//        final UserModel userModel = new UserModel();
+//        //userModel.initUserData();
+//        userModel.write("username", "Nguyễn Hoàng Anh");
 
         //final TextView txtUsername = new TextView(this);
 
         // Handle username example
-        DatabaseReference userReference = userModel.getReference();
-        userReference.child(userModel.encrypt("username"))
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Object object = dataSnapshot.getValue();
-                String value = userModel.decrypt(object.toString());
-                Log.w("Username", value);
-                //txtUsername.setText(value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("Database Error:", databaseError.toString());
-            }
-        });
+//        DatabaseReference userReference = userModel.getReference();
+//        userReference.child(userModel.encrypt("username"))
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Object object = dataSnapshot.getValue();
+//                String value = userModel.decrypt(object.toString());
+//                Log.w("Username", value);
+//                //txtUsername.setText(value);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.w("Database Error:", databaseError.toString());
+//            }
+//        });
 
     }
 
@@ -97,6 +92,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             case 0:
                 fragment = new Transaction_Home();
                 title = getString(R.string.transaction_title);
+                break;
+            case 1:
+                fragment = new WalletHome();
+                title = getString(R.string.wallet_title);
                 break;
             default:
                 break;
