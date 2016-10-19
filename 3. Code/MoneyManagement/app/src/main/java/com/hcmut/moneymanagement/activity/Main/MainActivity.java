@@ -1,5 +1,6 @@
 package com.hcmut.moneymanagement.activity.Main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,10 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
-import com.hcmut.moneymanagement.activity.Wallet.WalletHome;
 import com.hcmut.moneymanagement.activity.Transaction.TransactionHome;
+import com.hcmut.moneymanagement.activity.Wallet.WalletHome;
+import com.hcmut.moneymanagement.activity.login.screen.Login;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
@@ -97,6 +100,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new WalletHome();
                 title = getString(R.string.wallet_title);
                 break;
+
+            //Log out
+            case 3:
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                finish();
+                startActivity(new Intent(MainActivity.this,Login.class));
             default:
                 break;
         }
