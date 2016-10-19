@@ -12,7 +12,7 @@ import java.util.Calendar;
  * Created by Admin on 16-Oct-16.
  * Class use add date to view
  */
-public class Controller_AddTransaction {
+public class ControllerAddTransaction {
 
     private Calendar calendar;
     private EditText dateView;
@@ -21,8 +21,8 @@ public class Controller_AddTransaction {
     private MaterialBetterSpinner category;
     private MaterialBetterSpinner wallet;
 
-    public Controller_AddTransaction(Context context, MaterialBetterSpinner typeOfTransaction,
-                                     MaterialBetterSpinner category, MaterialBetterSpinner wallet) {
+    public ControllerAddTransaction(Context context, MaterialBetterSpinner typeOfTransaction,
+                                    MaterialBetterSpinner category, MaterialBetterSpinner wallet) {
         this.context = context;
         this.typeOfTransaction = typeOfTransaction;
         this.wallet = wallet;
@@ -56,6 +56,9 @@ public class Controller_AddTransaction {
         //Get current date
 
     }
+
+    //get data after input in transaction
+
 
 
 }

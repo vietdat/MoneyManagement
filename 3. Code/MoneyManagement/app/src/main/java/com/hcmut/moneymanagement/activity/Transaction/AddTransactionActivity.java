@@ -12,13 +12,19 @@ import android.widget.EditText;
 import com.hcmut.moneymanagement.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AddTransactionActivity extends AppCompatActivity implements OnClickListener {
 
     private Toolbar mToolbar;
     private EditText dateView;
+    private EditText amouthOfMoney;
+    private EditText description;
     private MaterialBetterSpinner typeTransaction;
     private MaterialBetterSpinner wallet;
     private MaterialBetterSpinner category;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +36,8 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         String title = getString(R.string.add_transaction_title);
         getSupportActionBar().setTitle(title);
 
+
         init();
-
-
     }
 
     private void  init(){
@@ -41,14 +46,42 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         typeTransaction = (MaterialBetterSpinner) findViewById(R.id.typeTransaction);
         category = (MaterialBetterSpinner) findViewById(R.id.category);
         wallet = (MaterialBetterSpinner) findViewById(R.id.wallet);
+        amouthOfMoney = (EditText) findViewById(R.id.input_amount);
+        description = (EditText) findViewById(R.id.desciption);
 
-        Controller_AddTransaction add_default = new Controller_AddTransaction(this,typeTransaction,category,wallet);
+        ControllerAddTransaction add_default = new ControllerAddTransaction(this,typeTransaction,category,wallet);
 
         add_default.showTypeTransaction();
         add_default.showCategorys();
         add_default.showWallets();
 
     }
+
+    //Get all data user input.
+    private Map getInputData() {
+        Map<String, Object> data = new HashMap<>();
+
+        //get type of transaction
+        String typeOfTransactionValue = typeTransaction.getText().toString().trim();
+        String amountOfMoneyValue = amouthOfMoney.getText().toString().trim();
+        String dateViewValue = dateView.getText().toString().trim();
+        String walletValue = wallet.getText().toString().trim();
+        String categoryValue = category.getText().toString().trim();
+        String descriptionValue = description.getText().toString().trim();
+
+        data.put("typeOfTransaction", typeOfTransactionValue);
+        data.put("amouthOfMoney", amountOfMoneyValue);
+        data.put("dateView", dateViewValue);
+        data.put("wallet", walletValue);
+        data.put("category",categoryValue);
+        data.put("description", descriptionValue);
+
+        return data;
+    }
+
+    //handler data
+
+    //
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -81,9 +114,6 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
     @Override
     public void onClick(View view) {
-        if (view == dateView) {
-
-        }
     }
 
 }
