@@ -136,7 +136,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                             UserModel userModel = new UserModel();
 
                             userModel.initUserData();
-                            userModel.write("user_id",userName);
+                            userModel.write("username",userName);
                         }
                     }
                 });

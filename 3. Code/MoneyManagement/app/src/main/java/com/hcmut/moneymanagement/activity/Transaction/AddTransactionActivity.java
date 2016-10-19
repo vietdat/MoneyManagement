@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Transaction;
+package com.hcmut.moneymanagement.activity.transaction;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -42,7 +42,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         category = (MaterialBetterSpinner) findViewById(R.id.category);
         wallet = (MaterialBetterSpinner) findViewById(R.id.wallet);
 
-        Controller_AddTransaction add_default = new Controller_AddTransaction(this,typeTransaction,category,wallet);
+        ControllerAddTransaction add_default = new ControllerAddTransaction(this,typeTransaction,category,wallet);
 
         add_default.showTypeTransaction();
         add_default.showCategorys();

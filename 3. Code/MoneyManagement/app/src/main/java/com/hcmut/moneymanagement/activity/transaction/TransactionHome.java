@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Transaction;
+package com.hcmut.moneymanagement.activity.transaction;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,12 +16,12 @@ import com.hcmut.moneymanagement.R;
 
 import java.util.ArrayList;
 
-public class Transaction_Home extends Fragment implements View.OnClickListener {
+public class TransactionHome extends Fragment implements View.OnClickListener {
 
     ListView lv;
     FloatingActionButton addButton;
 
-    public Transaction_Home() {
+    public TransactionHome() {
         // Required empty public constructor
     }
 

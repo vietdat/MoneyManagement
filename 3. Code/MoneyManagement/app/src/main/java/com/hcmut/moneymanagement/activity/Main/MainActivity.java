@@ -14,7 +14,7 @@ import android.view.View;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
 import com.hcmut.moneymanagement.activity.Wallet.WalletHome;
-import com.hcmut.moneymanagement.activity.Transaction.Transaction_Home;
+import com.hcmut.moneymanagement.activity.transaction.TransactionHome;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         String title = getString(R.string.app_name);
         switch (position) {
             case 0:
-                fragment = new Transaction_Home();
+                fragment = new TransactionHome();
                 title = getString(R.string.transaction_title);
                 break;
             case 1:
