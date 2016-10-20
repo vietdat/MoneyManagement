@@ -66,8 +66,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         btnSignUp.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(SignUp.this,
-                R.style.AppTheme_Dark_Dialog);
+        final ProgressDialog progressDialog = new ProgressDialog(SignUp.this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
@@ -85,6 +84,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                         onSignupSuccess(email, password);
                         // onSignupFailed();
                         progressDialog.dismiss();
+
                     }
                 }, 3000);
 
@@ -115,6 +115,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                             Toast.makeText(SignUp.this,"Successful!",Toast.LENGTH_LONG).show();
                             finish();
                             startActivity(new Intent(SignUp.this,Login.class));
+
                         }
                     }
                 });

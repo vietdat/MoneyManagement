@@ -35,7 +35,8 @@
         <activity android:name=".activity.signup.screen.SignUp" />
         <activity android:name=".activity.forgotpassword.screen.forgotpassword" />
         <activity android:name=".activity.Transaction.AddTransactionActivity" />
-        <activity android:name=".activity.Wallet.AddNewWalletActivity"></activity>
+        <activity android:name=".activity.Wallet.AddNewWalletActivity" />
+        <activity android:name=".activity.IncomeAndExpense.IncomeAndExpenseHome"></activity>
     </application>
 
 </manifest>

@@ -24,6 +24,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     private MaterialBetterSpinner typeTransaction;
     private MaterialBetterSpinner wallet;
     private MaterialBetterSpinner category;
+    private MenuItem mDoneAction;
 
 
     @Override
@@ -84,16 +85,34 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     //
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        mDoneAction = menu.findItem(R.id.action_done);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_transaction, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+//            case R.id.action_settings:
+//                return true;
+            case R.id.action_done:
+                //handle done action;
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     public void onStart(){
         super.onStart();
