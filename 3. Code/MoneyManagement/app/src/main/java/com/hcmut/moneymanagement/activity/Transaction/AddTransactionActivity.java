@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.transaction;
+package com.hcmut.moneymanagement.activity.Transaction;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.activity.Transaction.ControllerAddTransaction;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.HashMap;
@@ -122,7 +123,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
-                    DateDialog dialog=new DateDialog(view);
+                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.transaction.DateDialog(view);
                     android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
                     dialog.show(ft, "DatePicker");
 
