@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Transaction;
+package com.hcmut.moneymanagement.activity.transaction;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

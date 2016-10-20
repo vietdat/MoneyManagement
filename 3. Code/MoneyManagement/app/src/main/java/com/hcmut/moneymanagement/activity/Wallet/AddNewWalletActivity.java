@@ -5,6 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.hcmut.moneymanagement.R;
 
@@ -21,6 +26,28 @@ public class AddNewWalletActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         String title = getString(R.string.add_wallet_title);
         getSupportActionBar().setTitle(title);
+
+        // typeSpinner
+        Spinner typeSpinner = (Spinner) findViewById(R.id.spType);
+
+        List<String> types = new ArrayList<String>();
+        types.add("Tiền mặt");
+        types.add("Tài khoản ngân hàng");
+        types.add("Thêm mới...");
+
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(typeAdapter);
+
+        // currencySpinner
+        Spinner currencySpinner = (Spinner) findViewById(R.id.spCurrency);
+
+        List<String> currency = new ArrayList<String>();
+        currency.add("VND");
+
+        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currency);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(currencyAdapter);
     }
 
     @Override
