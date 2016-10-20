@@ -1,19 +1,33 @@
-package com.hcmut.moneymanagement.activity.transaction;
+package com.hcmut.moneymanagement.activity.Transaction;
+
+import android.content.Context;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.models.IncomeCategoryModel;
+import com.hcmut.moneymanagement.models.WalletModel;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+import com.hcmut.moneymanagement.spinner.OnItemSelectedListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.google.android.gms.internal.zzs.TAG;
 
 public class AddTransactionActivity extends AppCompatActivity implements OnClickListener {
 
@@ -38,6 +52,22 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
 
         init();
+
+        // Income category adappter
+        final IncomeCategoryModel incomeCategoryModel = new IncomeCategoryModel();
+        final ArrayAdapter<String> incomeCategoryAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, incomeCategoryModel.getNames());
+
+        // Type of transaction changed
+        typeTransaction.addTextChangedListener(new OnItemSelectedListener() {
+            @Override
+            protected void onItemSelected(String string) {
+                if(string.equals("Income")) {
+                    Log.w("selected", "Income");
+                    category.setAdapter(incomeCategoryAdapter);
+                }
+            }
+        });
     }
 
     private void  init(){
@@ -49,12 +79,11 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         amouthOfMoney = (EditText) findViewById(R.id.input_amount);
         description = (EditText) findViewById(R.id.desciption);
 
-        ControllerAddTransaction add_default = new ControllerAddTransaction(this,typeTransaction,category,wallet);
+        final ControllerAddTransaction add_default = new ControllerAddTransaction(this,typeTransaction,category,wallet);
 
         add_default.showTypeTransaction();
-        add_default.showCategorys();
+        add_default.showCategories();
         add_default.showWallets();
-
     }
 
     //Get all data user input.
@@ -78,10 +107,6 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
         return data;
     }
-
-    //handler data
-
-    //
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

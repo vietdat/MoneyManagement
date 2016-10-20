@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.transaction;
+package com.hcmut.moneymanagement.activity.Transaction;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
