@@ -66,7 +66,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         }
 
         btnSignUp.setEnabled(false);
-        
+
         progressDialog = new ProgressDialog(SignUp.this, R.style.AppTheme_Dark_Dialog);
 
         progressDialog.setIndeterminate(true);

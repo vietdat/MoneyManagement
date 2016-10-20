@@ -39,6 +39,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
 
         init();
+
     }
 
     private void  init(){
