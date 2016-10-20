@@ -35,6 +35,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -56,7 +57,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-       private void userSignUp() {
+    private void userSignUp() {
         Log.d(TAG, "Sign up");
 
         if (!validate()) {
@@ -65,33 +66,27 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         }
 
         btnSignUp.setEnabled(false);
+        
+        progressDialog = new ProgressDialog(SignUp.this, R.style.AppTheme_Dark_Dialog);
 
-        final ProgressDialog progressDialog = new ProgressDialog(SignUp.this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
-        progressDialog.show();
 
         String name = editTextUserName.getText().toString();
         final String email = editTextEmail.getText().toString();
         final String password = editTextPassword.getText().toString();
 
-        // TODO: Implement your own signup logic here.
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        onSignupSuccess(email, password);
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-
-                    }
-                }, 3000);
-
-
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.show();
+                onSignupHandler(email, password);
+            }
+        });
     }
 
-    private void onSignupSuccess(String email, String password) {
+
+    private void onSignupHandler(String email, String password) {
         btnSignUp.setEnabled(true);
         setResult(RESULT_OK, null);
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -107,13 +102,9 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                             Toast.makeText(SignUp.this,"Auth fail",Toast.LENGTH_LONG).show();
                         }
                         else  {
-                            //login
-                            //call function initUserData
-                            //call function write: viet user name.
-
-                            autoCreateNewDataBase();
+                            createUserData();
+                            progressDialog.dismiss();
                             Toast.makeText(SignUp.this,"Successful!",Toast.LENGTH_LONG).show();
-                            finish();
                             startActivity(new Intent(SignUp.this,Login.class));
 
                         }
@@ -121,30 +112,14 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 });
     }
 
-    public void autoCreateNewDataBase() {
-        //auto login
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+    public void createUserData() {
         final String userName = editTextUserName.getText().toString().trim();
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            //call function initUserData
-                            //call function write: viet user name.
-                            UserModel userModel = new UserModel();
+        UserModel userModel = new UserModel();
 
-                            userModel.initUserData();
-                            userModel.write("user_id",userName);
-                        }
-                    }
-                });
+        userModel.initUserData();
+        userModel.write("username",userName);
 
-
-        //Log out
-        mAuth.signOut(); //End user session
     }
 
     @Override
