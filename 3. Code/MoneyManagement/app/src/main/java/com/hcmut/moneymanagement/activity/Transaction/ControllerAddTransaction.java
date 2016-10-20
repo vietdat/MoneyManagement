@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.transaction;
+package com.hcmut.moneymanagement.activity.Transaction;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
@@ -56,6 +56,9 @@ public class ControllerAddTransaction {
         //Get current date
 
     }
+
+    //get data after input in transaction
+
 
 
 }

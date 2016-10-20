@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.transaction;
+package com.hcmut.moneymanagement.activity.Transaction;
 
 import android.app.Activity;
 import android.content.Intent;
