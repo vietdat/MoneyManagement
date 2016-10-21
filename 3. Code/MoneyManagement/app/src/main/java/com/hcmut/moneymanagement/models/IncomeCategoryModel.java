@@ -23,6 +23,7 @@ public class IncomeCategoryModel extends CategoryModel{
                     Object objWallet = categorySnapshot.child(encrypt("name")).getValue();
                     names.add(decrypt(objWallet.toString()));
                 }
+                names.add("Other");
             }
 
             @Override

@@ -16,10 +16,10 @@ public class AdapterController {
     private IncomeCategoryModel incomeCategoryModel;
     private ExpenseCategoryModel expenseCategoryModel;
 
-    private ArrayAdapter transactionTypeAdapter;
-    private ArrayAdapter walletAdapter;
-    private ArrayAdapter incomeAdapter;
-    private ArrayAdapter expenseAdapter;
+    private ArrayAdapter<String> transactionTypeAdapter;
+    private ArrayAdapter<String> walletAdapter;
+    private ArrayAdapter<String> incomeAdapter;
+    private ArrayAdapter<String> expenseAdapter;
 
     public AdapterController(Context context) {
         this.context = context;
@@ -30,15 +30,15 @@ public class AdapterController {
 
         // Wallet Adapter
         walletModel = new WalletModel();
-        walletAdapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, walletModel.getNames());
+        walletAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, walletModel.getNames());
 
         // Income Category Adapter
         incomeCategoryModel = new IncomeCategoryModel();
-        incomeAdapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, incomeCategoryModel.getNames());
+        incomeAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, incomeCategoryModel.getNames());
 
         // Expense Category Adapter
         expenseCategoryModel = new ExpenseCategoryModel();
-        expenseAdapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, expenseCategoryModel.getNames());
+        expenseAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, expenseCategoryModel.getNames());
 
     }
 

@@ -18,6 +18,7 @@ public abstract class CategoryModel extends Model{
 
     public CategoryModel(){
         names = new ArrayList<String>();
+
     }
 
     public void add(Category category){
