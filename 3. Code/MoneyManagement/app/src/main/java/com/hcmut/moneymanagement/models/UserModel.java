@@ -12,35 +12,31 @@ public class UserModel extends Model {
     }
 
     public void initUserData(){
-        Wallet cash = new Wallet("Cash", "Tiền mặt", 0);
-        Wallet bank  = new Wallet("Bank Account", "Tài khoản ngân hàng", 0);
+        IncomeCategoryModel incomeCategoryModel = new IncomeCategoryModel();
+        incomeCategoryModel.add(new Category("Salary"));
+        incomeCategoryModel.add(new Category("Gift"));
+        incomeCategoryModel.add(new Category("Deposit interest"));
+        incomeCategoryModel.add(new Category("Selling things"));
+
+        ExpenseCategoryModel expenseCategoryModel = new ExpenseCategoryModel();
+        expenseCategoryModel.add(new Category("Bill & Utilities"));
+        expenseCategoryModel.add(new Category("Traffic"));
+        expenseCategoryModel.add(new Category("Shopping"));
+        expenseCategoryModel.add(new Category("Entertainment"));;
+        expenseCategoryModel.add(new Category("Travel"));
+        expenseCategoryModel.add(new Category("Health"));
+        expenseCategoryModel.add(new Category("Education"));
+        expenseCategoryModel.add(new Category("Insurance"));
+
+        WalletCategoryModel walletCategoryModel = new WalletCategoryModel();
+        walletCategoryModel.add(new Category("Cash"));
+        walletCategoryModel.add(new Category("Bank account"));
+
+        Wallet cash = new Wallet("Cash", "Cash", "VND", "My cash");
+        Wallet bank  = new Wallet("Vietcombank", "Bank account", "VND", "My Vietcombank account");
         WalletModel walletModel = new WalletModel();
         walletModel.add(cash);
         walletModel.add(bank);
-
-        IncomeCategoryModel incomeCategoryModel = new IncomeCategoryModel();
-        incomeCategoryModel.add(new Category("Tiền lương"));
-        incomeCategoryModel.add(new Category("Tiền thưởng"));
-        incomeCategoryModel.add(new Category("Tiền lãi"));
-        incomeCategoryModel.add(new Category("Bán đồ"));
-        incomeCategoryModel.add(new Category("Khác"));
-
-        ExpenseCategoryModel expenseCategoryModel = new ExpenseCategoryModel();
-        expenseCategoryModel.add(new Category("Hóa đơn"));
-        expenseCategoryModel.add(new Category("Giao thông"));
-        expenseCategoryModel.add(new Category("Mua sắm"));
-        expenseCategoryModel.add(new Category("Giải trí"));
-        expenseCategoryModel.add(new Category("Mua sắm"));
-        expenseCategoryModel.add(new Category("Du lịch"));
-        expenseCategoryModel.add(new Category("Sức khỏe"));
-        expenseCategoryModel.add(new Category("Giáo dục"));
-        expenseCategoryModel.add(new Category("Bảo hiểm"));
-        expenseCategoryModel.add(new Category("Khác"));
-
-        WalletCategoryModel walletCategoryModel = new WalletCategoryModel();
-        walletCategoryModel.add(new Category("Tiền mặt"));
-        walletCategoryModel.add(new Category("Tài khoản ngân hàng"));
-        walletCategoryModel.add(new Category("Khác"));
     }
 
     public void write(String field, String value){

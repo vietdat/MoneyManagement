@@ -23,17 +23,19 @@ public class WalletModel extends Model{
     public void add(Wallet wallet){
         Field[] fields = Wallet.class.getFields();
         String key = reference.push().getKey();
-        for (int i = 0; i < fields.length - 2; i++){
+        for (int i = 0; i < fields.length; i++){
             try {
-                // Get value object of wallet
-                String fieldEncrypted = encryption.encrypt(fields[i].getName());
-                Object value = fields[i].get(wallet);
-                // Log.w("field", fields[i].getName());
-                // Log.w("value", value.toString());
-                String valueEncrypted = encryption.encrypt(value.toString());
+                String fieldName = fields[i].getName();
+                if( !fieldName.equals("serialVersionUID") && !fieldName.equals("$change")){
+                    // Get value object of wallet
+                    Object value = fields[i].get(wallet);
+                    if(value != null){
+                        String valueEncrypted = encryption.encrypt(value.toString());
 
-                // Write encypted value to Firebase
-                reference.child(key).child(fieldEncrypted).setValue(valueEncrypted);
+                        // Write encypted value to Firebase
+                        reference.child(key).child(encrypt(fieldName)).setValue(valueEncrypted);
+                    }
+                }
 
             }catch (IllegalAccessException e){
                 e.printStackTrace();
