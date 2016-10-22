@@ -1,11 +1,21 @@
 package com.hcmut.moneymanagement.models;
 
+import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.objects.Category;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+
+import static com.google.android.gms.internal.zzs.TAG;
 
 public class IncomeCategoryModel extends Model{
+    private ArrayList<String> incomeCategories;
+
     public IncomeCategoryModel(){
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("incomeCategories"));
@@ -29,5 +39,26 @@ public class IncomeCategoryModel extends Model{
                 e.printStackTrace();
             }
         }
+    }
+
+    public ArrayList<String> getNames(){
+        incomeCategories = new ArrayList<String>();
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                    Object objWallet = categorySnapshot.child(encrypt("text")).getValue();
+                    incomeCategories.add(decrypt(objWallet.toString()));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+
+        return incomeCategories;
     }
 }

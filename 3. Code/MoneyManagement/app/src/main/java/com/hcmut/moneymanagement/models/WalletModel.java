@@ -8,8 +8,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class WalletModel extends Model{
+    private ArrayList<String> incomeCategories;
+
     public WalletModel(){
         // Wallets refecence
         String wallets = encryption.encrypt("wallets");

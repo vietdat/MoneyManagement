@@ -3,14 +3,17 @@ package com.hcmut.moneymanagement.activity.Transaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.Transaction.ControllerAddTransaction;
+import com.hcmut.moneymanagement.models.IncomeCategoryModel;
+import com.hcmut.moneymanagement.spinner.OnItemSelectedListener;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.HashMap;
@@ -41,6 +44,21 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
         init();
 
+        // Income category adappter
+        final IncomeCategoryModel incomeCategoryModel = new IncomeCategoryModel();
+        final ArrayAdapter<String> incomeCategoryAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, incomeCategoryModel.getNames());
+
+        // Type of transaction changed
+        typeTransaction.addTextChangedListener(new OnItemSelectedListener() {
+            @Override
+            protected void onItemSelected(String string) {
+                if(string.equals("Income")) {
+                    Log.w("selected", "Income");
+                    category.setAdapter(incomeCategoryAdapter);
+                }
+            }
+        });
     }
 
     private void  init(){
@@ -52,12 +70,11 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         amouthOfMoney = (EditText) findViewById(R.id.input_amount);
         description = (EditText) findViewById(R.id.desciption);
 
-        ControllerAddTransaction add_default = new ControllerAddTransaction(this,typeTransaction,category,wallet);
+        final ControllerAddTransaction add_default = new ControllerAddTransaction(this,typeTransaction,category,wallet);
 
         add_default.showTypeTransaction();
-        add_default.showCategorys();
+        add_default.showCategories();
         add_default.showWallets();
-
     }
 
     //Get all data user input.
@@ -81,10 +98,6 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
         return data;
     }
-
-    //handler data
-
-    //
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -123,7 +136,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
-                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.transaction.DateDialog(view);
+                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
                     android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
                     dialog.show(ft, "DatePicker");
 
