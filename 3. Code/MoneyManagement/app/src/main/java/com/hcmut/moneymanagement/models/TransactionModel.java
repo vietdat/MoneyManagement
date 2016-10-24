@@ -15,7 +15,7 @@ public class TransactionModel extends Model{
     }
 
     public void add(Transaction transaction){
-        Field[] fields = Wallet.class.getFields();
+        Field[] fields = Transaction.class.getFields();
         String key = reference.push().getKey();
         for (int i = 0; i < fields.length; i++){
             try {

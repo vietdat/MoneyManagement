@@ -1,11 +1,17 @@
 package com.hcmut.moneymanagement.activity.Wallet;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.hcmut.moneymanagement.R;
@@ -29,27 +35,75 @@ public class AddNewWalletActivity extends AppCompatActivity {
         String title = getString(R.string.add_wallet_title);
         getSupportActionBar().setTitle(title);
 
-        // typeSpinner
-        Spinner typeSpinner = (Spinner) findViewById(R.id.spType);
+        typeOfTransaction ();
+        typeOfCurrency();
+
+
+    }
+
+    /**
+     * add data to typeOftransaction
+     * click event.
+     */
+    private void typeOfTransaction () {
+        // typeOfAccount
+        final Spinner typeOfAccount = (Spinner) findViewById(R.id.typeOfAccount);
 
         List<String> types = new ArrayList<String>();
-        types.add("Tiền mặt");
-        types.add("Tài khoản ngân hàng");
-        types.add("Thêm mới...");
+        types.add("Cash");
+        types.add("Bank account");
+        types.add("Create new...");
 
-        ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
+        final ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeSpinner.setAdapter(typeAdapter);
+        typeOfAccount.setAdapter(typeAdapter);
+        typeOfAccount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object item = parent.getItemAtPosition(position);
+                String selected = typeOfAccount.getSelectedItem().toString();
+                    if(selected.equals("Create new...")){
+                        // Create dialog
+                        final EditText input = new EditText(AddNewWalletActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AddNewWalletActivity.this);
+                        builder.setTitle("New wallet");
+                        builder.setView(input);
 
+                        // Add the buttons to Dialogs
+                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //add to database
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                        // Create the AlertDialog
+                        Dialog dialog = builder.create();
+
+                        dialog.show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void typeOfCurrency() {
         // currencySpinner
-        Spinner currencySpinner = (Spinner) findViewById(R.id.spCurrency);
+        Spinner currencySpinner = (Spinner) findViewById(R.id.currency);
 
         List<String> currency = new ArrayList<String>();
         currency.add("VND");
 
         ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currency);
-        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeSpinner.setAdapter(currencyAdapter);
+        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        currencySpinner.setAdapter(currencyAdapter);
     }
 
     @Override
