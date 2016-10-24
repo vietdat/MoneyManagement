@@ -15,9 +15,9 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
+import com.hcmut.moneymanagement.activity.Savings.SavingsHome;
 import com.hcmut.moneymanagement.activity.Transaction.TransactionHome;
 import com.hcmut.moneymanagement.activity.Wallet.WalletHome;
-import com.hcmut.moneymanagement.activity.Transaction.TransactionHome;
 import com.hcmut.moneymanagement.activity.login.screen.Login;
 
 
@@ -123,7 +123,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new WalletHome();
                 title = getString(R.string.wallet_title);
                 break;
-
+            case 2:
+                fragment = new SavingsHome();
+                title = getString(R.string.savings);
+                break;
             //Log out
             case 3:
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();

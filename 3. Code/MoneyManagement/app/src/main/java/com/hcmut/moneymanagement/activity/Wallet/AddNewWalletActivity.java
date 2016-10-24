@@ -8,10 +8,10 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.hcmut.moneymanagement.R;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.hcmut.moneymanagement.R;
 
 public class AddNewWalletActivity extends AppCompatActivity {
 
@@ -24,6 +24,8 @@ public class AddNewWalletActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         String title = getString(R.string.add_wallet_title);
         getSupportActionBar().setTitle(title);
 

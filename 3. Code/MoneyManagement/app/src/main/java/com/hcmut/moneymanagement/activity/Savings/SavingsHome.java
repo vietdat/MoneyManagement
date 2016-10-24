@@ -1,60 +1,66 @@
-package com.hcmut.moneymanagement.activity.IncomeAndExpense;
+package com.hcmut.moneymanagement.activity.Savings;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.hcmut.moneymanagement.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class IncomeAndExpenseHome extends AppCompatActivity {
-    private Toolbar toolbar;
+
+public class SavingsHome extends Fragment implements View.OnClickListener {
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_income_and_expense_home);
-
-        init();
-
-
-
     }
 
-    private void init() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_savings_home, container, false);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        return rootView;
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new FragmentIE(), "ONE");
-        adapter.addFrag(new FragmentIE(), "TWO");
-        adapter.addFrag(new FragmentIE(), "THREE");
-        adapter.addFrag(new FragmentIE(), "FOUR");
-        adapter.addFrag(new FragmentIE(), "FIVE");
-        adapter.addFrag(new FragmentIE(), "SIX");
-        adapter.addFrag(new FragmentIE(), "SEVEN");
-        adapter.addFrag(new FragmentIE(), "EIGHT");
-        adapter.addFrag(new FragmentIE(), "NINE");
-        adapter.addFrag(new FragmentIE(), "TEN");
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
+        adapter.addFrag(new SavingRunning(), "RUNNING");
+        adapter.addFrag(new SavingRunning(), "FINISH");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -86,6 +92,4 @@ public class IncomeAndExpenseHome extends AppCompatActivity {
         }
     }
 
-
-
-   }
+}
