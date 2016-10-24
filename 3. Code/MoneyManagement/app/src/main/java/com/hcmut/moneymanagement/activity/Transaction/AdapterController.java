@@ -67,8 +67,13 @@ public class AdapterController {
     }
 
     public void addIncomeCategory(String input){
-        Category newIncomeCategory = new Category(input);
-        incomeCategoryModel.add(newIncomeCategory);
+        Category category = new Category(input);
+        incomeCategoryModel.add(category);
+    }
+
+    public void addExpenseCategory(String input){
+        Category category = new Category(input);
+        expenseCategoryModel.add(category);
     }
 
 }

@@ -129,15 +129,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp">
+
                     <EditText android:id="@+id/desciption"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:lines="3"
-                        android:inputType="numberDecimal"
+                        android:inputType="textShortMessage"
                         android:gravity="top|left"
                         android:scrollbars="vertical"
                         android:hint="Enter Description" />
                 </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:text="Saving"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnSaving"
+                    android:layout_weight="1" />
 
             </LinearLayout>
         </ScrollView>

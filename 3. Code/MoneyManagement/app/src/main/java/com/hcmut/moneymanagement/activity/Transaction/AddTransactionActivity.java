@@ -1,5 +1,6 @@
 package com.hcmut.moneymanagement.activity.Transaction;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -11,11 +12,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.activity.signup.screen.SignUp;
 import com.hcmut.moneymanagement.models.IncomeCategoryModel;
+import com.hcmut.moneymanagement.models.TransactionModel;
+import com.hcmut.moneymanagement.objects.Transaction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,10 +39,12 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     private Spinner typeTransaction;
     private Spinner wallet;
     private Spinner category;
+    private Button btnSaving;
 
     private AdapterController adapterController;
     private String previousTypeSelected;
-    private AlertDialog categoryDialog;
+
+    private TransactionModel transactionModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,56 +57,10 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         getSupportActionBar().setTitle(title);
 
         init();
-        dialogInit();
 
-        // Type of transaction changed
-        typeTransaction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // If the selection has changed
-                String selected = typeTransaction.getSelectedItem().toString();
-                if( !previousTypeSelected.equals(selected) ) {
-                    if (selected.equals("Income")) {
-                        category.setAdapter(adapterController.getIncomeCategoryAdapter());
-                    } else if (selected.equals("Expense")) {
-                        category.setAdapter(adapterController.getExpenseCategoryAdapter());
-                    }
-                    previousTypeSelected = selected;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        wallet.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                return;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                return;
-            }
-        });
-
-        // Create new category
-        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selected = category.getSelectedItem().toString();
-                if(selected.equals("Create new")){
-                    categoryDialog.show();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        typeTransaction.setOnItemSelectedListener(onTransactionTypeItemSelected);
+        category.setOnItemSelectedListener(onCategoryItemSelected);
+        btnSaving.setOnClickListener(onSavingClickListener);
     }
 
     private void  init(){
@@ -107,59 +72,136 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         wallet = (Spinner) findViewById(R.id.wallet);
         amouthOfMoney = (EditText) findViewById(R.id.input_amount);
         description = (EditText) findViewById(R.id.desciption);
+        btnSaving = (Button) findViewById(R.id.btnSaving);
 
         adapterController = new AdapterController(this);
 
         typeTransaction.setAdapter(adapterController.getTransactionTypesAdapter());
         wallet.setAdapter(adapterController.getWalletAdapter());
         category.setAdapter(adapterController.getIncomeCategoryAdapter());
+
+        transactionModel = new TransactionModel();
     }
 
-    private void dialogInit(){
-        final EditText input = new EditText(this);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("New category");
-        builder.setView(input);
-
-        // Add the buttons to Dialogs
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if(previousTypeSelected.equals("Income")){
-                    dialog.dismiss();
-                    adapterController.addIncomeCategory(input.getText().toString());
+    // On Transaction type item selected
+    private AdapterView.OnItemSelectedListener onTransactionTypeItemSelected = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            // If the selection has changed
+            String selected = typeTransaction.getSelectedItem().toString();
+            if( !previousTypeSelected.equals(selected) ) {
+                if (selected.equals("Income")) {
+                    category.setAdapter(adapterController.getIncomeCategoryAdapter());
+                } else if (selected.equals("Expense")) {
+                    category.setAdapter(adapterController.getExpenseCategoryAdapter());
                 }
+                previousTypeSelected = selected;
             }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
+
+    // On Category item selected
+    private AdapterView.OnItemSelectedListener onCategoryItemSelected = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String selected = category.getSelectedItem().toString();
+            if(selected.equals("Create new")){
+                // Create dialog
+                final EditText input = new EditText(AddTransactionActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddTransactionActivity.this);
+                builder.setTitle("New category");
+                builder.setView(input);
+
+                // Add the buttons to Dialogs
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if(previousTypeSelected.equals("Income")){
+                            dialog.dismiss();
+                            adapterController.addIncomeCategory(input.getText().toString());
+                        }else if(previousTypeSelected.equals("Expense")){
+                            dialog.dismiss();
+                            adapterController.addExpenseCategory(input.getText().toString());
+                        }
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                // Create the AlertDialog
+                Dialog dialog = builder.create();
+
+                dialog.show();
             }
-        });
-        // Create the AlertDialog
-        categoryDialog = builder.create();
-    }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
+
+    // On Saving Click Listener
+    private OnClickListener onSavingClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            transactionModel.add(getInputData());
+            //Child added handler
+            transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+        }
+    };
+
+    //Transaction on child added
+    private ChildEventListener onTransactionChildListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            Toast.makeText(AddTransactionActivity.this,"Successful",Toast.LENGTH_LONG).show();
+            AddTransactionActivity.this.finish();
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Toast.makeText(AddTransactionActivity.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
+        }
+    };
+
 
     //Get all data user input.
-    private Map getInputData() {
-        Map<String, Object> data = new HashMap<>();
-        /*
-        //get type of transaction
-        String typeOfTransactionValue = typeTransaction.getText().toString().trim();
-        String amountOfMoneyValue = amouthOfMoney.getText().toString().trim();
+    private Transaction getInputData() {
+        String typeOfTransactionValue = typeTransaction.getSelectedItem().toString().trim();
+        int amountOfMoneyValue = Integer.parseInt(amouthOfMoney.getText().toString());
         String dateViewValue = dateView.getText().toString().trim();
-        String walletValue = wallet.getText().toString().trim();
-        String categoryValue = category.getText().toString().trim();
+        String walletValue = wallet.getSelectedItem().toString().trim();
+        String categoryValue = category.getSelectedItem().toString().trim();
         String descriptionValue = description.getText().toString().trim();
 
-        data.put("typeOfTransaction", typeOfTransactionValue);
-        data.put("amouthOfMoney", amountOfMoneyValue);
-        data.put("dateView", dateViewValue);
-        data.put("wallet", walletValue);
-        data.put("category",categoryValue);
-        data.put("description", descriptionValue);
-        */
+        Transaction transaction =
+                new Transaction(typeOfTransactionValue, amountOfMoneyValue, dateViewValue, walletValue, categoryValue, descriptionValue);
 
-        return data;
+        return transaction;
     }
 
     @Override
@@ -184,7 +226,6 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
                     DateDialog dialog=new DateDialog(view);
                     android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
                     dialog.show(ft, "DatePicker");
-
                 }
             }
 
