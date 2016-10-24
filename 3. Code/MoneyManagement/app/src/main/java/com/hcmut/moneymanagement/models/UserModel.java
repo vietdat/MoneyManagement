@@ -1,5 +1,7 @@
 package com.hcmut.moneymanagement.models;
 
+import android.util.Log;
+
 import com.google.firebase.database.FirebaseDatabase;
 import com.hcmut.moneymanagement.objects.Category;
 import com.hcmut.moneymanagement.objects.Wallet;

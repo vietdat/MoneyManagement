@@ -49,14 +49,15 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:orientation="vertical">
-
-                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                        android:id="@+id/typeTransaction"
+                    <TextView
+                        android:text="Transaction type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Type of transaction"
-                        android:textColorHint="#05ab9a"
-                        app:met_floatingLabel="normal" />
+                        android:id="@+id/tvTransactionType" />
+                    <Spinner
+                        android:id="@+id/typeTransaction"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
                 </LinearLayout>
 
                 <!-- Enter amount Label -->
@@ -91,13 +92,16 @@
                     android:layout_marginBottom="8dp"
                     android:orientation="vertical">
 
-                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                        android:id="@+id/wallet"
+                    <TextView
+                        android:text="Wallet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Wallet"
-                        android:textColorHint="#05ab9a"
-                        app:met_floatingLabel="normal" />
+                        android:id="@+id/tvWallet" />
+
+                    <Spinner
+                        android:id="@+id/wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
                 </LinearLayout>
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -108,13 +112,16 @@
                     android:layout_marginBottom="8dp"
                     android:orientation="vertical">
 
-                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                        android:id="@+id/category"
+                    <TextView
+                        android:text="Category"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Category"
-                        android:textColorHint="#05ab9a"
-                        app:met_floatingLabel="normal" />
+                        android:id="@+id/tvCategory" />
+
+                    <Spinner
+                        android:id="@+id/category"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
                 </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
