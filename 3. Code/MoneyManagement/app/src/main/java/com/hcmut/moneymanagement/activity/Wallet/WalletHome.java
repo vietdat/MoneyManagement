@@ -13,6 +13,8 @@ import android.widget.ListView;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.CustomListView.Adapter.MyArrayAdapter;
 import com.hcmut.moneymanagement.activity.CustomListView.Model.ListViewModel;
+import com.hcmut.moneymanagement.models.WalletModel;
+import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.util.ArrayList;
 
@@ -34,16 +36,21 @@ public class WalletHome extends Fragment implements View.OnClickListener {
         lv = (ListView) rootView.findViewById(R.id.wallet_list);
         addButton = (FloatingActionButton) rootView.findViewById(R.id.addNewWallet);
 
+        WalletModel walletModel = new WalletModel();
+        ArrayList<Wallet> wallets = walletModel.getWallets();
+        System.out.println("====================");
+        System.out.println(wallets.size());
+        System.out.println("====================");
         final ArrayList<ListViewModel> arr = new ArrayList<>();
-        ListViewModel income = new ListViewModel("ic_profile", "vi so 1", "vi so 1");
-        ListViewModel expense = new ListViewModel("ic_profile", "vi so 2", "vi so 2");
-
-        arr.add(income);
-        arr.add(expense);
+//        for(int i =0 ; i < wallets.getCount(); i++){
+//            ListViewModel lvWallet = new ListViewModel("ic_profile", wallets.getItem(i).getName(), wallets.getItem(i).getCurrencyUnit());
+//            arr.add(lvWallet);
+//        }
 
         MyArrayAdapter mayArr = new MyArrayAdapter(getActivity(), R.layout.list_row, arr);
 
         lv.setAdapter(mayArr);
+
 
 
         addButton.setOnClickListener(this);
@@ -69,8 +76,6 @@ public class WalletHome extends Fragment implements View.OnClickListener {
             intent.setClass(getActivity(), AddNewWalletActivity.class);
             getActivity().startActivity(intent);
         }
-
-
     }
 
 }

@@ -11,17 +11,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.models.WalletCategoryModel;
+import com.hcmut.moneymanagement.models.WalletModel;
+import com.hcmut.moneymanagement.objects.Category;
+import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddNewWalletActivity extends AppCompatActivity {
+public class AddNewWalletActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
+    private WalletCategoryModel walletCategoryModel;
+    private Button btnSaving;
+    private EditText input_name, startMoney, note;
+    private Spinner typeOfAccount, currency;
+    private WalletModel walletModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +49,33 @@ public class AddNewWalletActivity extends AppCompatActivity {
         String title = getString(R.string.add_wallet_title);
         getSupportActionBar().setTitle(title);
 
+        init();
         typeOfTransaction ();
         typeOfCurrency();
+        btnSaving.setOnClickListener(this);
 
+    }
 
+    private void init() {
+        btnSaving = (Button) findViewById(R.id.btnSaving);
+        input_name = (EditText) findViewById(R.id.input_name);
+        startMoney = (EditText) findViewById(R.id.startMoney);
+        note = (EditText) findViewById(R.id.note);
+        typeOfAccount = (Spinner) findViewById(R.id.typeOfAccount);
+        currency = (Spinner) findViewById(R.id.currency);
+
+        walletModel = new WalletModel();
+    }
+
+    private Wallet getValue() {
+        String name = input_name.getText().toString();
+        String type = typeOfAccount.getSelectedItem().toString();
+        String currencyUnit = currency.getSelectedItem().toString();
+        String description = note.getText().toString();
+        String initAmount = startMoney.getText().toString();
+
+        Wallet wallet = new Wallet(name, type, currencyUnit, description, Integer.parseInt(initAmount));
+        return wallet;
     }
 
     /**
@@ -47,22 +84,14 @@ public class AddNewWalletActivity extends AppCompatActivity {
      */
     private void typeOfTransaction () {
         // typeOfAccount
-        final Spinner typeOfAccount = (Spinner) findViewById(R.id.typeOfAccount);
+        walletCategoryModel = new WalletCategoryModel(AddNewWalletActivity.this);
 
-        List<String> types = new ArrayList<String>();
-        types.add("Cash");
-        types.add("Bank account");
-        types.add("Create new...");
-
-        final ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
-        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeOfAccount.setAdapter(typeAdapter);
+        typeOfAccount.setAdapter(walletCategoryModel.getNames());
         typeOfAccount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Object item = parent.getItemAtPosition(position);
                 String selected = typeOfAccount.getSelectedItem().toString();
-                    if(selected.equals("Create new...")){
+                    if(selected.equals("Create new")){
                         // Create dialog
                         final EditText input = new EditText(AddNewWalletActivity.this);
                         AlertDialog.Builder builder = new AlertDialog.Builder(AddNewWalletActivity.this);
@@ -73,6 +102,9 @@ public class AddNewWalletActivity extends AppCompatActivity {
                         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 //add to database
+                                dialog.dismiss();
+                                Category category = new Category(input.getText().toString());
+                                walletCategoryModel.add(category);
                             }
                         });
                         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -123,4 +155,41 @@ public class AddNewWalletActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
     }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnSaving) {
+            walletModel.add(getValue());
+            walletModel.getReference().addChildEventListener(onWalletChildListener);
+        }
+    }
+
+    // on child added
+    private ChildEventListener onWalletChildListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            Toast.makeText(AddNewWalletActivity.this,"Successful",Toast.LENGTH_LONG).show();
+            AddNewWalletActivity.this.finish();
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            Toast.makeText(AddNewWalletActivity.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
+        }
+    };
 }

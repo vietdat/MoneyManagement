@@ -48,10 +48,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp">
-                    <EditText android:id="@+id/input_amount"
+                    <EditText android:id="@+id/input_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
+                        android:inputType="text"
                         android:hint="Name" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -103,6 +103,7 @@
                     <EditText android:id="@+id/startMoney"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
                         android:hint="Start money" />
                 </android.support.design.widget.TextInputLayout>
 

@@ -33,6 +33,7 @@ public class UserModel extends Model {
         WalletCategoryModel walletCategoryModel = new WalletCategoryModel();
         walletCategoryModel.add(new Category("Cash"));
         walletCategoryModel.add(new Category("Bank account"));
+        walletCategoryModel.add(new Category("Other"));
 
         Wallet cash = new Wallet("Cash", "Cash", "VND", "My cash");
         Wallet bank  = new Wallet("Vietcombank", "Bank account", "VND", "My Vietcombank account");
