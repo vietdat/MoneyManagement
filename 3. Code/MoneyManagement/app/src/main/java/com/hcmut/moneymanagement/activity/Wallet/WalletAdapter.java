@@ -56,7 +56,7 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
         String uri_icon1 = "drawable/arrow";
         int ImageResoure1 = convertView.getContext().getResources().getIdentifier(uri_icon1, null, convertView.getContext().getApplicationContext().getPackageName());
         Drawable image1 = convertView.getContext().getResources().getDrawable(ImageResoure1);
-        icon.setImageDrawable(image1);
+        edit.setImageDrawable(image1);
 
         return convertView;
 

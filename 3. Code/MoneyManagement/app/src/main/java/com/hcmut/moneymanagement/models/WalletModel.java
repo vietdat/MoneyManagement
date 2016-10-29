@@ -40,7 +40,7 @@ public class WalletModel extends Model{
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                wallets.clear();
+//                wallets.clear();
                 // [START_EXCLUDE]
 
                 for (DataSnapshot walletSnapshot : dataSnapshot.getChildren()) {
@@ -131,19 +131,6 @@ public class WalletModel extends Model{
         }
     }
 
-    /*
-    public ValueEventListener walletsValueEventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    }
-    */
     public ArrayAdapter<String> getNameAdapter(){
         if(nameAdapter != null) {
             return nameAdapter;
