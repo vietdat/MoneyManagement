@@ -1,11 +1,6 @@
 package com.hcmut.moneymanagement.cryptogrophy;
 
-import android.util.Base64;
-import android.util.Log;
-
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 
 public class Decryption extends Crypto{
     public Decryption(){
@@ -18,6 +13,7 @@ public class Decryption extends Crypto{
     }
 
     public String decrypt(String input){
+        /*
         try {
             if( !input.isEmpty()){
                 // Decode from String to Byte array
@@ -31,5 +27,8 @@ public class Decryption extends Crypto{
             e.printStackTrace();
         }
         return "";
+        */
+
+        return input;
     }
 }

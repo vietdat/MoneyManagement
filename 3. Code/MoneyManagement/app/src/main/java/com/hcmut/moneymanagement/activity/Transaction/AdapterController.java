@@ -1,19 +1,12 @@
 package com.hcmut.moneymanagement.activity.Transaction;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.hcmut.moneymanagement.models.ExpenseCategoryModel;
 import com.hcmut.moneymanagement.models.IncomeCategoryModel;
 import com.hcmut.moneymanagement.models.WalletModel;
 import com.hcmut.moneymanagement.objects.Category;
-
-import static com.google.android.gms.internal.zzs.TAG;
 
 public class AdapterController {
 
@@ -37,7 +30,8 @@ public class AdapterController {
         transactionTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Wallet Adapter
-        walletModel = new WalletModel(context);
+        walletModel = new WalletModel();
+        walletModel.initNameAdapter(context);
         walletAdapter = walletModel.getNameAdapter();
 
         // Income Category Adapter
