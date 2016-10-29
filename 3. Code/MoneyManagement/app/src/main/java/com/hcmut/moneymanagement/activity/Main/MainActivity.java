@@ -14,8 +14,8 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.activity.Category.CategoryHome;
 import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
-import com.hcmut.moneymanagement.activity.Savings.SavingsHome;
 import com.hcmut.moneymanagement.activity.Transaction.TransactionHome;
 import com.hcmut.moneymanagement.activity.Wallet.WalletHome;
 import com.hcmut.moneymanagement.activity.login.screen.Login;
@@ -46,30 +46,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         // display the first navigation drawer view on app launch
         displayView(0);
-
-//        final UserModel userModel = new UserModel();
-//        //userModel.initUserData();
-//        userModel.write("username", "Nguyễn Hoàng Anh");
-
-        //final TextView txtUsername = new TextView(this);
-
-        // Handle username example
-//        DatabaseReference userReference = userModel.getReference();
-//        userReference.child(userModel.encrypt("username"))
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Object object = dataSnapshot.getValue();
-//                String value = userModel.decrypt(object.toString());
-//                Log.w("Username", value);
-//                //txtUsername.setText(value);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                Log.w("Database Error:", databaseError.toString());
-//            }
-//        });
 
     }
 
@@ -124,11 +100,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getString(R.string.wallet_title);
                 break;
             case 2:
-                fragment = new SavingsHome();
-                title = getString(R.string.savings);
+                fragment = new CategoryHome();
+                title = "Category";
                 break;
             //Log out
-            case 3:
+            case 4:
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
                 finish();
