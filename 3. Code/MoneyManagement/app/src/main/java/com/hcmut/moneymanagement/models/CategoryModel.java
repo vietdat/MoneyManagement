@@ -1,28 +1,33 @@
 package com.hcmut.moneymanagement.models;
 
+import android.util.Log;
+import android.widget.ArrayAdapter;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.hcmut.moneymanagement.objects.Transaction;
-import com.hcmut.moneymanagement.objects.Wallet;
+import com.google.firebase.database.ValueEventListener;
+import com.hcmut.moneymanagement.objects.Category;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TransactionModel extends Model{
+import static com.google.android.gms.internal.zzs.TAG;
 
-    public TransactionModel(){
-        reference = FirebaseDatabase.getInstance().getReference()
-                .child(uidEncrypted).child(encrypt("transactions"));
+public abstract class CategoryModel extends Model{
+    public CategoryModel(){
     }
 
-    public void add(Transaction transaction){
-        Field[] fields = Transaction.class.getFields();
+    public void add(Category category){
+        Field[] fields = Category.class.getFields();
         String key = reference.push().getKey();
         for (int i = 0; i < fields.length; i++){
             try {
                 String fieldName = fields[i].getName();
                 if( !fieldName.equals("serialVersionUID") && !fieldName.equals("$change")){
                     // Get value object of wallet
-                    Object value = fields[i].get(transaction);
+                    Object value = fields[i].get(category);
                     if(value != null){
                         String valueEncrypted = encryption.encrypt(value.toString());
 
@@ -37,4 +42,3 @@ public class TransactionModel extends Model{
         }
     }
 }
-

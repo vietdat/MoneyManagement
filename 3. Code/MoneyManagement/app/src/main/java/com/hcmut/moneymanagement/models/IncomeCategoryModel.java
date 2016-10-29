@@ -1,33 +1,63 @@
 package com.hcmut.moneymanagement.models;
 
+import android.content.Context;
+import android.util.Log;
+import android.widget.ArrayAdapter;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.hcmut.moneymanagement.objects.Category;
+import com.google.firebase.database.ValueEventListener;
+import com.hcmut.moneymanagement.activity.Transaction.AddTransactionActivity;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 
-public class IncomeCategoryModel extends Model{
+import static com.google.android.gms.internal.zzs.TAG;
+
+public class IncomeCategoryModel extends CategoryModel{
+    private Context context;
+    private ArrayList<String> names;
+    private ArrayAdapter<String> nameAdapter;
+
     public IncomeCategoryModel(){
+        // Wallets refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("incomeCategories"));
     }
+    public IncomeCategoryModel(Context context){
+        this.context = context;
+        //Log.w("uid", uidEncrypted);
 
-    public void add(Category category){
-        Field[] fields = Category.class.getFields();
-        String key = reference.push().getKey();
-        for (int i = 0; i < fields.length - 2; i++){
-            try {
-                // Get value object of wallet
-                String fieldEncrypted = encryption.encrypt(fields[i].getName());
-                Object value = fields[i].get(category);
+        // Wallets refecence
+        reference = FirebaseDatabase.getInstance().getReference()
+                .child(uidEncrypted).child(encrypt("incomeCategories"));
 
-                String valueEncrypted = encryption.encrypt(value.toString());
+        names = new ArrayList<String>();
+        nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, names);
+        nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                // Write encypted value to Firebase
-                reference.child(key).child(fieldEncrypted).setValue(valueEncrypted);
-
-            }catch (IllegalAccessException e){
-                e.printStackTrace();
+        //Event Listenner
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nameAdapter.clear();
+                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                    Object objWallet = categorySnapshot.child(encrypt("name")).getValue();
+                    nameAdapter.add(decrypt(objWallet.toString()));
+                    //Log.w("Income category", decrypt(objWallet.toString()));
+                }
+                nameAdapter.add("Create new");
+                nameAdapter.notifyDataSetChanged();
             }
-        }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadIncomeCategory:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    public ArrayAdapter<String> getNameAdapter(){
+        return nameAdapter;
     }
 }

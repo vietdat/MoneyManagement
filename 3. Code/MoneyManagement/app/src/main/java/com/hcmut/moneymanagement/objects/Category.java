@@ -1,11 +1,11 @@
 package com.hcmut.moneymanagement.objects;
 
 public class Category {
-    public String text;
+    public String name;
     public Category(){
-        String text = "";
+        String name = "";
     }
-    public Category(String text){
-        this.text = text;
+    public Category(String name){
+        this.name =name;
     }
 }

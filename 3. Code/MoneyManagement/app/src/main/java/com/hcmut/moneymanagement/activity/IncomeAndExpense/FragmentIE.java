@@ -1,12 +1,15 @@
 package com.hcmut.moneymanagement.activity.IncomeAndExpense;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.activity.DetailIncomeAndExpense.DetailIncomeAndExpense;
 
 import java.util.ArrayList;
 
@@ -18,10 +21,6 @@ public class FragmentIE extends android.support.v4.app.Fragment {
         // Required empty public constructor
     }
 
-    //create listview
-    public void createListview() {
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +35,8 @@ public class FragmentIE extends android.support.v4.app.Fragment {
         lv = (ListView)rootView.findViewById(R.id.lv_income_expense);
 
         addItemToListView();
-        
+        selecteItemInListView();
+
         return rootView;
     }
 
@@ -53,6 +53,17 @@ public class FragmentIE extends android.support.v4.app.Fragment {
         MyArrayAdapter mayArr = new MyArrayAdapter(getActivity(), R.layout.list_row_income, arr);
 
         lv.setAdapter(mayArr);
+    }
+
+    private void selecteItemInListView() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), DetailIncomeAndExpense.class);
+                    getActivity().startActivity(intent);
+            }
+        });
     }
 
 }

@@ -1,34 +1,58 @@
 package com.hcmut.moneymanagement.models;
 
+import android.content.Context;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.hcmut.moneymanagement.objects.Category;
+import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 
-public class ExpenseCategoryModel extends Model {
+import static com.google.android.gms.internal.zzs.TAG;
+
+public class ExpenseCategoryModel extends CategoryModel {
+    private Context context;
+    private ArrayList<String> names;
+    private ArrayAdapter<String> nameAdapter;
+
     public ExpenseCategoryModel(){
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("expenseCategories"));
     }
+    public ExpenseCategoryModel(Context context){
+        this.context = context;
 
-    public void add(Category category){
-        Field[] fields = Category.class.getFields();
-        String key = reference.push().getKey();
-        for (int i = 0; i < fields.length - 2; i++){
-            try {
-                // Get value object of wallet
-                String fieldEncrypted = encryption.encrypt(fields[i].getName());
-                Object value = fields[i].get(category);
+        reference = FirebaseDatabase.getInstance().getReference()
+                .child(uidEncrypted).child(encrypt("expenseCategories"));
 
-                String valueEncrypted = encryption.encrypt(value.toString());
+        names = new ArrayList<String>();
+        nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, names);
+        nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                // Write encypted value to Firebase
-                reference.child(key).child(fieldEncrypted).setValue(valueEncrypted);
-
-            }catch (IllegalAccessException e){
-                e.printStackTrace();
+        //Event Listenner
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                nameAdapter.clear();
+                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                    Object objWallet = categorySnapshot.child(encrypt("name")).getValue();
+                    nameAdapter.add(decrypt(objWallet.toString()));
+                }
+                nameAdapter.add("Create new");
+                nameAdapter.notifyDataSetChanged();
             }
-        }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadExpenseCategory:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    public ArrayAdapter<String> getNameAdapter(){
+        return nameAdapter;
     }
 }
