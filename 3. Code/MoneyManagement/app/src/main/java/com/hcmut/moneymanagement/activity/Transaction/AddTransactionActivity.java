@@ -161,9 +161,13 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     private OnClickListener onSavingClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            transactionModel.add(getInputData());
+            // transactionModel.add(getInputData());
             //Child added handler
-            transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+            // transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+
+            int selected = category.getSelectedItemPosition();
+            Log.w("selected", String.valueOf(selected));
+
         }
     };
 
@@ -205,6 +209,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         String walletValue = wallet.getSelectedItem().toString().trim();
         String categoryValue = category.getSelectedItem().toString().trim();
         String descriptionValue = description.getText().toString().trim();
+
 
         Transaction transaction =
                 new Transaction(typeOfTransactionValue, amountOfMoneyValue, dateViewValue, walletValue, categoryValue, descriptionValue);

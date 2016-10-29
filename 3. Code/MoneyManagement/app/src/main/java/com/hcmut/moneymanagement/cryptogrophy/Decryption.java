@@ -18,6 +18,7 @@ public class Decryption extends Crypto{
     }
 
     public String decrypt(String input){
+        /*
         try {
             if( !input.isEmpty()){
                 // Decode from String to Byte array
@@ -25,11 +26,14 @@ public class Decryption extends Crypto{
                 // Decrypt the Byte array
                 byte[] outputBytes = cipher.doFinal(inputBytes);
                 // Return output string
-                return new String(outputBytes);
+                // return new String(outputBytes);
+                return input;
             }
         }catch(IllegalBlockSizeException | BadPaddingException e){
             e.printStackTrace();
         }
         return "";
+        */
+        return input;
     }
 }

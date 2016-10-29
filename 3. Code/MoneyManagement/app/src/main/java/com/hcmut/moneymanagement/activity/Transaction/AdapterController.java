@@ -37,7 +37,8 @@ public class AdapterController {
         transactionTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Wallet Adapter
-        walletModel = new WalletModel(context);
+        walletModel = new WalletModel();
+        walletModel.initNameAdapter(context);
         walletAdapter = walletModel.getNameAdapter();
 
         // Income Category Adapter
@@ -77,5 +78,7 @@ public class AdapterController {
         Category category = new Category(input);
         expenseCategoryModel.add(category);
     }
+
+    public void addTransaction(String typeOfTransaction, int amountOfMoney, )
 
 }

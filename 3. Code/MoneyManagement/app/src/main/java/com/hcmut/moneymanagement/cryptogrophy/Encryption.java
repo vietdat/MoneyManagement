@@ -24,7 +24,8 @@ public class Encryption extends Crypto {
                 byte[] outputBytes = cipher.doFinal(inputBytes);
                 // Encode for Firebase storeable
                 String output = Base64.encodeToString(outputBytes, Base64Flags);
-                return output;
+                //return output;
+                return input;
             }
         }catch(IllegalBlockSizeException | BadPaddingException e){
             e.printStackTrace();
