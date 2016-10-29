@@ -69,8 +69,6 @@ public class WalletHome extends Fragment implements View.OnClickListener {
             intent.setClass(getActivity(), AddNewWalletActivity.class);
             getActivity().startActivity(intent);
         }
-
-
     }
 
 }

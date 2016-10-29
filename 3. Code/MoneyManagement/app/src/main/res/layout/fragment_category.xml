@@ -1,0 +1,121 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".activity.Category.CategoryHome">
+
+    <TabHost
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tabHost">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/tabIncome"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/lvIncomeCategories"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="#b5b5b5"
+                        android:dividerHeight="1dp"
+                        android:listSelector="@drawable/list_selector" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tabExpense"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/lvExpenseCategories"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="#b5b5b5"
+                        android:dividerHeight="1dp"
+                        android:listSelector="@drawable/list_selector" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tabWallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/lvWalletCategories"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="#b5b5b5"
+                        android:dividerHeight="1dp"
+                        android:listSelector="@drawable/list_selector" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnNew"
+        android:src="@drawable/ic_add"
+        app:borderWidth="2dp"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorPrimaryDark"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnEdit"
+        android:layout_toStartOf="@+id/btnEdit">
+    </android.support.design.widget.FloatingActionButton>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:borderWidth="2dp"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorPrimaryDark"
+        app:srcCompat="@android:drawable/ic_menu_edit"
+        android:id="@+id/btnEdit"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnDelete"
+        android:layout_toStartOf="@+id/btnDelete" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDelete"
+        android:src="@android:drawable/ic_menu_delete"
+        app:borderWidth="2dp"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp">
+    </android.support.design.widget.FloatingActionButton>
+</RelativeLayout>

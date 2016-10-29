@@ -4,9 +4,10 @@
     <string name="feedback_forgotpassword_message">A link to reset your password has been sent. Please Check your email.</string>
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
-        <item>Transactions</item>
-        <item>Wallets</item>
-        <item>Savings</item>
+        <item>Transaction</item>
+        <item>Wallet</item>
+        <item>Category</item>
+        <item>Saving</item>
         <item>Logout</item>
     </string-array>
     <string name="action_settings">Settings</string>

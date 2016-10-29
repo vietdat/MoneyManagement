@@ -26,7 +26,9 @@ import com.hcmut.moneymanagement.models.IncomeCategoryModel;
 import com.hcmut.moneymanagement.models.TransactionModel;
 import com.hcmut.moneymanagement.objects.Transaction;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,6 +69,12 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         previousTypeSelected = "";
 
         dateView = (EditText) findViewById(R.id.input_date);
+        // Set default date is today
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String today = df.format(c.getTime());
+        dateView.setText(today);
+
         typeTransaction = (Spinner) findViewById(R.id.typeTransaction);
         category = (Spinner) findViewById(R.id.category);
         wallet = (Spinner) findViewById(R.id.wallet);

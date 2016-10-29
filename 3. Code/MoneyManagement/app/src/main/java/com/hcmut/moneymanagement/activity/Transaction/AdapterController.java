@@ -41,11 +41,13 @@ public class AdapterController {
         walletAdapter = walletModel.getNameAdapter();
 
         // Income Category Adapter
-        incomeCategoryModel = new IncomeCategoryModel(context);
+        incomeCategoryModel = new IncomeCategoryModel();
+        incomeCategoryModel.initSpinnerAdapter(context);
         incomeAdapter = incomeCategoryModel.getNameAdapter();
 
         // Expense Category Adapter
-        expenseCategoryModel = new ExpenseCategoryModel(context);
+        expenseCategoryModel = new ExpenseCategoryModel();
+        expenseCategoryModel.initSpinnerAdapter(context);
         expenseAdapter = expenseCategoryModel.getNameAdapter();
 
     }
