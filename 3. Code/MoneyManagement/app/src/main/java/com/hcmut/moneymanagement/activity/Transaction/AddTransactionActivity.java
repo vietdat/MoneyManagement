@@ -222,13 +222,6 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch (id) {
-//            case R.id.action_settings:
-//                return true;
-            case R.id.action_done:
-                //handle done action;
-                return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

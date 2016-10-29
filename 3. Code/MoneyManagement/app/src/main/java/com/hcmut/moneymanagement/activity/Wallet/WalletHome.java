@@ -17,8 +17,6 @@ import android.widget.Toast;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.models.WalletModel;
 
-import static com.google.android.gms.internal.zzs.TAG;
-
 
 public class WalletHome extends Fragment implements View.OnClickListener {
     ListView lv;

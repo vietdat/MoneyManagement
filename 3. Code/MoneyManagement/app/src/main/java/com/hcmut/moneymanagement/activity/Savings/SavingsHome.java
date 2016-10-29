@@ -2,25 +2,24 @@ package com.hcmut.moneymanagement.activity.Savings;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TabHost;
 
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.objects.Saving;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SavingsHome extends Fragment implements View.OnClickListener {
-
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private TabHost tabHost;
+    private ListView lvRunning;
+    private ListView lvFinish;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,22 +30,50 @@ public class SavingsHome extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_savings_home, container, false);
+        // TabHost Init
+        tabHost = (TabHost) rootView.findViewById(R.id.tabHost);
+        tabHost.setup();
 
-        viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+        TabHost.TabSpec tabRunning = tabHost.newTabSpec("Running");
+        tabRunning.setContent(R.id.tabRunning);
+        tabRunning.setIndicator("Running");
+        tabHost.addTab(tabRunning);
 
-        tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        TabHost.TabSpec tabFinish = tabHost.newTabSpec("Finish");
+        tabFinish.setContent(R.id.tabFinish);
+        tabFinish.setIndicator("Finish");
+        tabHost.addTab(tabFinish);
+
+        Saving saving = new Saving("Tien dam cuoi", "3000000", "0", "365 days");
+        ArrayList<Saving> arr = new ArrayList<Saving>();
+        arr.add(saving);
+        arr.add(saving);
+        arr.add(saving);
+        //add adapter
+        SavingAdapter savingAdapter = new SavingAdapter(getActivity(), R.layout.saving_item ,arr);
+
+        lvRunning = (ListView) rootView.findViewById(R.id.lvRunning);
+        lvRunning.setAdapter(savingAdapter);
+        lvRunning.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+        lvFinish = (ListView) rootView.findViewById(R.id.lvFinish);
+        lvFinish.setAdapter(savingAdapter);
+        lvFinish.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
 
         return rootView;
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
-        adapter.addFrag(new SavingRunning(), "RUNNING");
-        adapter.addFrag(new SavingRunning(), "FINISH");
-        viewPager.setAdapter(adapter);
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -63,33 +90,5 @@ public class SavingsHome extends Fragment implements View.OnClickListener {
 
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFrag(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
 
 }

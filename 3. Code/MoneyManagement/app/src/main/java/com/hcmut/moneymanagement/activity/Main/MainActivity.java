@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.Category.CategoryHome;
 import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
+import com.hcmut.moneymanagement.activity.Savings.SavingsHome;
 import com.hcmut.moneymanagement.activity.Transaction.TransactionHome;
 import com.hcmut.moneymanagement.activity.Wallet.WalletHome;
 import com.hcmut.moneymanagement.activity.login.screen.Login;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        mSearchAction = menu.findItem(R.id.action_done);
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -70,13 +71,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch (id) {
-//            case R.id.action_settings:
-//                return true;
-            case R.id.action_done:
-                //handleMenuSearch();
-                return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -102,6 +96,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             case 2:
                 fragment = new CategoryHome();
                 title = "Category";
+                break;
+            case 3:
+                fragment = new SavingsHome();
+                title = "Savings";
                 break;
             //Log out
             case 4:

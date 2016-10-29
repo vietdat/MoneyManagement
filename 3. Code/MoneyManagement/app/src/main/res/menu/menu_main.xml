@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.materialtheme.MainActivity" >
 
-    <item
-        android:id="@+id/action_done"
-        android:title="@string/done"
-        android:orderInCategory="200"
-        android:icon="@drawable/ic_done"
-        app:showAsAction="ifRoom"
-        />
+
 
 </menu>

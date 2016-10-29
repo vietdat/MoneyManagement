@@ -15,6 +15,7 @@ import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Map;
 
 import static com.google.android.gms.internal.zzs.TAG;
 import static java.lang.Integer.parseInt;
@@ -22,6 +23,7 @@ import static java.lang.Integer.parseInt;
 public class WalletModel extends Model{
     private Context context;
     private ArrayList<String> names;
+    public  ArrayList<String> keys;
     private ArrayList<Wallet> wallets;
     private ArrayAdapter<String> nameAdapter;
     private WalletAdapter walletAdapter;
@@ -29,9 +31,12 @@ public class WalletModel extends Model{
     public WalletModel(){
         names = new ArrayList<String>();
         wallets = new ArrayList<Wallet>();
+        keys = new ArrayList<String>();
         // Wallets refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("wallets"));
+
+
     }
 
     public void initWalletAdapter(Activity activity){
@@ -40,9 +45,6 @@ public class WalletModel extends Model{
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                wallets.clear();
-                // [START_EXCLUDE]
-
                 for (DataSnapshot walletSnapshot : dataSnapshot.getChildren()) {
                     Wallet wallet = new Wallet();
 
@@ -95,9 +97,11 @@ public class WalletModel extends Model{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 names.clear();
+                keys.clear();
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
-                    Object objWallet = categorySnapshot.child(encrypt("name")).getValue();
-                    names.add(decrypt(objWallet.toString()));
+                    Object obj = categorySnapshot.child(encrypt("name")).getValue();
+                    names.add(decrypt(obj.toString()));
+                    keys.add(categorySnapshot.getKey());
                 }
                 nameAdapter.notifyDataSetChanged();
             }
@@ -107,6 +111,16 @@ public class WalletModel extends Model{
                 Log.w(TAG, "loadWallet:onCancelled", databaseError.toException());
             }
         });
+    }
+
+    // Update a wallet
+    public void update(String key, Map<String, Object> data){
+        reference.child(key).updateChildren(data);
+    }
+
+    // Remove a wallet
+    public void remove(String key){
+        reference.child(key).removeValue();
     }
 
     public void add(Wallet wallet){
