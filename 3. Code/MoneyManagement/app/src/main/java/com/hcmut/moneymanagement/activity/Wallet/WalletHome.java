@@ -8,7 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.models.WalletModel;
@@ -26,7 +29,6 @@ public class WalletHome extends Fragment implements View.OnClickListener {
         walletModel.initWalletAdapter(getActivity());
 
 
-        System.err.println("oN cREATE Wallet home");
     }
 
     @Override
@@ -39,6 +41,7 @@ public class WalletHome extends Fragment implements View.OnClickListener {
         WalletAdapter wallets = walletModel.getWalletAdapter();
         lv.setAdapter(wallets);
 
+        selecteItemInListView();
         addButton.setOnClickListener(this);
         // Inflate the layout for this fragment
         return rootView;
@@ -62,6 +65,18 @@ public class WalletHome extends Fragment implements View.OnClickListener {
             intent.setClass(getActivity(), AddNewWalletActivity.class);
             getActivity().startActivity(intent);
         }
+    }
+
+    private void selecteItemInListView() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String selected =((TextView)view.findViewById(R.id.wallet_name)).getText().toString();
+
+                Toast toast=Toast.makeText(getContext(), selected, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
     }
 
 }

@@ -40,7 +40,7 @@ public class WalletModel extends Model{
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                wallets.clear();
+//                wallets.clear();
                 // [START_EXCLUDE]
 
                 for (DataSnapshot walletSnapshot : dataSnapshot.getChildren()) {

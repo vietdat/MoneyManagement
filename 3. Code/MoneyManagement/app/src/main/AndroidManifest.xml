@@ -45,7 +45,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activity.DetailIncomeAndExpense.DetailIncomeAndExpense"></activity>
+        <activity android:name=".activity.DetailIncomeAndExpense.DetailIncomeAndExpense" />
+        <activity android:name=".activity.Wallet.WalletDetai"></activity>
     </application>
 
 </manifest>
