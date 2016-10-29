@@ -160,6 +160,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         if(view == btnSaving) {
             walletModel.add(getValue());
+
             walletModel.getReference().addChildEventListener(onWalletChildListener);
         }
     }

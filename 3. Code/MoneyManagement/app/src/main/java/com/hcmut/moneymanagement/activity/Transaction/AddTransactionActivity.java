@@ -157,7 +157,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             Toast.makeText(AddTransactionActivity.this,"Successful",Toast.LENGTH_LONG).show();
-            AddTransactionActivity.this.finish();
+            //AddTransactionActivity.this.finish();
         }
 
         @Override

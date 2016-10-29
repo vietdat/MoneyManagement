@@ -37,7 +37,7 @@ public class WalletModel extends Model{
     public void initWalletAdapter(Activity activity){
         walletAdapter = new WalletAdapter(activity, R.layout.wallet_item, wallets);
 
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 wallets.clear();
@@ -115,17 +115,13 @@ public class WalletModel extends Model{
         for (int i = 0; i < fields.length; i++){
             try {
                 String fieldName = fields[i].getName();
-                Log.w("field", fieldName);
                 if( !fieldName.equals("serialVersionUID") && !fieldName.equals("$change")){
                     // Get value object of wallet
                     Object value = fields[i].get(wallet);
                     if(value != null){
                         String valueEncrypted = encryption.encrypt(value.toString());
-                        Log.w("value", value.toString());
                         // Write encypted value to Firebase
                         reference.child(key).child(encrypt(fieldName)).setValue(valueEncrypted);
-
-                        Log.w("encrypt", encrypt(fieldName));
                     }
                 }
 
@@ -135,7 +131,19 @@ public class WalletModel extends Model{
         }
     }
 
+    /*
+    public ValueEventListener walletsValueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
 
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    }
+    */
     public ArrayAdapter<String> getNameAdapter(){
         if(nameAdapter != null) {
             return nameAdapter;
