@@ -21,16 +21,11 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.signup.screen.SignUp;
-import com.hcmut.moneymanagement.models.IncomeCategoryModel;
 import com.hcmut.moneymanagement.models.TransactionModel;
 import com.hcmut.moneymanagement.objects.Transaction;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AddTransactionActivity extends AppCompatActivity implements OnClickListener {
 
@@ -176,7 +171,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             Toast.makeText(AddTransactionActivity.this,"Successful",Toast.LENGTH_LONG).show();
-            AddTransactionActivity.this.finish();
+            //AddTransactionActivity.this.finish();
         }
 
         @Override
@@ -218,16 +213,33 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_transaction, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+//            case R.id.action_settings:
+//                return true;
+            case R.id.action_done:
+                //handle done action;
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     public void onStart(){
         super.onStart();
@@ -236,7 +248,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
-                    DateDialog dialog=new DateDialog(view);
+                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
                     android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
                     dialog.show(ft, "DatePicker");
                 }

@@ -1,5 +1,8 @@
 package com.hcmut.moneymanagement.models;
 
+import java.lang.reflect.Field;
+
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -8,6 +11,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.activity.Wallet.WalletAdapter;
 import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.lang.reflect.Field;
@@ -20,8 +25,9 @@ public class WalletModel extends Model{
     private Context context;
     private ArrayList<String> names;
     private ArrayList<Wallet> wallets;
+
     private ArrayAdapter<String> nameAdapter;
-    private ArrayAdapter<Wallet> walletAdapter;
+    private WalletAdapter walletAdapter;
 
     public WalletModel(){
         names = new ArrayList<String>();
@@ -33,15 +39,15 @@ public class WalletModel extends Model{
 
     }
 
-    public void initWalletAdapter(Context context){
-        this.context = context;
-        walletAdapter = new ArrayAdapter<Wallet>(context, android.R.layout.simple_spinner_item, wallets);
+    public void initWalletAdapter(Activity activity){
+        walletAdapter = new WalletAdapter(activity, R.layout.wallet_item, wallets);
 
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                wallets.clear();
+//                wallets.clear();
                 // [START_EXCLUDE]
+
                 for (DataSnapshot walletSnapshot : dataSnapshot.getChildren()) {
                     Wallet wallet = new Wallet();
 
@@ -114,17 +120,13 @@ public class WalletModel extends Model{
         for (int i = 0; i < fields.length; i++){
             try {
                 String fieldName = fields[i].getName();
-                Log.w("field", fieldName);
                 if( !fieldName.equals("serialVersionUID") && !fieldName.equals("$change")){
                     // Get value object of wallet
                     Object value = fields[i].get(wallet);
                     if(value != null){
                         String valueEncrypted = encryption.encrypt(value.toString());
-                        Log.w("value", value.toString());
                         // Write encypted value to Firebase
                         reference.child(key).child(encrypt(fieldName)).setValue(valueEncrypted);
-
-                        Log.w("encrypt", encrypt(fieldName));
                     }
                 }
 
@@ -142,10 +144,10 @@ public class WalletModel extends Model{
         return  null;
     }
 
-    public ArrayAdapter<Wallet> getWallets() {
+    public WalletAdapter getWalletAdapter() {
         if(walletAdapter!=null){
             return walletAdapter;
         }
         return null;
     }
-}
+ }

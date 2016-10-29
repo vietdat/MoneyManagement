@@ -35,7 +35,18 @@
         <activity android:name=".activity.signup.screen.SignUp" />
         <activity android:name=".activity.forgotpassword.screen.forgotpassword" />
         <activity android:name=".activity.Transaction.AddTransactionActivity" />
-        <activity android:name=".activity.Wallet.AddNewWalletActivity"></activity>
+        <activity android:name=".activity.Wallet.AddNewWalletActivity" />
+        <activity android:name=".activity.IncomeAndExpense.IncomeAndExpenseHome" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".activity.DetailIncomeAndExpense.DetailIncomeAndExpense" />
+        <activity android:name=".activity.Wallet.WalletDetai"></activity>
     </application>
 
 </manifest>
