@@ -160,7 +160,6 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         if(view == btnSaving) {
             walletModel.add(getValue());
-
             walletModel.getReference().addChildEventListener(onWalletChildListener);
         }
     }
@@ -169,7 +168,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     private ChildEventListener onWalletChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(AddNewWalletActivity.this,"Successful",Toast.LENGTH_LONG).show();
+            Toast.makeText(AddNewWalletActivity.this,"Add new wallet success",Toast.LENGTH_LONG).show();
             AddNewWalletActivity.this.finish();
         }
 
