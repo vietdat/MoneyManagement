@@ -155,7 +155,7 @@ public class WalletModel extends Model{
         return walletAdapter;
     }
 
-//    public Wallet getWallet(int position) {
-//        return wallets.get(position);
-//    }
+    public Wallet getWallet(int position) {
+        return wallets.get(position);
+    }
  }
