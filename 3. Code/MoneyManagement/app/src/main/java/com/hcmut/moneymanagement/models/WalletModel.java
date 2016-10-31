@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.R;
@@ -17,12 +18,17 @@ import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.google.android.gms.internal.zzs.TAG;
 import static java.lang.Integer.parseInt;
 
 public class WalletModel extends Model{
     private Context context;
+
+    public ArrayList<String> keys;
+
     private ArrayList<String> names;
     private ArrayList<Wallet> wallets;
 
@@ -30,6 +36,7 @@ public class WalletModel extends Model{
     private WalletAdapter walletAdapter;
 
     public WalletModel(){
+        keys = new ArrayList<String>();
         names = new ArrayList<String>();
         wallets = new ArrayList<Wallet>();
         // Wallets refecence
@@ -45,16 +52,15 @@ public class WalletModel extends Model{
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                wallets.clear();
+                // wallets.clear();
                 // [START_EXCLUDE]
-
                 for (DataSnapshot walletSnapshot : dataSnapshot.getChildren()) {
                     Wallet wallet = new Wallet();
 
                     //get name
                     Object objWallet = walletSnapshot.child(encrypt("name")).getValue();
                     wallet.setName(decrypt(objWallet.toString()));
-                    Log.w("Name", decrypt(objWallet.toString()));
+                    //Log.w("Name", decrypt(objWallet.toString()));
 
                     //get type
                     Object objType = walletSnapshot.child(encrypt("type")).getValue();
@@ -94,15 +100,18 @@ public class WalletModel extends Model{
 
     public void initNameAdapter(Context context){
         nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, names);
+        nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         //Event Listenner
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                keys.clear();
                 names.clear();
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     Object objWallet = categorySnapshot.child(encrypt("name")).getValue();
                     names.add(decrypt(objWallet.toString()));
+                    keys.add(categorySnapshot.getKey());
                 }
                 nameAdapter.notifyDataSetChanged();
             }
@@ -149,5 +158,40 @@ public class WalletModel extends Model{
             return walletAdapter;
         }
         return null;
+    }
+
+    // Update a category
+    public void increaseMoneyAmount(String key, final int amount){
+        final DatabaseReference walletReference =  FirebaseDatabase.getInstance().getReference()
+                .child(uidEncrypted).child(encrypt("wallets")).child(key);
+
+        walletReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Object objCurrentAmount = dataSnapshot.child(encrypt("currentAmount")).getValue();
+                if(objCurrentAmount != null) {
+                    int currentAmount = Integer.parseInt(objCurrentAmount.toString());
+                    currentAmount += amount;
+                    Map<String, Object> update = new HashMap<String, Object>();
+                    update.put(encrypt("currentAmount"), currentAmount);
+
+                    walletReference.updateChildren(update);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void decreateMoneyAmount(String key, int amount){
+        this.increaseMoneyAmount(key, -amount);
+    }
+
+    // Remove a category
+    public void remove(String key){
+        reference.child(key).removeValue();
     }
  }

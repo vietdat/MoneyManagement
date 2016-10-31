@@ -21,11 +21,14 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.models.Model;
 import com.hcmut.moneymanagement.models.TransactionModel;
 import com.hcmut.moneymanagement.objects.Transaction;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddTransactionActivity extends AppCompatActivity implements OnClickListener {
 
@@ -156,13 +159,34 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     private OnClickListener onSavingClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            // transactionModel.add(getInputData());
-            //Child added handler
-            // transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+            String typeOfTransactionValue = typeTransaction.getSelectedItem().toString().trim();
+            int moneyAmount = Integer.parseInt(amouthOfMoney.getText().toString());
+            String dateViewValue = dateView.getText().toString().trim();
+            String descriptionValue = description.getText().toString().trim();
+            String walletId = adapterController.walletModel.keys
+                    .get(wallet.getSelectedItemPosition());
 
-            int selected = category.getSelectedItemPosition();
-            Log.w("selected", String.valueOf(selected));
+            if(typeOfTransactionValue.equals("Income")) {
+                String categoryId = adapterController.incomeCategoryModel.keys.get(category.getSelectedItemPosition());
+                Transaction transaction =
+                        new Transaction(typeOfTransactionValue, moneyAmount, dateViewValue, walletId, categoryId, descriptionValue);
 
+                transactionModel.add(transaction);
+                //Child added handler
+                transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+                adapterController.walletModel.increaseMoneyAmount(walletId, moneyAmount);
+
+            }else if(typeOfTransactionValue.equals("Expense")){
+                String categoryId = adapterController.expenseCategoryModel.keys.get(category.getSelectedItemPosition());
+                Transaction transaction =
+                        new Transaction(typeOfTransactionValue, moneyAmount, dateViewValue, walletId, categoryId, descriptionValue);
+
+                transactionModel.add(transaction);
+                //Child added handler
+                transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+                adapterController.walletModel.decreateMoneyAmount(walletId, moneyAmount);
+
+            }
         }
     };
 
@@ -171,7 +195,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             Toast.makeText(AddTransactionActivity.this,"Successful",Toast.LENGTH_LONG).show();
-            //AddTransactionActivity.this.finish();
+            AddTransactionActivity.this.finish();
         }
 
         @Override
@@ -194,23 +218,6 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
             Toast.makeText(AddTransactionActivity.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
         }
     };
-
-
-    //Get all data user input.
-    private Transaction getInputData() {
-        String typeOfTransactionValue = typeTransaction.getSelectedItem().toString().trim();
-        int amountOfMoneyValue = Integer.parseInt(amouthOfMoney.getText().toString());
-        String dateViewValue = dateView.getText().toString().trim();
-        String walletValue = wallet.getSelectedItem().toString().trim();
-        String categoryValue = category.getSelectedItem().toString().trim();
-        String descriptionValue = description.getText().toString().trim();
-
-
-        Transaction transaction =
-                new Transaction(typeOfTransactionValue, amountOfMoneyValue, dateViewValue, walletValue, categoryValue, descriptionValue);
-
-        return transaction;
-    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
