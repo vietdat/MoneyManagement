@@ -21,13 +21,11 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.signup.screen.SignUp;
-import com.hcmut.moneymanagement.models.IncomeCategoryModel;
+import com.hcmut.moneymanagement.models.Model;
 import com.hcmut.moneymanagement.models.TransactionModel;
 import com.hcmut.moneymanagement.objects.Transaction;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -161,9 +159,34 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     private OnClickListener onSavingClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            transactionModel.add(getInputData());
-            //Child added handler
-            transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+            String typeOfTransactionValue = typeTransaction.getSelectedItem().toString().trim();
+            int moneyAmount = Integer.parseInt(amouthOfMoney.getText().toString());
+            String dateViewValue = dateView.getText().toString().trim();
+            String descriptionValue = description.getText().toString().trim();
+            String walletId = adapterController.walletModel.keys
+                    .get(wallet.getSelectedItemPosition());
+
+            if(typeOfTransactionValue.equals("Income")) {
+                String categoryId = adapterController.incomeCategoryModel.keys.get(category.getSelectedItemPosition());
+                Transaction transaction =
+                        new Transaction(typeOfTransactionValue, moneyAmount, dateViewValue, walletId, categoryId, descriptionValue);
+
+                transactionModel.add(transaction);
+                //Child added handler
+                transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+                adapterController.walletModel.increaseMoneyAmount(walletId, moneyAmount);
+
+            }else if(typeOfTransactionValue.equals("Expense")){
+                String categoryId = adapterController.expenseCategoryModel.keys.get(category.getSelectedItemPosition());
+                Transaction transaction =
+                        new Transaction(typeOfTransactionValue, moneyAmount, dateViewValue, walletId, categoryId, descriptionValue);
+
+                transactionModel.add(transaction);
+                //Child added handler
+                transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+                adapterController.walletModel.decreateMoneyAmount(walletId, moneyAmount);
+
+            }
         }
     };
 
@@ -196,33 +219,34 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         }
     };
 
-
-    //Get all data user input.
-    private Transaction getInputData() {
-        String typeOfTransactionValue = typeTransaction.getSelectedItem().toString().trim();
-        int amountOfMoneyValue = Integer.parseInt(amouthOfMoney.getText().toString());
-        String dateViewValue = dateView.getText().toString().trim();
-        String walletValue = wallet.getSelectedItem().toString().trim();
-        String categoryValue = category.getSelectedItem().toString().trim();
-        String descriptionValue = description.getText().toString().trim();
-
-        Transaction transaction =
-                new Transaction(typeOfTransactionValue, amountOfMoneyValue, dateViewValue, walletValue, categoryValue, descriptionValue);
-
-        return transaction;
-    }
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_transaction, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+//            case R.id.action_settings:
+//                return true;
+            case R.id.action_done:
+                //handle done action;
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     public void onStart(){
         super.onStart();
@@ -231,7 +255,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
-                    DateDialog dialog=new DateDialog(view);
+                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
                     android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
                     dialog.show(ft, "DatePicker");
                 }

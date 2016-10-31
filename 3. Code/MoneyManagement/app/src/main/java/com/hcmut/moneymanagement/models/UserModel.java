@@ -29,10 +29,11 @@ public class UserModel extends Model {
         expenseCategoryModel.add(new Category("Health"));
         expenseCategoryModel.add(new Category("Education"));
         expenseCategoryModel.add(new Category("Insurance"));
-
+        Log.w("Uid", uidEncrypted);
         WalletCategoryModel walletCategoryModel = new WalletCategoryModel();
         walletCategoryModel.add(new Category("Cash"));
         walletCategoryModel.add(new Category("Bank account"));
+        walletCategoryModel.add(new Category("Other"));
 
         Wallet cash = new Wallet("Cash", "Cash", "VND", "My cash");
         Wallet bank  = new Wallet("Vietcombank", "Bank account", "VND", "My Vietcombank account");
@@ -41,6 +42,7 @@ public class UserModel extends Model {
         walletModel.add(bank);
     }
 
+    //write username to db
     public void write(String field, String value){
         reference.child(encrypt(field)).setValue(encrypt(value));
     }
