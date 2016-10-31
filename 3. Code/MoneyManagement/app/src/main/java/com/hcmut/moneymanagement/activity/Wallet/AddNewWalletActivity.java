@@ -168,7 +168,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     private ChildEventListener onWalletChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(AddNewWalletActivity.this,"Add new wallet success",Toast.LENGTH_LONG).show();
+            Toast.makeText(AddNewWalletActivity.this,"Add new wallet success",Toast.LENGTH_SHORT).show();
             AddNewWalletActivity.this.finish();
         }
 

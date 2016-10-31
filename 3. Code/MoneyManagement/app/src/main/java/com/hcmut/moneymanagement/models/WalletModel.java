@@ -35,8 +35,6 @@ public class WalletModel extends Model{
         // Wallets refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("wallets"));
-
-
     }
 
     public void initWalletAdapter(Activity activity){
@@ -156,4 +154,8 @@ public class WalletModel extends Model{
     public WalletAdapter getWalletAdapter() {
         return walletAdapter;
     }
+
+//    public Wallet getWallet(int position) {
+//        return wallets.get(position);
+//    }
  }
