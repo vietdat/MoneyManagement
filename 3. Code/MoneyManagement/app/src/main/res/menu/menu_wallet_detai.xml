@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.materialtheme.WalletDetail" >
+
+    <item
+        android:id="@+id/mnUpdate"
+        android:icon="@drawable/pencil"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mnDelete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -146,7 +146,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_transaction, menu);
+        getMenuInflater().inflate(R.menu.menu_wallet_add, menu);
         return true;
     }
 

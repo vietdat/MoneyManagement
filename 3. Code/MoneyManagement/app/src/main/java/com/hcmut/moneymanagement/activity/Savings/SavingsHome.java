@@ -70,7 +70,6 @@ public class SavingsHome extends Fragment implements View.OnClickListener {
             }
         });
 
-
         return rootView;
     }
 
@@ -89,6 +88,5 @@ public class SavingsHome extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
 
     }
-
 
 }

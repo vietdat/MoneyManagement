@@ -12,9 +12,9 @@ public class AdapterController {
 
     private Context context;
 
-    private WalletModel walletModel;
-    private IncomeCategoryModel incomeCategoryModel;
-    private ExpenseCategoryModel expenseCategoryModel;
+    public WalletModel walletModel;
+    public IncomeCategoryModel incomeCategoryModel;
+    public ExpenseCategoryModel expenseCategoryModel;
 
     private ArrayAdapter<String> transactionTypeAdapter;
     private ArrayAdapter<String> walletAdapter;
@@ -71,5 +71,6 @@ public class AdapterController {
         Category category = new Category(input);
         expenseCategoryModel.add(category);
     }
+
 
 }

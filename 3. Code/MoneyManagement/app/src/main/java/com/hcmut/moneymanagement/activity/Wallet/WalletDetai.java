@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,59 +25,58 @@ import java.util.List;
 
 public class WalletDetai extends AppCompatActivity {
 
-    int position;
+    private Toolbar mToolbar;
+    String key;
     Wallet wallet;
     WalletModel walletModel;
     EditText nameOfWallet, currentAmount, note;
     Spinner typeOfAccount, currency;
     WalletCategoryModel walletCategoryModel;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_detai);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        String title = getString(R.string.add_wallet_title);
+        getSupportActionBar().setTitle(title);
+
+        wallet = new Wallet();
 
         Bundle extras = getIntent().getExtras();
-        position = extras.getInt("position");
-
+        key = extras.getString("key");
+        wallet = (Wallet) getIntent().getSerializableExtra("wallet");
+        walletModel = new WalletModel();
+        walletModel.initNameAdapter(getApplicationContext());
         //add data to view
         initData();
-
-
-
-
-
-
     }
 
     private void initData() {
-        wallet = new Wallet();
-        walletModel = new WalletModel();
-        walletModel.initWalletAdapter(this);
-        wallet = walletModel.getWallet(position);
-
         nameOfWallet = (EditText) findViewById(R.id.input_name);
         currentAmount = (EditText) findViewById(R.id.startMoney);
         note = (EditText) findViewById(R.id.note);
         typeOfAccount = (Spinner) findViewById(R.id.typeOfAccount);
         currency = (Spinner) findViewById(R.id.currency);
+
         typeOfCurrency();
         typeOfAccount();
+
+        nameOfWallet.setText(wallet.getName());
+        currentAmount.setText(String.valueOf(wallet.getCurrentAmount()));
+        note.setText(wallet.getDescription());
+        int spinnerPosition = walletCategoryModel.getNames().getPosition(wallet.getType());
+        typeOfAccount.setSelection(spinnerPosition);
 
         nameOfWallet.setFocusable(false);
         currentAmount.setFocusable(false);
         note.setFocusable(false);
         typeOfAccount.setEnabled(false);
         currency.setEnabled(false);
-
-        nameOfWallet.setText(wallet.getName());
-        currentAmount.setText(wallet.getCurrentAmount());
-        note.setText(wallet.getDescription());
-        if (!wallet.getType().equals(null)) {
-            int spinnerPosition = walletCategoryModel.getNames().getPosition(wallet.getType());
-            typeOfAccount.setSelection(spinnerPosition);
-        }
 
 
     }
@@ -126,6 +128,7 @@ public class WalletDetai extends AppCompatActivity {
             }
         });
     }
+
     private void typeOfCurrency() {
         // currencySpinner
         Spinner currencySpinner = (Spinner) findViewById(R.id.currency);
@@ -137,4 +140,30 @@ public class WalletDetai extends AppCompatActivity {
         currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         currencySpinner.setAdapter(currencyAdapter);
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_wallet_detai, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.mnUpdate) {
+            return true;
+        }
+
+        if(id == R.id.mnDelete){
+            walletModel.remove(key);
+            WalletDetai.this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

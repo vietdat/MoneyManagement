@@ -1,8 +1,10 @@
 package com.hcmut.moneymanagement.objects;
+
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Wallet extends Object {
+public class Wallet extends Object implements Serializable {
     public String name;
     public String type;
     public String currencyUnit;

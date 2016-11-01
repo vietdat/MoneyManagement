@@ -13,9 +13,6 @@ import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.util.ArrayList;
 
-/**
- * Created by Admin on 29-Oct-16.
- */
 public class WalletAdapter extends ArrayAdapter<Wallet> {
     Activity context=null;
     ArrayList<Wallet> wallets=null;

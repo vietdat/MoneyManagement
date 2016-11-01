@@ -17,7 +17,9 @@ import android.widget.ListView;
 
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.models.WalletModel;
+import com.hcmut.moneymanagement.objects.Wallet;
 
+import java.io.Serializable;
 
 public class WalletHome extends Fragment implements View.OnClickListener {
     ListView lv;
@@ -48,11 +50,10 @@ public class WalletHome extends Fragment implements View.OnClickListener {
         View rootView = inflater.inflate(R.layout.fragment_wallet_home, container, false);
         lv = (ListView) rootView.findViewById(R.id.wallet_list);
         addButton = (FloatingActionButton) rootView.findViewById(R.id.addNewWallet);
+
         selecteItemInListView();
-
         addButton.setOnClickListener(this);
-
-
+        Log.w("Create View", "nothing");
         // Inflate the layout for this fragment
         return rootView;
     }
@@ -97,8 +98,11 @@ public class WalletHome extends Fragment implements View.OnClickListener {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Wallet wallet = walletModel.wallets.get(position);
                 Intent intent = new Intent(getActivity(), WalletDetai.class);
-                intent.putExtra("position", position);
+                String key = walletModel.keys.get(position);
+                intent.putExtra("key", key);
+                intent.putExtra("wallet", (Serializable) wallet);
                 startActivity(intent);
             }
         });
