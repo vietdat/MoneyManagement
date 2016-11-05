@@ -50,7 +50,8 @@
         <activity android:name=".activity.Wallet.WalletDetai" />
         <activity android:name=".activity.Wallet.WalletEdit" />
         <activity android:name=".activity.Savings.SavingDetail" />
-        <activity android:name=".activity.Savings.SavingEdit"></activity>
+        <activity android:name=".activity.Savings.SavingEdit" />
+        <activity android:name=".activity.Tools.Tips.TipsHome"></activity>
     </application>
 
 </manifest>

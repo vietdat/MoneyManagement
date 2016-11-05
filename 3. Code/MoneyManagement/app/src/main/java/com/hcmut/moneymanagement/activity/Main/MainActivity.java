@@ -17,6 +17,7 @@ import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.Category.CategoryHome;
 import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
 import com.hcmut.moneymanagement.activity.Savings.SavingsHome;
+import com.hcmut.moneymanagement.activity.Tools.ToolsHome;
 import com.hcmut.moneymanagement.activity.Transaction.TransactionHome;
 import com.hcmut.moneymanagement.activity.Wallet.WalletHome;
 import com.hcmut.moneymanagement.activity.login.screen.Login;
@@ -100,8 +101,24 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new SavingsHome();
                 title = "Savings";
                 break;
-            //Log out
             case 4:
+                fragment = new SavingsHome();
+                title = "Budgets";
+                break;
+            case 5:
+                fragment = new SavingsHome();
+                title = "Events";
+                break;
+            case 6:
+                fragment = new SavingsHome();
+                title = "Graphs";
+                break;
+            case 7:
+                fragment = new ToolsHome();
+                title = "Tools";
+                break;
+            //Log out
+            case 8:
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
                 finish();
