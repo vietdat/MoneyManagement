@@ -43,6 +43,8 @@ public class Wallet extends Object implements Serializable {
         this.initialAmount = initialAmount;
         this.currentAmount = initialAmount;
     }
+
+
     public String getName() {
         return name;
     }

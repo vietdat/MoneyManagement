@@ -16,9 +16,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="transaction_title">Transaction</string>
-    <string name="add_transaction_title">Add Transaction</string>
+    <string name="add_transaction_title">Add activity</string>
     <string name="wallet_title">Wallet</string>
     <string name="savings">Savings</string>
     <string name="add_wallet_title">Add new wallet</string>
+    <string name="add_saving_tittle">Add new saving</string>
+    <string name="detail_saving_tittle">Saving detail</string>
+    <string name="edit_saving_tittle">Saving edit</string>
     <string name="done">Done</string>
 </resources>

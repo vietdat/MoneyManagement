@@ -1,17 +1,31 @@
 package com.hcmut.moneymanagement.objects;
 
+import java.io.Serializable;
+
 /**
  * Created by Admin on 23-Oct-16.
  */
-public class Saving {
-    String name;
-    String goal;
-    String current_amount;
-
-    String left;
+public class Saving extends Object implements Serializable {
+    public String name;
+    public String goal;
+    public String startDate;
+    public String endDate;
+    public String current_amount;
+    public String current_unit;
+    public String description;
 
     public Saving(){
+    }
 
+    public Saving(String name, String goal, String current_amount, String current_unit,
+                  String startDate, String endDate, String description) {
+        this.name = name;
+        this.goal = goal;
+        this.current_amount = current_amount;
+        this.current_unit = current_unit;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
     }
 
     public String getCurrent_amount() {
@@ -30,14 +44,6 @@ public class Saving {
         this.name = name;
     }
 
-    public Saving(String name, String goal, String current_amount, String left) {
-        this.name = name;
-        this.goal = goal;
-        this.current_amount = current_amount;
-        this.left = left;
-
-    }
-
     public String getTitle() {
         return name;
     }
@@ -54,13 +60,38 @@ public class Saving {
         this.goal = goal;
     }
 
-    public String getLeft() {
-        return left;
+    public String getCurrent_unit() {
+        return current_unit;
     }
 
-    public void setLeft(String left) {
-        this.left = left;
+    public void setCurrent_unit(String current_unit) {
+        this.current_unit = current_unit;
     }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
 
 }

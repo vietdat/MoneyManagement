@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 
 import com.hcmut.moneymanagement.models.ExpenseCategoryModel;
 import com.hcmut.moneymanagement.models.IncomeCategoryModel;
+import com.hcmut.moneymanagement.models.SavingModel;
 import com.hcmut.moneymanagement.models.WalletModel;
 import com.hcmut.moneymanagement.objects.Category;
 
@@ -15,11 +16,13 @@ public class AdapterController {
     public WalletModel walletModel;
     public IncomeCategoryModel incomeCategoryModel;
     public ExpenseCategoryModel expenseCategoryModel;
+    public SavingModel savingModel;
 
     private ArrayAdapter<String> transactionTypeAdapter;
     private ArrayAdapter<String> walletAdapter;
     private ArrayAdapter<String> incomeAdapter;
     private ArrayAdapter<String> expenseAdapter;
+    private ArrayAdapter<String> savingNameAdapter;
 
     public AdapterController(Context context) {
         this.context = context;
@@ -44,6 +47,11 @@ public class AdapterController {
         expenseCategoryModel.initSpinnerAdapter(context);
         expenseAdapter = expenseCategoryModel.getNameAdapter();
 
+        savingModel = new SavingModel();
+        savingModel.initNameAdapter(context);
+        savingNameAdapter = savingModel.getNameAdapter();
+
+
     }
 
     public ArrayAdapter getTransactionTypesAdapter() {
@@ -60,6 +68,10 @@ public class AdapterController {
 
     public ArrayAdapter getExpenseCategoryAdapter(){
         return expenseAdapter;
+    }
+
+    public ArrayAdapter getSavingNameAdapter() {
+        return savingNameAdapter;
     }
 
     public void addIncomeCategory(String input){

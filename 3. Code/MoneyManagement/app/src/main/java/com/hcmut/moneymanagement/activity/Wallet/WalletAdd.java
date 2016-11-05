@@ -28,7 +28,7 @@ import com.hcmut.moneymanagement.objects.Wallet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddNewWalletActivity extends AppCompatActivity implements View.OnClickListener {
+public class WalletAdd extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
     private WalletCategoryModel walletCategoryModel;
@@ -84,7 +84,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
      */
     private void typeOfTransaction () {
         // typeOfAccount
-        walletCategoryModel = new WalletCategoryModel(AddNewWalletActivity.this);
+        walletCategoryModel = new WalletCategoryModel(WalletAdd.this);
 
         typeOfAccount.setAdapter(walletCategoryModel.getNames());
         typeOfAccount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -93,8 +93,8 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
                 String selected = typeOfAccount.getSelectedItem().toString();
                     if(selected.equals("Create new")){
                         // Create dialog
-                        final EditText input = new EditText(AddNewWalletActivity.this);
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AddNewWalletActivity.this);
+                        final EditText input = new EditText(WalletAdd.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(WalletAdd.this);
                         builder.setTitle("New wallet");
                         builder.setView(input);
 
@@ -168,8 +168,8 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     private ChildEventListener onWalletChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(AddNewWalletActivity.this,"Add new wallet success",Toast.LENGTH_SHORT).show();
-            AddNewWalletActivity.this.finish();
+            Toast.makeText(WalletAdd.this,"Add new wallet success",Toast.LENGTH_SHORT).show();
+            WalletAdd.this.finish();
         }
 
         @Override
@@ -189,7 +189,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Toast.makeText(AddNewWalletActivity.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(WalletAdd.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
         }
     };
 }

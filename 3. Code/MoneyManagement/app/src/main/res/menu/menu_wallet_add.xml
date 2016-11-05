@@ -4,7 +4,7 @@
     tools:context="com.example.materialtheme.AdddNewWalletActivity" >
 
     <item
-        android:id="@+id/mnNotification"
+        android:id="@+id/mnDone"
         android:icon="@drawable/ic_done"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom" />

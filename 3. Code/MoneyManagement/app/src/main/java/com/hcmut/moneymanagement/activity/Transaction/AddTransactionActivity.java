@@ -11,9 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -33,9 +33,10 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     private EditText amouthOfMoney;
     private EditText description;
     private Spinner typeTransaction;
+    private TextView tvCategory;
     private Spinner wallet;
+    private TextView tvWallet;
     private Spinner category;
-    private Button btnSaving;
 
     private AdapterController adapterController;
     private String previousTypeSelected;
@@ -49,6 +50,8 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         String title = getString(R.string.add_transaction_title);
         getSupportActionBar().setTitle(title);
 
@@ -56,7 +59,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
         typeTransaction.setOnItemSelectedListener(onTransactionTypeItemSelected);
         category.setOnItemSelectedListener(onCategoryItemSelected);
-        btnSaving.setOnClickListener(onSavingClickListener);
+
     }
 
     private void  init(){
@@ -74,8 +77,8 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         wallet = (Spinner) findViewById(R.id.wallet);
         amouthOfMoney = (EditText) findViewById(R.id.input_amount);
         description = (EditText) findViewById(R.id.desciption);
-        btnSaving = (Button) findViewById(R.id.btnSaving);
-
+        tvCategory = (TextView) findViewById(R.id.tvCategory);
+        tvWallet = (TextView) findViewById(R.id.tvWallet);
         adapterController = new AdapterController(this);
 
         typeTransaction.setAdapter(adapterController.getTransactionTypesAdapter());
@@ -96,6 +99,13 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
                     category.setAdapter(adapterController.getIncomeCategoryAdapter());
                 } else if (selected.equals("Expense")) {
                     category.setAdapter(adapterController.getExpenseCategoryAdapter());
+                } else if(selected.equals("Saving")) {
+                    category.setAdapter(adapterController.getSavingNameAdapter());
+                    tvCategory.setText("Saving name");
+                } else if(selected.equals("Transfer")) {
+                    category.setAdapter(adapterController.getWalletAdapter());
+                    tvCategory.setText("To wallet");
+                    tvWallet.setText("From wallet");
                 }
                 previousTypeSelected = selected;
             }
@@ -150,48 +160,12 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         }
     };
 
-
-    // On Saving Click Listener
-    private OnClickListener onSavingClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            String typeOfTransactionValue = typeTransaction.getSelectedItem().toString().trim();
-            int moneyAmount = Integer.parseInt(amouthOfMoney.getText().toString());
-            String dateViewValue = dateView.getText().toString().trim();
-            String descriptionValue = description.getText().toString().trim();
-            String walletId = adapterController.walletModel.keys
-                    .get(wallet.getSelectedItemPosition());
-
-            if(typeOfTransactionValue.equals("Income")) {
-                String categoryId = adapterController.incomeCategoryModel.keys.get(category.getSelectedItemPosition());
-                Transaction transaction =
-                        new Transaction(typeOfTransactionValue, moneyAmount, dateViewValue, walletId, categoryId, descriptionValue);
-
-                transactionModel.add(transaction);
-                //Child added handler
-                transactionModel.getReference().addChildEventListener(onTransactionChildListener);
-                adapterController.walletModel.increaseMoneyAmount(walletId, moneyAmount);
-
-            }else if(typeOfTransactionValue.equals("Expense")){
-                String categoryId = adapterController.expenseCategoryModel.keys.get(category.getSelectedItemPosition());
-                Transaction transaction =
-                        new Transaction(typeOfTransactionValue, moneyAmount, dateViewValue, walletId, categoryId, descriptionValue);
-
-                transactionModel.add(transaction);
-                //Child added handler
-                transactionModel.getReference().addChildEventListener(onTransactionChildListener);
-                adapterController.walletModel.decreateMoneyAmount(walletId, moneyAmount);
-
-            }
-        }
-    };
-
     //Transaction on child added
     private ChildEventListener onTransactionChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(AddTransactionActivity.this,"Successful",Toast.LENGTH_LONG).show();
-            //AddTransactionActivity.this.finish();
+            Toast.makeText(AddTransactionActivity.this,"Add transaction successful",Toast.LENGTH_SHORT).show();
+            AddTransactionActivity.this.finish();
         }
 
         @Override
@@ -223,18 +197,73 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_wallet_add, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        if (id == R.id.mnDone) {
+            String typeOfTransactionValue = typeTransaction.getSelectedItem().toString().trim();
+            int moneyAmount = Integer.parseInt(amouthOfMoney.getText().toString());
+            String dateViewValue = dateView.getText().toString().trim();
+            String descriptionValue = description.getText().toString().trim();
+            String walletId = adapterController.walletModel.keys
+                    .get(wallet.getSelectedItemPosition());
 
-        return super.onOptionsItemSelected(item);
+            if(typeOfTransactionValue.equals("Income")) {
+                String categoryId = adapterController.incomeCategoryModel.keys.get(category.getSelectedItemPosition());
+                Transaction transaction =
+                        new Transaction(typeOfTransactionValue, moneyAmount, dateViewValue, walletId, categoryId, descriptionValue);
+
+                transactionModel.add(transaction);
+                //Child added handler
+                transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+                adapterController.walletModel.increaseMoneyAmount(walletId, moneyAmount);
+
+            }else if(typeOfTransactionValue.equals("Expense")){
+                String categoryId = adapterController.expenseCategoryModel.keys.get(category.getSelectedItemPosition());
+                Transaction transaction =
+                        new Transaction(typeOfTransactionValue, moneyAmount, dateViewValue, walletId, categoryId, descriptionValue);
+                transactionModel.add(transaction);
+                //Child added handler
+                transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+                adapterController.walletModel.decreateMoneyAmount(walletId, moneyAmount);
+            } else if(typeOfTransactionValue.equals("Saving")){
+                String categoryId = adapterController.savingModel.keys.get(category.getSelectedItemPosition());
+                Transaction transaction =
+                        new Transaction(typeOfTransactionValue, moneyAmount, dateViewValue, walletId, categoryId, descriptionValue);
+
+                transactionModel.add(transaction);
+                //Child added handler
+                transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+                adapterController.walletModel.decreateMoneyAmount(walletId, moneyAmount);
+                adapterController.savingModel.increaseMoneyAmount(categoryId, moneyAmount);
+            } else if(typeOfTransactionValue.equals("Transfer")){
+                String categoryId = adapterController.walletModel.keys.get(category.getSelectedItemPosition());
+                System.out.println("++++++++++key++++++++++" + categoryId);
+                Transaction transaction =
+                        new Transaction(typeOfTransactionValue, moneyAmount, dateViewValue, walletId, categoryId, descriptionValue);
+
+                transactionModel.add(transaction);
+                //Child added handler
+                transactionModel.getReference().addChildEventListener(onTransactionChildListener);
+                adapterController.walletModel.decreateMoneyAmount(walletId, moneyAmount);
+                adapterController.walletModel.increaseMoneyAmount(categoryId, moneyAmount);
+            }
+
+
+
+            return true;
+        }
+
+        if(id == android.R.id.home) {
+            AddTransactionActivity.this.finish();
+            return true;
+        }
+            return super.onOptionsItemSelected(item);
     }
-
-
 
     public void onStart(){
         super.onStart();
