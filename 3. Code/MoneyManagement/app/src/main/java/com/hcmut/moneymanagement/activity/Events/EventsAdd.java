@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Savings;
+package com.hcmut.moneymanagement.activity.Events;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,33 +15,35 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.models.SavingModel;
-import com.hcmut.moneymanagement.objects.Saving;
+import com.hcmut.moneymanagement.models.EventModel;
+import com.hcmut.moneymanagement.models.WalletModel;
+import com.hcmut.moneymanagement.objects.Event;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavingsAdd extends AppCompatActivity {
+public class EventsAdd extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    private EditText input_name, input_goal, input_starting_amount, input_start_date, input_end_date,
-                    description;
+    private EditText input_name, input_end_date, description;
     private Spinner curentUnit;
+    private WalletModel walletModel;
 
-    private SavingModel savingModel;
+    private EventModel eventModel;
 
     private String input_key = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_saving_add);
+        setContentView(R.layout.activity_events_add);
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String title = getString(R.string.add_saving_tittle);
+        String title = getString(R.string.add_event_tittle);
         getSupportActionBar().setTitle(title);
 
         init();
@@ -50,15 +52,15 @@ public class SavingsAdd extends AppCompatActivity {
     //Khoi tao gia tri
     private void init() {
         input_name = (EditText) findViewById(R.id.input_name);
-        input_goal = (EditText) findViewById(R.id.input_goal);
-        input_starting_amount = (EditText) findViewById(R.id.input_starting_amount);
-        input_start_date = (EditText) findViewById(R.id.etStartDate);
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
         description = (EditText) findViewById(R.id.description);
 
+        walletModel = new WalletModel();
+        walletModel.initNameAdapter(getApplicationContext());
+
         typeOfCurrency();
 
-        savingModel = new SavingModel();
+        eventModel = new EventModel();
     }
 
     private void typeOfCurrency() {
@@ -73,18 +75,15 @@ public class SavingsAdd extends AppCompatActivity {
         curentUnit.setAdapter(currencyAdapter);
     }
 
-    private Saving getValue(){
+    private Event getValue(){
         String name = input_name.getText().toString();
-        String goal = input_goal.getText().toString();
-        String starting_amount = input_starting_amount.getText().toString();
-        String start_date = input_start_date.getText().toString();
         String end_date = input_end_date.getText().toString();
         String desciption = description.getText().toString();
         String currentUnit = curentUnit.getSelectedItem().toString();
 
-        Saving saving = new Saving(name,goal, starting_amount, currentUnit, start_date,
-                                    end_date, desciption);
-        return saving;
+        Event event = new Event(name, end_date, currentUnit, desciption);
+
+        return event;
     }
 
     @Override
@@ -92,16 +91,15 @@ public class SavingsAdd extends AppCompatActivity {
 
         int id = item.getItemId();
         if (id == R.id.mnDone) {
-            savingModel.add(getValue());
-            savingModel.getReference().addChildEventListener(onSavingChildListener);
+            eventModel.add(getValue());
+            eventModel.getReference().addChildEventListener(onSavingChildListener);
             return true;
         }
 
         if(id == android.R.id.home){
-            SavingsAdd.this.finish();
+            EventsAdd.this.finish();
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -115,19 +113,7 @@ public class SavingsAdd extends AppCompatActivity {
 
     public void onStart(){
         super.onStart();
-
-        input_start_date = (EditText) findViewById(R.id.etStartDate);
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
-        input_start_date.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            public void onFocusChange(View view, boolean hasfocus){
-                if(hasfocus){
-                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
-                    android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
-                    dialog.show(ft, "DatePicker");
-                }
-            }
-
-        });
         input_end_date.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
@@ -144,8 +130,8 @@ public class SavingsAdd extends AppCompatActivity {
     private ChildEventListener onSavingChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(SavingsAdd.this,"Add new saving successful",Toast.LENGTH_LONG).show();
-            SavingsAdd.this.finish();
+            Toast.makeText(EventsAdd.this,"Add new event successful",Toast.LENGTH_LONG).show();
+            EventsAdd.this.finish();
         }
 
         @Override
@@ -165,7 +151,7 @@ public class SavingsAdd extends AppCompatActivity {
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Toast.makeText(SavingsAdd.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(EventsAdd.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
         }
     };
 }

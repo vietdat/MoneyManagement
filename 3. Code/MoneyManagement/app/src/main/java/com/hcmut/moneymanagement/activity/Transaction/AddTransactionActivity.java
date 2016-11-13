@@ -20,10 +20,12 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.models.EventModel;
 import com.hcmut.moneymanagement.models.TransactionModel;
 import com.hcmut.moneymanagement.objects.Transaction;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddTransactionActivity extends AppCompatActivity implements OnClickListener {
@@ -42,6 +44,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     private String previousTypeSelected;
 
     private TransactionModel transactionModel;
+    private EventModel eventModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,8 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         category.setAdapter(adapterController.getIncomeCategoryAdapter());
 
         transactionModel = new TransactionModel();
+        eventModel = new EventModel();
+        eventModel.initEventAdapter(AddTransactionActivity.this);
     }
 
     // On Transaction type item selected
@@ -222,6 +227,12 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
                 transactionModel.getReference().addChildEventListener(onTransactionChildListener);
                 adapterController.walletModel.increaseMoneyAmount(walletId, moneyAmount);
 
+                //Check event. If event is running => auto add transaction to event
+                ArrayList<String> arr = eventModel.keyRunnings;
+                for(int i = 0; i < arr.size(); i++) {
+                    eventModel.increaseMoneyAmount(arr.get(i), moneyAmount);
+                }
+
             }else if(typeOfTransactionValue.equals("Expense")){
                 String categoryId = adapterController.expenseCategoryModel.keys.get(category.getSelectedItemPosition());
                 Transaction transaction =
@@ -230,6 +241,13 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
                 //Child added handler
                 transactionModel.getReference().addChildEventListener(onTransactionChildListener);
                 adapterController.walletModel.decreateMoneyAmount(walletId, moneyAmount);
+
+                //Check event. If event is running => auto add transaction to event
+                ArrayList<String> arr = eventModel.keyRunnings;
+                for(int i = 0; i < arr.size(); i++) {
+                    eventModel.increaseMoneyAmount(arr.get(i), -moneyAmount);
+                }
+
             } else if(typeOfTransactionValue.equals("Saving")){
                 String categoryId = adapterController.savingModel.keys.get(category.getSelectedItemPosition());
                 Transaction transaction =
@@ -242,7 +260,6 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
                 adapterController.savingModel.increaseMoneyAmount(categoryId, moneyAmount);
             } else if(typeOfTransactionValue.equals("Transfer")){
                 String categoryId = adapterController.walletModel.keys.get(category.getSelectedItemPosition());
-                System.out.println("++++++++++key++++++++++" + categoryId);
                 Transaction transaction =
                         new Transaction(typeOfTransactionValue, moneyAmount, dateViewValue, walletId, categoryId, descriptionValue);
 
@@ -267,13 +284,12 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
     public void onStart(){
         super.onStart();
-
-        EditText txtDate=(EditText)findViewById(R.id.input_date);
-        txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+        dateView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
-                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
-                    android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog =
+                            new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
+                    android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
                     dialog.show(ft, "DatePicker");
                 }
             }

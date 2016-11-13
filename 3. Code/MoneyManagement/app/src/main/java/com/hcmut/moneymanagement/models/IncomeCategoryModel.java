@@ -7,6 +7,7 @@ public class IncomeCategoryModel extends CategoryModel{
         // Wallets refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("incomeCategories"));
+        reference.keepSynced(true);
     }
 
 }

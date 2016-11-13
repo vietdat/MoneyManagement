@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.Wallet.WalletDetai;
+import com.hcmut.moneymanagement.activity.Wallets.WalletDetai;
 import com.hcmut.moneymanagement.models.SavingModel;
 import com.hcmut.moneymanagement.objects.Saving;
 
@@ -107,7 +107,7 @@ public class SavingEdit extends AppCompatActivity {
     public void onStart(){
         super.onStart();
 
-        endDate = (EditText) findViewById(R.id.etStartDate);
+        endDate = (EditText) findViewById(R.id.etEndtDate);
         endDate.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){

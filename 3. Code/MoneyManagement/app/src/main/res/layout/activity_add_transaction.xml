@@ -23,12 +23,6 @@
 
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/container_body"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -93,15 +87,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:text="Wallet"
+                        android:text="Select wallet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/tvWallet" />
-
                     <Spinner
                         android:id="@+id/wallet"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp" />
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -144,15 +137,5 @@
 
 
     </LinearLayout>
-
-
-    <fragment
-        android:id="@+id/fragment_navigation_drawer"
-        android:name="com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer"
-        android:layout_width="@dimen/nav_drawer_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:layout="@layout/fragment_navigation_drawer"
-        tools:layout="@layout/fragment_navigation_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

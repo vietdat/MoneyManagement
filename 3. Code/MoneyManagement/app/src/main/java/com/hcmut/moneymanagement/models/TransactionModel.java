@@ -3,7 +3,6 @@ package com.hcmut.moneymanagement.models;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.hcmut.moneymanagement.objects.Transaction;
-import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.lang.reflect.Field;
 
@@ -12,6 +11,7 @@ public class TransactionModel extends Model{
     public TransactionModel(){
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("transactions"));
+        reference.keepSynced(true);
     }
 
     public void add(Transaction transaction){

@@ -45,6 +45,7 @@ public class SavingModel extends Model {
         // Saving refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("saving"));
+        reference.keepSynced(true);
     }
 
     public void initSavingAdapter(Activity activity){

@@ -11,7 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.Wallet.WalletAdapter;
+import com.hcmut.moneymanagement.activity.Wallets.WalletAdapter;
 import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.lang.reflect.Field;
@@ -41,6 +41,7 @@ public class WalletModel extends Model{
         // Wallets refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("wallets"));
+        reference.keepSynced(true);
     }
 
     public void initWalletAdapter(Activity activity){
@@ -94,7 +95,7 @@ public class WalletModel extends Model{
     }
 
     public void initNameAdapter(Context context){
-        nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, names);
+        nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, names);
 
         //Event Listenner
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -164,7 +165,7 @@ public class WalletModel extends Model{
         return null;
     }
 
-    // Update a category
+    // Update a amount
     public void increaseMoneyAmount(String key, final int amount){
         final DatabaseReference walletReference =  FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("wallets")).child(key);

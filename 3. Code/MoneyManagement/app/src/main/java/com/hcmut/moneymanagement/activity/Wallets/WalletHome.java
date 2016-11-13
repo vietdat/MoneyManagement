@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Wallet;
+package com.hcmut.moneymanagement.activity.Wallets;
 
 import android.app.Activity;
 import android.app.Dialog;

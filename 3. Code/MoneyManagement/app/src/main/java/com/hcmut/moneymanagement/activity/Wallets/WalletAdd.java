@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Wallet;
+package com.hcmut.moneymanagement.activity.Wallets;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -32,7 +31,6 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
 
     private Toolbar mToolbar;
     private WalletCategoryModel walletCategoryModel;
-    private Button btnSaving;
     private EditText input_name, startMoney, note;
     private Spinner typeOfAccount, currency;
     private WalletModel walletModel;
@@ -40,7 +38,7 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wallet);
+        setContentView(R.layout.activity_wallet_add);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -52,12 +50,10 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
         init();
         typeOfTransaction ();
         typeOfCurrency();
-        btnSaving.setOnClickListener(this);
 
     }
 
     private void init() {
-        btnSaving = (Button) findViewById(R.id.btnSaving);
         input_name = (EditText) findViewById(R.id.input_name);
         startMoney = (EditText) findViewById(R.id.startMoney);
         note = (EditText) findViewById(R.id.note);
@@ -140,6 +136,19 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.mnDone) {
+            walletModel.add(getValue());
+            walletModel.getReference().addChildEventListener(onWalletChildListener);
+            return true;
+        }
+
+        if(id == android.R.id.home){
+            WalletAdd.this.finish();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -158,10 +167,7 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        if(view == btnSaving) {
-            walletModel.add(getValue());
-            walletModel.getReference().addChildEventListener(onWalletChildListener);
-        }
+
     }
 
     // on child added

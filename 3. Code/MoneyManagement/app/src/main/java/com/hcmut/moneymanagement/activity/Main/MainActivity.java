@@ -15,11 +15,13 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.Category.CategoryHome;
+import com.hcmut.moneymanagement.activity.Events.EventsHome;
+import com.hcmut.moneymanagement.activity.Graph.GraphHome;
 import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
 import com.hcmut.moneymanagement.activity.Savings.SavingsHome;
 import com.hcmut.moneymanagement.activity.Tools.ToolsHome;
 import com.hcmut.moneymanagement.activity.Transaction.TransactionHome;
-import com.hcmut.moneymanagement.activity.Wallet.WalletHome;
+import com.hcmut.moneymanagement.activity.Wallets.WalletHome;
 import com.hcmut.moneymanagement.activity.login.screen.Login;
 
 
@@ -106,11 +108,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = "Budgets";
                 break;
             case 5:
-                fragment = new SavingsHome();
+                fragment = new EventsHome();
                 title = "Events";
                 break;
             case 6:
-                fragment = new SavingsHome();
+                fragment = new GraphHome();
                 title = "Graphs";
                 break;
             case 7:

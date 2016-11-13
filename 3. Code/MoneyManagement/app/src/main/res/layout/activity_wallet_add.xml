@@ -116,7 +116,6 @@
                     <EditText android:id="@+id/note"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lines="3"
                         android:inputType="textShortMessage"
                         android:gravity="top|left"
                         android:scrollbars="vertical"
