@@ -1,7 +1,5 @@
 package com.hcmut.moneymanagement.models;
 
-import java.lang.reflect.Field;
-
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -9,6 +7,7 @@ import android.widget.ArrayAdapter;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.R;
@@ -36,6 +35,7 @@ public class WalletModel extends Model{
 
     public WalletModel(){
         keys = new ArrayList<String>();
+
         names = new ArrayList<String>();
         wallets = new ArrayList<Wallet>();
         // Wallets refecence
@@ -51,15 +51,17 @@ public class WalletModel extends Model{
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // wallets.clear();
+
+                //  wallets.clear();
                 // [START_EXCLUDE]
+
                 for (DataSnapshot walletSnapshot : dataSnapshot.getChildren()) {
                     Wallet wallet = new Wallet();
 
                     //get name
                     Object objWallet = walletSnapshot.child(encrypt("name")).getValue();
                     wallet.setName(decrypt(objWallet.toString()));
-                    //Log.w("Name", decrypt(objWallet.toString()));
+                    Log.w("Name", decrypt(objWallet.toString()));
 
                     //get type
                     Object objType = walletSnapshot.child(encrypt("type")).getValue();
@@ -99,7 +101,6 @@ public class WalletModel extends Model{
 
     public void initNameAdapter(Context context){
         nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, names);
-        nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         //Event Listenner
         reference.addListenerForSingleValueEvent(new ValueEventListener() {

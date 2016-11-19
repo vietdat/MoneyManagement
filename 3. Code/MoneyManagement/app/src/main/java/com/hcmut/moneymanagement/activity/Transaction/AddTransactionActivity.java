@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,14 +20,11 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.models.Model;
 import com.hcmut.moneymanagement.models.TransactionModel;
 import com.hcmut.moneymanagement.objects.Transaction;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AddTransactionActivity extends AppCompatActivity implements OnClickListener {
 
@@ -195,7 +191,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             Toast.makeText(AddTransactionActivity.this,"Successful",Toast.LENGTH_LONG).show();
-            AddTransactionActivity.this.finish();
+            //AddTransactionActivity.this.finish();
         }
 
         @Override

@@ -59,36 +59,35 @@ public class FragmentIE extends android.support.v4.app.Fragment {
         if(type.equals("Income")){
             addItemToListView();
         }
-        selecteItemInListView();
 
         return rootView;
     }
 
-    private void addItemToListView(){
+    private void addItemToListView() {
         final TransactionModel transactionModel = new TransactionModel();
         transactionModel.getReference().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot transactionSnapshot : dataSnapshot.getChildren()) {
                     Object objType = transactionSnapshot.child(transactionModel.encrypt("type")).getValue();
-                    if(objType != null){
-                        if(objType.toString().equals(type)){
+                    if (objType != null) {
+                        if (objType.toString().equals(type)) {
                             Object objAmount = transactionSnapshot.child(transactionModel.encrypt("money")).getValue();
                             Object objDate = transactionSnapshot.child(transactionModel.encrypt("date")).getValue();
 
-                            if(objAmount != null && objDate != null){
+                            if (objAmount != null && objDate != null) {
                                 DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                                try{
+                                try {
                                     Date itemDate = format.parse(objDate.toString());
 
                                     Calendar cal = Calendar.getInstance();
                                     cal.setTime(itemDate);
                                     int itemMonth = cal.get(Calendar.MONTH) + 1;
 
-                                    if(itemMonth == month){
+                                    if (itemMonth == month) {
                                         items.add(new ListViewModel(objDate.toString(), "+ " + objAmount.toString()));
                                     }
-                                }catch(ParseException ex){
+                                } catch (ParseException ex) {
                                     ex.printStackTrace();
                                 }
                             }
@@ -101,19 +100,6 @@ public class FragmentIE extends android.support.v4.app.Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-    }
-
-    private void selecteItemInListView() {
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                /*
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(), DetailIncomeAndExpense.class);
-                    getActivity().startActivity(intent);
-                    */
             }
         });
     }

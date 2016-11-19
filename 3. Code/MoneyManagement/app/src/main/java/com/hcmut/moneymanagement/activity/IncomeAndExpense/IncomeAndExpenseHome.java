@@ -40,6 +40,7 @@ public class IncomeAndExpenseHome extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -85,8 +86,8 @@ public class IncomeAndExpenseHome extends AppCompatActivity {
         adapter.addFrag(new FragmentIE("Income", m1), month1);
         adapter.addFrag(new FragmentIE("Income", m2), month2);
         adapter.addFrag(new FragmentIE("Income", m3), month3);
-        viewPager.setAdapter(adapter);
     }
+
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
