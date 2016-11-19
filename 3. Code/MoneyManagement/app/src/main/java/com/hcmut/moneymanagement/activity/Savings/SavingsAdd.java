@@ -1,14 +1,14 @@
 package com.hcmut.moneymanagement.activity.Savings;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -18,15 +18,11 @@ import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.models.SavingModel;
 import com.hcmut.moneymanagement.objects.Saving;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SavingsAdd extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private EditText input_name, input_goal, input_starting_amount, input_start_date, input_end_date,
                     description;
-    private Spinner curentUnit;
 
     private SavingModel savingModel;
 
@@ -35,7 +31,7 @@ public class SavingsAdd extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_new_saving);
+        setContentView(R.layout.activity_saving_add);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -56,21 +52,10 @@ public class SavingsAdd extends AppCompatActivity {
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
         description = (EditText) findViewById(R.id.description);
 
-        typeOfCurrency();
+        input_start_date.setShowSoftInputOnFocus(false);
+        input_end_date.setShowSoftInputOnFocus(false);
 
         savingModel = new SavingModel();
-    }
-
-    private void typeOfCurrency() {
-        // currencySpinner
-        curentUnit = (Spinner) findViewById(R.id.currencyUnit);
-
-        List<String> currency = new ArrayList<String>();
-        currency.add("VND");
-
-        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currency);
-        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        curentUnit.setAdapter(currencyAdapter);
     }
 
     private Saving getValue(){
@@ -80,9 +65,8 @@ public class SavingsAdd extends AppCompatActivity {
         String start_date = input_start_date.getText().toString();
         String end_date = input_end_date.getText().toString();
         String desciption = description.getText().toString();
-        String currentUnit = curentUnit.getSelectedItem().toString();
 
-        Saving saving = new Saving(name,goal, starting_amount, currentUnit, start_date,
+        Saving saving = new Saving(name,goal, starting_amount, start_date,
                                     end_date, desciption);
         return saving;
     }
@@ -94,6 +78,11 @@ public class SavingsAdd extends AppCompatActivity {
         if (id == R.id.mnDone) {
             savingModel.add(getValue());
             savingModel.getReference().addChildEventListener(onSavingChildListener);
+            return true;
+        }
+
+        if(id == android.R.id.home){
+            SavingsAdd.this.finish();
             return true;
         }
 
@@ -118,6 +107,8 @@ public class SavingsAdd extends AppCompatActivity {
                 if(hasfocus){
                     com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
                     android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     dialog.show(ft, "DatePicker");
                 }
             }
@@ -128,6 +119,8 @@ public class SavingsAdd extends AppCompatActivity {
                 if(hasfocus){
                     com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
                     android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     dialog.show(ft, "DatePicker");
                 }
             }

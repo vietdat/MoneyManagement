@@ -14,13 +14,17 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.activity.Budget.BudgetHome;
 import com.hcmut.moneymanagement.activity.Category.CategoryHome;
+import com.hcmut.moneymanagement.activity.Events.EventsHome;
+import com.hcmut.moneymanagement.activity.Graph.GraphHome;
 import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
 import com.hcmut.moneymanagement.activity.Savings.SavingsHome;
 import com.hcmut.moneymanagement.activity.Tools.ToolsHome;
 import com.hcmut.moneymanagement.activity.Transaction.TransactionHome;
-import com.hcmut.moneymanagement.activity.Wallet.WalletHome;
+import com.hcmut.moneymanagement.activity.Wallets.WalletHome;
 import com.hcmut.moneymanagement.activity.login.screen.Login;
+import com.hcmut.moneymanagement.models.WalletModel;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener, View.OnClickListener {
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
     private MenuItem mSearchAction;
+    private WalletModel walletModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +65,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
-
-
-
         return true;
     }
 
@@ -102,15 +103,15 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = "Savings";
                 break;
             case 4:
-                fragment = new SavingsHome();
+                fragment = new BudgetHome();
                 title = "Budgets";
                 break;
             case 5:
-                fragment = new SavingsHome();
+                fragment = new EventsHome();
                 title = "Events";
                 break;
             case 6:
-                fragment = new SavingsHome();
+                fragment = new GraphHome();
                 title = "Graphs";
                 break;
             case 7:

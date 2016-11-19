@@ -1,17 +1,23 @@
 package com.hcmut.moneymanagement.activity.Tools;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.CustomListView.Model.ListViewModel;
+import com.hcmut.moneymanagement.activity.Tools.Settings.SettingsHome;
 import com.hcmut.moneymanagement.activity.Tools.Tips.TipsHome;
 
 import java.util.ArrayList;
@@ -84,7 +90,39 @@ public class ToolsHome extends Fragment implements View.OnClickListener {
                 if(position == 0) {
                     Intent intent = new Intent(getActivity(), TipsHome.class);
                     startActivity(intent);
+                } else if(position == 1 || position == 2) {
+                    final EditText input = new EditText(getActivity());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Enter bank name");
+                    builder.setView(input);
+
+                    // Add the buttons to Dialogs
+                    builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            Uri gmmIntentUri = Uri.parse("geo:10.8435,-106.75820?q=" + Uri.encode(input.getText().toString()));
+                            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                            mapIntent.setPackage("com.google.android.apps.maps");
+                            if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                startActivity(mapIntent);
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+                    // Create the AlertDialog
+                    Dialog dialog = builder.create();
+
+                    dialog.show();
+                } else if (position == 4) {
+                    Intent intent = new Intent(getActivity(), SettingsHome.class);
+                    startActivity(intent);
                 }
+
+
             }
         });
     }

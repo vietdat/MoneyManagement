@@ -24,8 +24,6 @@ public class SavingsHome extends Fragment implements View.OnClickListener {
     private ListView lvRunning;
     private ListView lvFinish;
     FloatingActionButton addButton;
-    FloatingActionButton editButton;
-    FloatingActionButton deleteButton;
     private SavingModel savingModel;
     private Saving chooseSaving = new Saving();
 

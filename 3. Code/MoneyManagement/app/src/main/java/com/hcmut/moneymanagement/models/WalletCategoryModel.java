@@ -30,6 +30,7 @@ public class WalletCategoryModel extends CategoryModel {
         // Wallets refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("walletCategoryModel"));
+        reference.keepSynced(true);
 
         names = new ArrayList<String>();
         nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, names);

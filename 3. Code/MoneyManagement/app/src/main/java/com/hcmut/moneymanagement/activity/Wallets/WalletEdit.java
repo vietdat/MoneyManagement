@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Wallet;
+package com.hcmut.moneymanagement.activity.Wallets;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -22,17 +21,17 @@ import com.hcmut.moneymanagement.objects.Category;
 import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public class WalletDetai extends AppCompatActivity {
+public class WalletEdit extends AppCompatActivity {
 
     private Toolbar mToolbar;
     String key;
     Wallet wallet;
     WalletModel walletModel;
     EditText nameOfWallet, currentAmount, note;
-    Spinner typeOfAccount, currency;
+    Spinner typeOfAccount;
     WalletCategoryModel walletCategoryModel;
 
     @Override
@@ -63,9 +62,7 @@ public class WalletDetai extends AppCompatActivity {
         currentAmount = (EditText) findViewById(R.id.startMoney);
         note = (EditText) findViewById(R.id.note);
         typeOfAccount = (Spinner) findViewById(R.id.typeOfAccount);
-        currency = (Spinner) findViewById(R.id.currency);
 
-        typeOfCurrency();
         typeOfAccount();
 
         nameOfWallet.setText(wallet.getName());
@@ -74,14 +71,21 @@ public class WalletDetai extends AppCompatActivity {
         int spinnerPosition = walletCategoryModel.getNames().getPosition(wallet.getType());
         typeOfAccount.setSelection(spinnerPosition);
 
-        nameOfWallet.setFocusable(false);
         currentAmount.setFocusable(false);
-        note.setFocusable(false);
-        typeOfAccount.setEnabled(false);
-        currency.setEnabled(false);
-
-
     }
+
+    private Wallet getValue() {
+        String name = nameOfWallet.getText().toString();
+        String type = typeOfAccount.getSelectedItem().toString();
+        String description = note.getText().toString();
+        int initAmount = wallet.getInitialAmount();
+
+        Wallet wallet1 = new Wallet(name, type, description, initAmount);
+        wallet1.setCurrentAmount(wallet.getCurrentAmount());
+
+        return wallet1;
+    }
+
 
     /**
      * add data to typeOftransaction
@@ -89,7 +93,7 @@ public class WalletDetai extends AppCompatActivity {
      */
     private void typeOfAccount () {
         // typeOfAccount
-        walletCategoryModel = new WalletCategoryModel(WalletDetai.this);
+        walletCategoryModel = new WalletCategoryModel(WalletEdit.this);
 
         typeOfAccount.setAdapter(walletCategoryModel.getNames());
         typeOfAccount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -98,8 +102,8 @@ public class WalletDetai extends AppCompatActivity {
                 String selected = typeOfAccount.getSelectedItem().toString();
                 if(selected.equals("Create new")){
                     // Create dialog
-                    final EditText input = new EditText(WalletDetai.this);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(WalletDetai.this);
+                    final EditText input = new EditText(WalletEdit.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(WalletEdit.this);
                     builder.setTitle("New wallet");
                     builder.setView(input);
 
@@ -131,22 +135,10 @@ public class WalletDetai extends AppCompatActivity {
         });
     }
 
-    private void typeOfCurrency() {
-        // currencySpinner
-        Spinner currencySpinner = (Spinner) findViewById(R.id.currency);
-
-        List<String> currency = new ArrayList<String>();
-        currency.add("VND");
-
-        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currency);
-        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        currencySpinner.setAdapter(currencyAdapter);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_wallet_detai, menu);
+        getMenuInflater().inflate(R.menu.menu_wallet_add, menu);
         return true;
     }
 
@@ -154,27 +146,28 @@ public class WalletDetai extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.mnUpdate) {
-            Intent intent = new Intent(this, WalletEdit.class);
-            intent.putExtra("key", key);
-            intent.putExtra("wallet", (Serializable) wallet);
-            startActivity(intent);
-            WalletDetai.this.finish();
-            return true;
-        }
+        if (id == R.id.mnDone) {
+            Wallet update = getValue();
+            Map<String, Object> updateData = new HashMap<String, Object>();
+            updateData.put(walletModel.encrypt("name"), walletModel.encrypt(update.getName()));
+            updateData.put(walletModel.encrypt("type"), walletModel.encrypt(update.getType()));
+            updateData.put(walletModel.encrypt("description"), walletModel.encrypt(update.getDescription()));
 
-        if(id == R.id.mnDelete){
-            walletModel.remove(key);
-            WalletDetai.this.finish();
+            walletModel.update(key, updateData);
+
+            Intent intent = new Intent(this, WalletDetai.class);
+            intent.putExtra("key", key);
+            intent.putExtra("wallet", (Serializable) update);
+            startActivity(intent);
+            WalletEdit.this.finish();
+
             return true;
         }
 
         if(id == android.R.id.home){
-            WalletDetai.this.finish();
+            WalletEdit.this.finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

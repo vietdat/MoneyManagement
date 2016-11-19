@@ -14,6 +14,17 @@
         <item>Tools</item>
         <item>Logout</item>
     </string-array>
+    <string-array name="nav_drawer_icon">
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+    </string-array>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
@@ -25,8 +36,15 @@
     <string name="savings">Savings</string>
     <string name="add_wallet_title">Add new wallet</string>
     <string name="add_saving_tittle">Add new saving</string>
+    <string name="add_budget_tittle">Add new budget</string>
+    <string name="add_event_tittle">Add new event</string>
+    <string name="detail_event_tittle">Event detail</string>
     <string name="detail_saving_tittle">Saving detail</string>
+    <string name="detail_budget_tittle">Budget detail</string>
     <string name="edit_saving_tittle">Saving edit</string>
+    <string name="edit_budget_tittle">Budget edit</string>
+    <string name="edit_events_tittle">Event edit</string>
     <string name="tips_tittle">Tips</string>
+    <string name="setting_tittle">Settings</string>
     <string name="done">Done</string>
 </resources>

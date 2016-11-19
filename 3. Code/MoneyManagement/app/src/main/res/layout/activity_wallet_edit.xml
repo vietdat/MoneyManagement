@@ -122,13 +122,6 @@
                         android:scrollbars="vertical"
                         android:hint="Note" />
                 </android.support.design.widget.TextInputLayout>
-
-                <Button
-                    android:text="Saving"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btnSaving"
-                    android:layout_weight="1" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

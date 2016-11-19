@@ -45,6 +45,7 @@ public class SavingModel extends Model {
         // Saving refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("saving"));
+        reference.keepSynced(true);
     }
 
     public void initSavingAdapter(Activity activity){
@@ -73,10 +74,6 @@ public class SavingModel extends Model {
                     //currency amount
                     Object objcurrent_amount = snapshot.child(encrypt("current_amount")).getValue();
                     saving.setCurrent_amount(decrypt(objcurrent_amount.toString()));
-
-                    //currency unit
-                    Object objcurrent_unit = snapshot.child(encrypt("current_unit")).getValue();
-                    saving.setCurrent_unit(decrypt(objcurrent_unit.toString()));
 
                     //Satrt date
                     Object objStartDate = snapshot.child(encrypt("startDate")).getValue();

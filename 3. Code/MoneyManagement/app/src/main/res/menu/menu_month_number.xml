@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/thisMonth"
+        android:title="This Months"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/threeMonths"
+        android:title="3 Lastest Months"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/fiveMonths"
+        android:title="5 Lastest Months"
+        app:showAsAction="never" />
+    <!--
+    <item
+        android:id="@+id/allOfTime"
+        android:title="All of time"
+        app:showAsAction="never" />
+     -->
+</menu>
