@@ -101,7 +101,7 @@ public class TransactionHome extends Fragment implements View.OnClickListener {
         if(view == addButton) {
 
             Intent intent = new Intent();
-            intent.setClass(getActivity(), AddTransactionActivity.class);
+            intent.setClass(getActivity(), com.hcmut.moneymanagement.activity.Transaction.AddTransactionActivity.class);
 
             getActivity().startActivity(intent);
         }

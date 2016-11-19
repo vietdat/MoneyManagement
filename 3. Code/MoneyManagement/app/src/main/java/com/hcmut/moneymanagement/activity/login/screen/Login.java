@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.Main.MainActivity;
 import com.hcmut.moneymanagement.activity.forgotpassword.screen.forgotpassword;
@@ -42,6 +43,7 @@ public class Login extends Activity implements View.OnClickListener{
         if(firebaseAuth.getCurrentUser() != null){
             //profile activity here
             finish();
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
 

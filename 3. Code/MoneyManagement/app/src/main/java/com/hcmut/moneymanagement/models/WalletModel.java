@@ -11,7 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.Wallet.WalletAdapter;
+import com.hcmut.moneymanagement.activity.Wallets.WalletAdapter;
 import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.lang.reflect.Field;
@@ -28,7 +28,8 @@ public class WalletModel extends Model{
     public ArrayList<String> keys;
 
     private ArrayList<String> names;
-    private ArrayList<Wallet> wallets;
+
+    public ArrayList<Wallet> wallets;
 
     private ArrayAdapter<String> nameAdapter;
     private WalletAdapter walletAdapter;
@@ -38,11 +39,12 @@ public class WalletModel extends Model{
 
         names = new ArrayList<String>();
         wallets = new ArrayList<Wallet>();
+        keys = new ArrayList<String>();
+
         // Wallets refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("wallets"));
-
-
+        reference.keepSynced(true);
     }
 
     public void initWalletAdapter(Activity activity){
@@ -51,17 +53,13 @@ public class WalletModel extends Model{
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //  wallets.clear();
-                // [START_EXCLUDE]
-
+                wallets.clear();
                 for (DataSnapshot walletSnapshot : dataSnapshot.getChildren()) {
                     Wallet wallet = new Wallet();
 
                     //get name
                     Object objWallet = walletSnapshot.child(encrypt("name")).getValue();
                     wallet.setName(decrypt(objWallet.toString()));
-                    Log.w("Name", decrypt(objWallet.toString()));
 
                     //get type
                     Object objType = walletSnapshot.child(encrypt("type")).getValue();
@@ -100,7 +98,7 @@ public class WalletModel extends Model{
     }
 
     public void initNameAdapter(Context context){
-        nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, names);
+        nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, names);
 
         //Event Listenner
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -121,6 +119,16 @@ public class WalletModel extends Model{
                 Log.w(TAG, "loadWallet:onCancelled", databaseError.toException());
             }
         });
+    }
+
+    // Update a wallet
+    public void update(String key, Map<String, Object> data){
+        reference.child(key).updateChildren(data);
+    }
+
+    // Remove a wallet
+    public void remove(String key){
+        reference.child(key).removeValue();
     }
 
     public void add(Wallet wallet){
@@ -160,7 +168,7 @@ public class WalletModel extends Model{
         return null;
     }
 
-    // Update a category
+    // Update a amount
     public void increaseMoneyAmount(String key, final int amount){
         final DatabaseReference walletReference =  FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("wallets")).child(key);
@@ -190,8 +198,4 @@ public class WalletModel extends Model{
         this.increaseMoneyAmount(key, -amount);
     }
 
-    // Remove a category
-    public void remove(String key){
-        reference.child(key).removeValue();
-    }
  }

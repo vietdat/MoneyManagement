@@ -20,14 +20,7 @@
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar" />
-
         </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/container_body"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
@@ -55,26 +48,29 @@
                         android:hint="Name" />
                 </android.support.design.widget.TextInputLayout>
 
-                //Type of account
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:text="Type of account"
+                    android:layout_marginBottom="8dp">
+                    <EditText android:id="@+id/goal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tvTypeOfAccount" />
+                        android:inputType="numberDecimal"
+                        android:hint="Goal" />
+                </android.support.design.widget.TextInputLayout>
 
-                    <Spinner
-                        android:id="@+id/typeOfAccount"
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+                    <EditText android:id="@+id/currentAmount"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-                </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="Current amount" />
+                </android.support.design.widget.TextInputLayout>
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -100,11 +96,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp">
-                    <EditText android:id="@+id/startMoney"
+                    <EditText android:id="@+id/startDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:hint="Start money" />
+                        android:hint="Start date" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -112,37 +108,32 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp">
-
-                    <EditText android:id="@+id/note"
+                    <EditText android:id="@+id/endDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:hint="End date" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+
+                    <EditText android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:lines="3"
                         android:inputType="textShortMessage"
                         android:gravity="top|left"
                         android:scrollbars="vertical"
-                        android:hint="Note" />
+                        android:hint="Description" />
                 </android.support.design.widget.TextInputLayout>
-
-                <Button
-                    android:text="Saving"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btnSaving"
-                    android:layout_weight="1" />
             </LinearLayout>
         </ScrollView>
 
 
     </LinearLayout>
-
-
-    <fragment
-        android:id="@+id/fragment_navigation_drawer"
-        android:name="com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer"
-        android:layout_width="@dimen/nav_drawer_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:layout="@layout/fragment_navigation_drawer"
-        tools:layout="@layout/fragment_navigation_drawer" />
-
 </android.support.v4.widget.DrawerLayout>

@@ -1,29 +1,33 @@
-package com.hcmut.moneymanagement.activity.Wallet;
+package com.hcmut.moneymanagement.activity.Wallets;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.models.WalletModel;
+import com.hcmut.moneymanagement.objects.Wallet;
 
-import static com.google.android.gms.internal.zzs.TAG;
-
+import java.io.Serializable;
 
 public class WalletHome extends Fragment implements View.OnClickListener {
     ListView lv;
     FloatingActionButton addButton;
     private WalletModel  walletModel;
+    FloatingActionButton btnEdit;
+    FloatingActionButton btnDelete;
+    WalletAdapter walletAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class WalletHome extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
+        walletModel.initNameAdapter(getContext());
         walletModel.initWalletAdapter(getActivity());
         lv.setAdapter(walletModel.getWalletAdapter());
     }
@@ -43,16 +48,31 @@ public class WalletHome extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_wallet_home, container, false);
-
         lv = (ListView) rootView.findViewById(R.id.wallet_list);
         addButton = (FloatingActionButton) rootView.findViewById(R.id.addNewWallet);
-        Log.w("Create View", "nothing");
-
 
         selecteItemInListView();
         addButton.setOnClickListener(this);
+        Log.w("Create View", "nothing");
         // Inflate the layout for this fragment
         return rootView;
+    }
+
+    private void showNoItemSelectedDialog(){
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        alertDialogBuilder
+                .setTitle("No Item Selected!")
+                .setMessage("Please select a category from the list.")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        Dialog dialog = alertDialogBuilder.create();
+        dialog.show();
     }
 
     @Override
@@ -68,9 +88,8 @@ public class WalletHome extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if(view == addButton) {
-
             Intent intent = new Intent();
-            intent.setClass(getActivity(), AddNewWalletActivity.class);
+            intent.setClass(getActivity(), WalletAdd.class);
             getActivity().startActivity(intent);
         }
     }
@@ -78,11 +97,13 @@ public class WalletHome extends Fragment implements View.OnClickListener {
     private void selecteItemInListView() {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selected =((TextView)view.findViewById(R.id.wallet_name)).getText().toString();
-
-                Toast toast=Toast.makeText(getContext(), selected, Toast.LENGTH_SHORT);
-                toast.show();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Wallet wallet = walletModel.wallets.get(position);
+                Intent intent = new Intent(getActivity(), WalletDetai.class);
+                String key = walletModel.keys.get(position);
+                intent.putExtra("key", key);
+                intent.putExtra("wallet", (Serializable) wallet);
+                startActivity(intent);
             }
         });
     }

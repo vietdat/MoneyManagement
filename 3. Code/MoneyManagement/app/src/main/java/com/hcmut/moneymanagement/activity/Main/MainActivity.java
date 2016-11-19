@@ -15,9 +15,13 @@ import android.view.View;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.Category.CategoryHome;
+import com.hcmut.moneymanagement.activity.Events.EventsHome;
+import com.hcmut.moneymanagement.activity.Graph.GraphHome;
 import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
+import com.hcmut.moneymanagement.activity.Savings.SavingsHome;
+import com.hcmut.moneymanagement.activity.Tools.ToolsHome;
 import com.hcmut.moneymanagement.activity.Transaction.TransactionHome;
-import com.hcmut.moneymanagement.activity.Wallet.WalletHome;
+import com.hcmut.moneymanagement.activity.Wallets.WalletHome;
 import com.hcmut.moneymanagement.activity.login.screen.Login;
 
 
@@ -51,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        mSearchAction = menu.findItem(R.id.action_done);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -70,14 +73,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch (id) {
-//            case R.id.action_settings:
-//                return true;
-            case R.id.action_done:
-                //handleMenuSearch();
-                return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -86,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     public void onDrawerItemSelected(View view, int position) {
         displayView(position);
     }
+
 
     private void displayView(int position) {
         Fragment fragment = null;
@@ -103,8 +99,28 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 fragment = new CategoryHome();
                 title = "Category";
                 break;
-            //Log out
+            case 3:
+                fragment = new SavingsHome();
+                title = "Savings";
+                break;
             case 4:
+                fragment = new SavingsHome();
+                title = "Budgets";
+                break;
+            case 5:
+                fragment = new EventsHome();
+                title = "Events";
+                break;
+            case 6:
+                fragment = new GraphHome();
+                title = "Graphs";
+                break;
+            case 7:
+                fragment = new ToolsHome();
+                title = "Tools";
+                break;
+            //Log out
+            case 8:
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
                 finish();

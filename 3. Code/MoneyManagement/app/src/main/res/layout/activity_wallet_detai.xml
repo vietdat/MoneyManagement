@@ -20,7 +20,6 @@
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar" />
-
         </LinearLayout>
 
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -109,20 +108,13 @@
 
                     <EditText android:id="@+id/note"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="400dp"
                         android:lines="3"
                         android:inputType="textShortMessage"
                         android:gravity="top|left"
                         android:scrollbars="vertical"
                         android:hint="Note" />
                 </android.support.design.widget.TextInputLayout>
-
-                <Button
-                    android:text="Saving"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btnSaving"
-                    android:layout_weight="1" />
             </LinearLayout>
         </ScrollView>
 
