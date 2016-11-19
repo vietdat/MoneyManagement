@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Savings;
+package com.hcmut.moneymanagement.activity.Budget;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,60 +9,61 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.models.SavingModel;
-import com.hcmut.moneymanagement.objects.Saving;
+import com.hcmut.moneymanagement.models.BudgetModel;
+import com.hcmut.moneymanagement.objects.Budget;
 
 import java.io.Serializable;
 
-public class SavingDetail extends AppCompatActivity {
+public class BudgetDetail extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    Saving saving;
+    Budget budget;
     String key;
-    SavingModel savingModel;
-    EditText nameOfSaving, goal, currentAmount, startDate, endDate, description;
+    BudgetModel budgetModel;
+    EditText nameOfBudget, initAmount, currentAmount, endDate, description, category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_saving_detail);
+        setContentView(R.layout.activity_budget_detail);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String title = getString(R.string.detail_saving_tittle);
+        String title = getString(R.string.detail_budget_tittle);
         getSupportActionBar().setTitle(title);
 
-        saving = new Saving();
+        budget = new Budget();
 
         Bundle extras = getIntent().getExtras();
         key = extras.getString("key");
-        saving = (Saving) getIntent().getSerializableExtra("saving");
-        savingModel = new SavingModel();
+        budget = (Budget) getIntent().getSerializableExtra("budget");
+        budgetModel = new BudgetModel();
         //add data to view
         initData();
     }
 
     private void initData() {
-        nameOfSaving = (EditText) findViewById(R.id.input_name);
-        goal = (EditText) findViewById(R.id.goal);
-        currentAmount = (EditText) findViewById(R.id.currentAmount);
-        startDate = (EditText) findViewById(R.id.startDate);
+        nameOfBudget = (EditText) findViewById(R.id.input_name);
         endDate = (EditText) findViewById(R.id.endDate);
+        initAmount = (EditText) findViewById(R.id.initAmount);
+        currentAmount = (EditText) findViewById(R.id.currentAmount);
+        category = (EditText) findViewById(R.id.category);
         description = (EditText) findViewById(R.id.description);
-        nameOfSaving.setText(saving.getName());
-        goal.setText(saving.getGoal());
-        currentAmount.setText(saving.getCurrent_amount());
-        startDate.setText(saving.getStartDate());
-        endDate.setText(saving.getEndDate());
-        description.setText(saving.getDescription());
 
-        nameOfSaving.setFocusable(false);
-        goal.setFocusable(false);
+        nameOfBudget.setText(budget.getName());
+        initAmount.setText(budget.getAmount());
+        currentAmount.setText(budget.getCurrentAmount());
+        category.setText(budget.getCategory());
+        endDate.setText(budget.getEndDate());
+        description.setText(budget.getDescription());
+
+        nameOfBudget.setFocusable(false);
+        initAmount.setFocusable(false);
         currentAmount.setFocusable(false);
-        startDate.setFocusable(false);
+        category.setFocusable(false);
         endDate.setFocusable(false);
         description.setFocusable(false);
     }
@@ -79,22 +80,22 @@ public class SavingDetail extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.mnUpdate) {
-            Intent intent = new Intent(this, SavingEdit.class);
+            Intent intent = new Intent(this, BudgetEdit.class);
             intent.putExtra("key", key);
-            intent.putExtra("saving", (Serializable) saving);
+            intent.putExtra("budget", (Serializable) budget);
             startActivity(intent);
-            SavingDetail.this.finish();
+            BudgetDetail.this.finish();
             return true;
         }
 
         if(id == R.id.mnDelete){
-            savingModel.remove(key);
-            SavingDetail.this.finish();
+            budgetModel.remove(key);
+            BudgetDetail.this.finish();
             return true;
         }
 
         if(id == android.R.id.home){
-            SavingDetail.this.finish();
+            BudgetDetail.this.finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

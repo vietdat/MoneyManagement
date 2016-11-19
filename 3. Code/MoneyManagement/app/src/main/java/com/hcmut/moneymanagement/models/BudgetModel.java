@@ -11,8 +11,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.Savings.SavingAdapter;
-import com.hcmut.moneymanagement.objects.Saving;
+import com.hcmut.moneymanagement.activity.Budget.BudgetAdapter;
+import com.hcmut.moneymanagement.objects.Budget;
 
 import java.lang.reflect.Field;
 import java.text.ParseException;
@@ -24,81 +24,109 @@ import java.util.Map;
 
 import static com.google.android.gms.internal.zzs.TAG;
 
-public class SavingModel extends Model {
+/**
+ * Created by Admin on 15-Nov-16.
+ */
+public class BudgetModel extends Model {
     private Context context;
     private ArrayList<String> names;
-    public ArrayList<Saving> savings;
-    public ArrayList<Saving> savingsRunning;
-    public ArrayList<Saving> savingsFinish;
+    public ArrayList<Budget> budgets;
+    public ArrayList<Budget> budgetsRunning;
+    public ArrayList<Budget> budgetsFinish;
     private ArrayAdapter<String> nameAdapter;
-    private SavingAdapter savingsFinishAdapter;
+    private BudgetAdapter budgetFinishAdapter;
     public ArrayList<String> keyRunnings, keyFinishs, keys;
-    private SavingAdapter savingsRunningAdapter;
+    private BudgetAdapter budgetRunningAdapter;
 
-    public SavingModel(){
+    public BudgetModel(){
         names = new ArrayList<String>();
-        savingsRunning = new ArrayList<Saving>();
-        savingsFinish = new ArrayList<Saving>();
+        budgetsRunning = new ArrayList<Budget>();
+        budgetsFinish = new ArrayList<Budget>();
         keyRunnings = new ArrayList<String>();
         keys = new ArrayList<String>();
         keyFinishs = new ArrayList<String>();
-        // Saving refecence
+        // Budget refecence
         reference = FirebaseDatabase.getInstance().getReference()
-                .child(uidEncrypted).child(encrypt("saving"));
+                .child(uidEncrypted).child(encrypt("budget"));
         reference.keepSynced(true);
     }
 
-    public void initSavingAdapter(Activity activity){
+    //add budget to database
+    public void add(Budget budget){
+        Field[] fields = Budget.class.getFields();
+        String key = reference.push().getKey();
+        for (int i = 0; i < fields.length; i++){
+            try {
+                String fieldName = fields[i].getName();
 
-        savingsRunningAdapter = new SavingAdapter(activity, R.layout.saving_item, savingsRunning);
-        savingsFinishAdapter = new SavingAdapter(activity, R.layout.saving_item, savingsFinish);
+                if( !fieldName.equals("serialVersionUID") && !fieldName.equals("$change")){
+                    // Get value object of wallet
+                    Object value = fields[i].get(budget);
+                    if(value != null){
+                        String valueEncrypted = encryption.encrypt(value.toString());
+
+                        // Write encypted value to Firebase
+                        reference.child(key).child(encrypt(fieldName)).setValue(valueEncrypted);
+                    }
+                }
+            }catch (IllegalAccessException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //init running and finish adapter
+    public void initBudgetAdapter(Activity activity){
+        budgetRunningAdapter = new BudgetAdapter(activity, R.layout.budget_item, budgetsRunning);
+        budgetFinishAdapter = new BudgetAdapter(activity, R.layout.budget_item, budgetsFinish);
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                savingsRunning.clear();
-                savingsFinish.clear();
+                budgetsRunning.clear();
+                budgetsFinish.clear();
                 keyRunnings.clear();
                 keyFinishs.clear();
+
                 // [START_EXCLUDE]
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Saving saving = new Saving();
+                    Budget budget = new Budget();
                     //get name
                     Object obj = snapshot.child(encrypt("name")).getValue();
-                    saving.setName(decrypt(obj.toString()));
+                    budget.setName(decrypt(obj.toString()));
 
-                    //get goal
-                    Object objGoal = snapshot.child(encrypt("goal")).getValue();
-                    saving.setGoal(decrypt(objGoal.toString()));
-
-                    //currency amount
-                    Object objcurrent_amount = snapshot.child(encrypt("current_amount")).getValue();
-                    saving.setCurrent_amount(decrypt(objcurrent_amount.toString()));
-
-                    //Satrt date
-                    Object objStartDate = snapshot.child(encrypt("startDate")).getValue();
-                    saving.setStartDate(decrypt(objStartDate.toString()));
+                    //amount
+                    Object objcurrent_unit = snapshot.child(encrypt("amount")).getValue();
+                    budget.setAmount(decrypt(objcurrent_unit.toString()));
 
                     //End date
                     Object objEndDate = snapshot.child(encrypt("endDate")).getValue();
-                    saving.setEndDate(decrypt(objEndDate.toString()));
+                    budget.setEndDate(decrypt(objEndDate.toString()));
+
+                    //category
+                    Object objSpent = snapshot.child(encrypt("category")).getValue();
+                    budget.setCategory(decrypt(objSpent.toString()));
+
+                    //current amount
+                    Object objCurrentAmount = snapshot.child(encrypt("currentAmount")).getValue();
+                    budget.setCurrentAmount(decrypt(objCurrentAmount.toString()));
 
                     //Description
                     Object objDescription = snapshot.child(encrypt("description")).getValue();
-                    saving.setDescription(decrypt(objDescription.toString()));
+                    budget.setDescription(decrypt(objDescription.toString()));
 
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     try {
-                        Date endDate = df.parse(saving.getEndDate());
+                        Date endDate = df.parse(budget.getEndDate());
                         Date now = new Date();
                         Long leftDate = (endDate.getTime() - now.getTime())
                                 / (24 * 3600 * 1000) + 1;
                         int i = leftDate.intValue();
                         if(i < 0) {
-                            savingsFinish.add(saving);
+                            budgetsFinish.add(budget);
                             keyFinishs.add(snapshot.getKey());
                         } else {
-                            savingsRunning.add(saving);
+                            budgetsRunning.add(budget);
                             keyRunnings.add(snapshot.getKey());
                         }
 
@@ -107,12 +135,12 @@ public class SavingModel extends Model {
                     }
                 }
 
-                savingsRunningAdapter.notifyDataSetChanged();
-                savingsFinishAdapter.notifyDataSetChanged();
+                budgetRunningAdapter.notifyDataSetChanged();
+                budgetFinishAdapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "loadWallet:onCancelled", databaseError.toException());
+                Log.w(TAG, "loadEvent:onCancelled", databaseError.toException());
             }
         });
     }
@@ -158,21 +186,27 @@ public class SavingModel extends Model {
         });
     }
 
-    public void increaseMoneyAmount(String key, final int amount){
-        final DatabaseReference savingReference =  FirebaseDatabase.getInstance().getReference()
-                .child(uidEncrypted).child(encrypt("saving")).child(key);
 
-        savingReference.addListenerForSingleValueEvent(new ValueEventListener() {
+    // Update a budget
+    public void update(String key, Map<String, Object> data){
+        reference.child(key).updateChildren(data);
+    }
+
+    public void decreaseMoneyAmount(String key, final int amount){
+        final DatabaseReference budgetReference =  FirebaseDatabase.getInstance().getReference()
+                .child(uidEncrypted).child(encrypt("budget")).child(key);
+
+        budgetReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Object objCurrentAmount = dataSnapshot.child(encrypt("current_amount")).getValue();
+                Object objCurrentAmount = dataSnapshot.child(encrypt("currentAmount")).getValue();
                 if(objCurrentAmount != null) {
-                    int currentAmount = Integer.parseInt(decrypt(objCurrentAmount.toString()));
-                    currentAmount += amount;
+                    int currentAmount = Integer.parseInt(objCurrentAmount.toString());
+                    currentAmount -= amount;
                     Map<String, Object> update = new HashMap<String, Object>();
-                    update.put(encrypt("current_amount"), currentAmount);
+                    update.put(encrypt("spent"), String.valueOf(currentAmount));
 
-                    savingReference.updateChildren(update);
+                    budgetReference.updateChildren(update);
                 }
             }
 
@@ -183,48 +217,14 @@ public class SavingModel extends Model {
         });
     }
 
-    public void add(Saving saving){
-        Field[] fields = Saving.class.getFields();
-        String key = reference.push().getKey();
-        for (int i = 0; i < fields.length; i++){
-            try {
-                String fieldName = fields[i].getName();
-
-                if( !fieldName.equals("serialVersionUID") && !fieldName.equals("$change")){
-                    // Get value object of wallet
-                    Object value = fields[i].get(saving);
-                    if(value != null){
-                        String valueEncrypted = encryption.encrypt(value.toString());
-
-                        // Write encypted value to Firebase
-                        reference.child(key).child(encrypt(fieldName)).setValue(valueEncrypted);
-                    }
-                }
-            }catch (IllegalAccessException e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-    // Update a saving
-    public void update(String key, Map<String, Object> data){
-        reference.child(key).updateChildren(data);
-    }
-
     public void remove(String key){
         reference.child(key).removeValue();
     }
 
-    public ArrayAdapter<String> getNameAdapter(){
-        if(nameAdapter != null) {
-            return nameAdapter;
-        }
-        return  null;
+    public BudgetAdapter getBudgetsRunningAdapter() {
+        return budgetRunningAdapter;
     }
-    public SavingAdapter getSavingsRunningAdapter() {
-        return savingsRunningAdapter;
+    public BudgetAdapter getBudgetsFinishAdapter() {
+        return budgetFinishAdapter;
     }
-    public SavingAdapter getSavingsFinishAdapter() {
-        return savingsFinishAdapter;
-    }
- }
+}

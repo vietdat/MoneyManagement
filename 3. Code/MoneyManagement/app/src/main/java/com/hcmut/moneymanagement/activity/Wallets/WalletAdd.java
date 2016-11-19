@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,15 +23,12 @@ import com.hcmut.moneymanagement.models.WalletModel;
 import com.hcmut.moneymanagement.objects.Category;
 import com.hcmut.moneymanagement.objects.Wallet;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class WalletAdd extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
     private WalletCategoryModel walletCategoryModel;
     private EditText input_name, startMoney, note;
-    private Spinner typeOfAccount, currency;
+    private Spinner typeOfAccount;
     private WalletModel walletModel;
 
     @Override
@@ -49,8 +45,6 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
 
         init();
         typeOfTransaction ();
-        typeOfCurrency();
-
     }
 
     private void init() {
@@ -58,7 +52,6 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
         startMoney = (EditText) findViewById(R.id.startMoney);
         note = (EditText) findViewById(R.id.note);
         typeOfAccount = (Spinner) findViewById(R.id.typeOfAccount);
-        currency = (Spinner) findViewById(R.id.currency);
 
         walletModel = new WalletModel();
     }
@@ -66,11 +59,27 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
     private Wallet getValue() {
         String name = input_name.getText().toString();
         String type = typeOfAccount.getSelectedItem().toString();
-        String currencyUnit = currency.getSelectedItem().toString();
         String description = note.getText().toString();
         String initAmount = startMoney.getText().toString();
 
-        Wallet wallet = new Wallet(name, type, currencyUnit, description, Integer.parseInt(initAmount));
+        if(name.equals("")){
+            Toast.makeText(WalletAdd.this,"Please input name",Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
+        if(initAmount.equals("")){
+            Toast.makeText(WalletAdd.this,"Please input name",Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
+        if(type.equals("")){
+            Toast.makeText(WalletAdd.this,"Please connect internet to get data!!",Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
+
+        Wallet wallet = new Wallet(name, type, description, Integer.parseInt(initAmount));
+
         return wallet;
     }
 
@@ -122,23 +131,14 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
         });
     }
 
-    private void typeOfCurrency() {
-        // currencySpinner
-        Spinner currencySpinner = (Spinner) findViewById(R.id.currency);
-
-        List<String> currency = new ArrayList<String>();
-        currency.add("VND");
-
-        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currency);
-        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        currencySpinner.setAdapter(currencyAdapter);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
         if (id == R.id.mnDone) {
+            if(getValue() == null){
+                return false;
+            }
             walletModel.add(getValue());
             walletModel.getReference().addChildEventListener(onWalletChildListener);
             return true;

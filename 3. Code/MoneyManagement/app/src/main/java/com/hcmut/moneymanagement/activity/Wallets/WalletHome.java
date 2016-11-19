@@ -25,9 +25,6 @@ public class WalletHome extends Fragment implements View.OnClickListener {
     ListView lv;
     FloatingActionButton addButton;
     private WalletModel  walletModel;
-    FloatingActionButton btnEdit;
-    FloatingActionButton btnDelete;
-    WalletAdapter walletAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

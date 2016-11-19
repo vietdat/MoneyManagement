@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Savings;
+package com.hcmut.moneymanagement.activity.Budget;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,66 +9,66 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.models.SavingModel;
-import com.hcmut.moneymanagement.objects.Saving;
+import com.hcmut.moneymanagement.models.BudgetModel;
+import com.hcmut.moneymanagement.models.ExpenseCategoryModel;
+import com.hcmut.moneymanagement.objects.Budget;
 
-public class SavingsAdd extends AppCompatActivity {
+public class BudgetAdd extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    private EditText input_name, input_goal, input_starting_amount, input_start_date, input_end_date,
-                    description;
-
-    private SavingModel savingModel;
-
-    private String input_key = "";
+    private EditText input_name, input_end_date, description, amount;
+    private BudgetModel budgetModel;
+    private Spinner category;
+    private ExpenseCategoryModel expenseCategoryModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_saving_add);
+        setContentView(R.layout.activity_budget_add);
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String title = getString(R.string.add_saving_tittle);
+        String title = getString(R.string.add_budget_tittle);
         getSupportActionBar().setTitle(title);
 
         init();
     }
 
-    //Khoi tao gia tri
     private void init() {
         input_name = (EditText) findViewById(R.id.input_name);
-        input_goal = (EditText) findViewById(R.id.input_goal);
-        input_starting_amount = (EditText) findViewById(R.id.input_starting_amount);
-        input_start_date = (EditText) findViewById(R.id.etStartDate);
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
         description = (EditText) findViewById(R.id.description);
+        amount = (EditText) findViewById(R.id.amount);
+        category = (Spinner) findViewById(R.id.category);
 
-        input_start_date.setShowSoftInputOnFocus(false);
         input_end_date.setShowSoftInputOnFocus(false);
 
-        savingModel = new SavingModel();
+        budgetModel = new BudgetModel();
+        expenseCategoryModel = new ExpenseCategoryModel();
+        expenseCategoryModel.initListViewAdapter(getApplicationContext());
+        category.setAdapter(expenseCategoryModel.getNameAdapter());
     }
 
-    private Saving getValue(){
+    private Budget getValue() {
         String name = input_name.getText().toString();
-        String goal = input_goal.getText().toString();
-        String starting_amount = input_starting_amount.getText().toString();
-        String start_date = input_start_date.getText().toString();
         String end_date = input_end_date.getText().toString();
         String desciption = description.getText().toString();
+        String currentAmount = amount.getText().toString();
+        String categoryName = category.getSelectedItem().toString();
 
-        Saving saving = new Saving(name,goal, starting_amount, start_date,
-                                    end_date, desciption);
-        return saving;
+        Budget budget = new Budget(name, end_date, currentAmount, desciption, categoryName);
+
+        return budget;
     }
 
     @Override
@@ -76,16 +76,15 @@ public class SavingsAdd extends AppCompatActivity {
 
         int id = item.getItemId();
         if (id == R.id.mnDone) {
-            savingModel.add(getValue());
-            savingModel.getReference().addChildEventListener(onSavingChildListener);
+            budgetModel.add(getValue());
+            budgetModel.getReference().addChildEventListener(onSavingChildListener);
             return true;
         }
 
         if(id == android.R.id.home){
-            SavingsAdd.this.finish();
+            BudgetAdd.this.finish();
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -99,21 +98,7 @@ public class SavingsAdd extends AppCompatActivity {
 
     public void onStart(){
         super.onStart();
-
-        input_start_date = (EditText) findViewById(R.id.etStartDate);
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
-        input_start_date.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            public void onFocusChange(View view, boolean hasfocus){
-                if(hasfocus){
-                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
-                    android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
-                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    im.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                    dialog.show(ft, "DatePicker");
-                }
-            }
-
-        });
         input_end_date.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
@@ -128,12 +113,11 @@ public class SavingsAdd extends AppCompatActivity {
         });
     }
 
-    // on child added
     private ChildEventListener onSavingChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(SavingsAdd.this,"Add new saving successful",Toast.LENGTH_LONG).show();
-            SavingsAdd.this.finish();
+            Toast.makeText(BudgetAdd.this,"Add new budget successful",Toast.LENGTH_SHORT).show();
+            BudgetAdd.this.finish();
         }
 
         @Override
@@ -153,7 +137,7 @@ public class SavingsAdd extends AppCompatActivity {
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Toast.makeText(SavingsAdd.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(BudgetAdd.this,"Error Establishing a Database Connection",Toast.LENGTH_SHORT).show();
         }
     };
 }

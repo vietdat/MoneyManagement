@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -22,9 +21,7 @@ import com.hcmut.moneymanagement.objects.Category;
 import com.hcmut.moneymanagement.objects.Wallet;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class WalletEdit extends AppCompatActivity {
@@ -34,7 +31,7 @@ public class WalletEdit extends AppCompatActivity {
     Wallet wallet;
     WalletModel walletModel;
     EditText nameOfWallet, currentAmount, note;
-    Spinner typeOfAccount, currency;
+    Spinner typeOfAccount;
     WalletCategoryModel walletCategoryModel;
 
     @Override
@@ -65,9 +62,7 @@ public class WalletEdit extends AppCompatActivity {
         currentAmount = (EditText) findViewById(R.id.startMoney);
         note = (EditText) findViewById(R.id.note);
         typeOfAccount = (Spinner) findViewById(R.id.typeOfAccount);
-        currency = (Spinner) findViewById(R.id.currency);
 
-        typeOfCurrency();
         typeOfAccount();
 
         nameOfWallet.setText(wallet.getName());
@@ -77,17 +72,15 @@ public class WalletEdit extends AppCompatActivity {
         typeOfAccount.setSelection(spinnerPosition);
 
         currentAmount.setFocusable(false);
-        currency.setEnabled(false);
     }
 
     private Wallet getValue() {
         String name = nameOfWallet.getText().toString();
         String type = typeOfAccount.getSelectedItem().toString();
-        String currencyUnit = currency.getSelectedItem().toString();
         String description = note.getText().toString();
         int initAmount = wallet.getInitialAmount();
 
-        Wallet wallet1 = new Wallet(name, type, currencyUnit, description, initAmount);
+        Wallet wallet1 = new Wallet(name, type, description, initAmount);
         wallet1.setCurrentAmount(wallet.getCurrentAmount());
 
         return wallet1;
@@ -142,18 +135,6 @@ public class WalletEdit extends AppCompatActivity {
         });
     }
 
-    private void typeOfCurrency() {
-        // currencySpinner
-        Spinner currencySpinner = (Spinner) findViewById(R.id.currency);
-
-        List<String> currency = new ArrayList<String>();
-        currency.add("VND");
-
-        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currency);
-        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        currencySpinner.setAdapter(currencyAdapter);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -189,6 +170,4 @@ public class WalletEdit extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
