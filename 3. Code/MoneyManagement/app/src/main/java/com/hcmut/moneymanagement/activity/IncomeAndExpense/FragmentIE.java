@@ -56,9 +56,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
         transactions = new MyArrayAdapter(getActivity(), R.layout.list_row_income, items);
         lv.setAdapter(transactions);
 
-        if(type.equals("Income")){
-            addItemToListView();
-        }
+        addItemToListView();
 
         return rootView;
     }
@@ -74,6 +72,10 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                         if (objType.toString().equals(type)) {
                             Object objAmount = transactionSnapshot.child(transactionModel.encrypt("money")).getValue();
                             Object objDate = transactionSnapshot.child(transactionModel.encrypt("date")).getValue();
+                            Object objCateId = transactionSnapshot.child(transactionModel.encrypt("category")).getValue();
+
+                            //IncomeCategoryModel incomeCategoryModel = new IncomeCategoryModel();
+                            //String cate_name = incomeCategoryModel.getNameByKey(objCateId.toString());
 
                             if (objAmount != null && objDate != null) {
                                 DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -85,7 +87,11 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                                     int itemMonth = cal.get(Calendar.MONTH) + 1;
 
                                     if (itemMonth == month) {
-                                        items.add(new ListViewModel(objDate.toString(), "+ " + objAmount.toString()));
+                                        if(type.equals("Income")) {
+                                            items.add(new ListViewModel(objDate.toString(), "+ " + objAmount.toString()));
+                                        }else if( type.equals("Expense") ){
+                                            items.add(new ListViewModel(objDate.toString(), "- " + objAmount.toString()));
+                                        }
                                     }
                                 } catch (ParseException ex) {
                                     ex.printStackTrace();

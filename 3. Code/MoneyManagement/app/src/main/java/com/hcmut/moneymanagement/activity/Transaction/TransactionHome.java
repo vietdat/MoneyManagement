@@ -70,17 +70,15 @@ public class TransactionHome extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                if(i == 0) {
                    Intent intent = new Intent();
-                   intent.putExtra("type", "income");
+                   intent.putExtra("type", "Income");
                    intent.setClass(getActivity(), IncomeAndExpenseHome.class);
                    getActivity().startActivity(intent);
                } else if(i == 1) {
                    Intent intent = new Intent();
-                   intent.putExtra("type", "expense");
+                   intent.putExtra("type", "Expense");
                    intent.setClass(getActivity(), IncomeAndExpenseHome.class);
                    getActivity().startActivity(intent);
                }
-
-
 
             }
         });

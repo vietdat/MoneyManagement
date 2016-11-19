@@ -1,11 +1,13 @@
 package com.hcmut.moneymanagement.models;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.objects.Category;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.Semaphore;
 
 import static com.google.android.gms.internal.zzs.TAG;
 
@@ -119,5 +122,36 @@ public abstract class CategoryModel extends Model{
             return nameAdapter;
         }
         return null;
+    }
+
+    public String getNameByKey(final String key){
+        String name = "";
+
+        /*
+        final Semaphore semaphore = new Semaphore(0);
+        try {
+            DatabaseReference itemReference = reference.child(key);
+            itemReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Object objName = dataSnapshot.child(encrypt("name")).getValue();
+
+                    name = objName.toString();
+                    semaphore.release();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w(TAG, "loadCategory:onCancelled", databaseError.toException());
+                }
+            });
+
+            semaphore.acquire();
+        }catch (InterruptedException ex){
+            Log.w(TAG, ex.toString());
+        }
+        */
+
+        return name;
     }
 }

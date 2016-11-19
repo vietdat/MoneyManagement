@@ -1,5 +1,6 @@
 package com.hcmut.moneymanagement.activity.IncomeAndExpense;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,8 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.activity.Transaction.TransactionHome;
+import com.hcmut.moneymanagement.activity.Wallets.WalletDetai;
+import com.hcmut.moneymanagement.models.IncomeCategoryModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,11 +27,15 @@ public class IncomeAndExpenseHome extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private String typeOfTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_income_and_expense_home);
+
+        Bundle extras = getIntent().getExtras();
+        typeOfTransaction = extras.getString("type");
 
         init();
     }
@@ -36,7 +46,7 @@ public class IncomeAndExpenseHome extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+        setupViewPager(viewPager, 3);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -44,7 +54,7 @@ public class IncomeAndExpenseHome extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.w("Tab position", String.valueOf(tab.getPosition()));
+                //Log.w("Tab position", String.valueOf(tab.getPosition()));
             }
 
             @Override
@@ -59,35 +69,52 @@ public class IncomeAndExpenseHome extends AppCompatActivity {
         });
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager(ViewPager viewPager, int months) {
         SimpleDateFormat format = new SimpleDateFormat("MMMM");
-        Calendar c = Calendar.getInstance();
-        String month1 = format.format(c.getTime());
-        int m1 = c.get(Calendar.MONTH)+1;
-
-        c.add(Calendar.MONTH, -1);
-        int m2 = c.get(Calendar.MONTH)+1;
-        String month2 = format.format(c.getTime());
-
-        c.add(Calendar.MONTH, -1);
-        int m3 = c.get(Calendar.MONTH)+1;
-        String month3 = format.format(c.getTime());
-
-        /*
-        Log.w("month 1", month1);
-        Log.w("month 2", month2);
-        Log.w("month 3", month3);
-        Log.w("month int", String.valueOf(m1));
-        Log.w("month int", String.valueOf(m2));
-        Log.w("month int", String.valueOf(m3));
-        */
-
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new FragmentIE("Income", m1), month1);
-        adapter.addFrag(new FragmentIE("Income", m2), month2);
-        adapter.addFrag(new FragmentIE("Income", m3), month3);
+
+        // NOT ALL OF TIME OPTIONS
+        if( months != Integer.MAX_VALUE ){
+            for( int i = 0; i<months; i++){
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.MONTH, -i);
+                String str_month = format.format(c.getTime());
+                int month = c.get(Calendar.MONTH) + 1;
+
+                adapter.addFrag(new FragmentIE(typeOfTransaction, month), str_month);
+            }
+        }
+
+        viewPager.setAdapter(adapter);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_month_number, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if( id== R.id.thisMonth){
+            setupViewPager(viewPager, 1);
+        }else if (id == R.id.threeMonths) {
+            setupViewPager(viewPager, 3);
+        }else if( id == R.id.fiveMonths ){
+            setupViewPager(viewPager, 5);
+        }else if(id == android.R.id.home){
+            this.finish();
+        }
+
+        return true;
+    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
