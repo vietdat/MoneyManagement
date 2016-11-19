@@ -58,7 +58,8 @@
         <activity android:name=".activity.Events.EventEdit" />
         <activity android:name=".activity.Budget.BudgetAdd" />
         <activity android:name=".activity.Budget.BudgetEdit" />
-        <activity android:name=".activity.Budget.BudgetDetail"></activity>
+        <activity android:name=".activity.Budget.BudgetDetail" />
+        <activity android:name=".activity.Tools.Settings.SettingsHome"></activity>
     </application>
 
 </manifest>

@@ -63,10 +63,6 @@ public class WalletModel extends Model{
                     Object objType = walletSnapshot.child(encrypt("type")).getValue();
                     wallet.setType(decrypt(objType.toString()));
 
-                    //currencyUnit
-                    Object objCurrencyUnit = walletSnapshot.child(encrypt("currencyUnit")).getValue();
-                    wallet.setCurrencyUnit(decrypt(objCurrencyUnit.toString()));
-
                     //description
                     Object objDescription = walletSnapshot.child(encrypt("description")).getValue();
                     wallet.setDescription(decrypt(objDescription.toString()));

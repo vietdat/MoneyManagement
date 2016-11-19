@@ -216,6 +216,11 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         int id = item.getItemId();
         if (id == R.id.mnDone) {
             String typeOfTransactionValue = typeTransaction.getSelectedItem().toString().trim();
+
+            if(amouthOfMoney.getText().toString().equals("")){
+                Toast.makeText(AddTransactionActivity.this,"Please input amount",Toast.LENGTH_SHORT).show();
+                return false;
+            }
             int moneyAmount = Integer.parseInt(amouthOfMoney.getText().toString());
             String dateViewValue = dateView.getText().toString().trim();
             String descriptionValue = description.getText().toString().trim();

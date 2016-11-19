@@ -7,7 +7,6 @@ import java.util.Calendar;
 public class Wallet extends Object implements Serializable {
     public String name;
     public String type;
-    public String currencyUnit;
     public String description;
     public String date;
     public int initialAmount;
@@ -16,10 +15,9 @@ public class Wallet extends Object implements Serializable {
     public Wallet(){
     }
 
-    public Wallet(String name, String type, String currencyUnit, String description){
+    public Wallet(String name, String type, String description){
         this.name = name;
         this.type = type;
-        this.currencyUnit = currencyUnit;
         this.description = description;
 
         Calendar c = Calendar.getInstance();
@@ -30,10 +28,9 @@ public class Wallet extends Object implements Serializable {
         this.currentAmount = 0;
     }
 
-    public Wallet(String name, String type, String currencyUnit, String description, int initialAmount){
+    public Wallet(String name, String type, String description, int initialAmount){
         this.name = name;
         this.type = type;
-        this.currencyUnit = currencyUnit;
         this.description = description;
 
         Calendar c = Calendar.getInstance();
@@ -59,14 +56,6 @@ public class Wallet extends Object implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getCurrencyUnit() {
-        return currencyUnit;
-    }
-
-    public void setCurrencyUnit(String currencyUnit) {
-        this.currencyUnit = currencyUnit;
     }
 
     public String getDescription() {

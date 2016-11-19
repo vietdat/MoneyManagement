@@ -6,17 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.models.SavingModel;
 import com.hcmut.moneymanagement.objects.Saving;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SavingDetail extends AppCompatActivity {
 
@@ -25,7 +21,6 @@ public class SavingDetail extends AppCompatActivity {
     String key;
     SavingModel savingModel;
     EditText nameOfSaving, goal, currentAmount, startDate, endDate, description;
-    Spinner currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +52,6 @@ public class SavingDetail extends AppCompatActivity {
         startDate = (EditText) findViewById(R.id.startDate);
         endDate = (EditText) findViewById(R.id.endDate);
         description = (EditText) findViewById(R.id.description);
-        currency = (Spinner) findViewById(R.id.currency);
-
-        typeOfCurrency();
-
         nameOfSaving.setText(saving.getName());
         goal.setText(saving.getGoal());
         currentAmount.setText(saving.getCurrent_amount());
@@ -74,19 +65,6 @@ public class SavingDetail extends AppCompatActivity {
         startDate.setFocusable(false);
         endDate.setFocusable(false);
         description.setFocusable(false);
-        currency.setEnabled(false);
-    }
-
-    private void typeOfCurrency() {
-        // currencySpinner
-        Spinner currencySpinner = (Spinner) findViewById(R.id.currency);
-
-        List<String> currency = new ArrayList<String>();
-        currency.add("VND");
-
-        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currency);
-        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        currencySpinner.setAdapter(currencyAdapter);
     }
 
     @Override

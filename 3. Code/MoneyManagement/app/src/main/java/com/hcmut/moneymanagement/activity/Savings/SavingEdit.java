@@ -9,19 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.Wallets.WalletDetai;
 import com.hcmut.moneymanagement.models.SavingModel;
 import com.hcmut.moneymanagement.objects.Saving;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SavingEdit extends AppCompatActivity {
@@ -31,7 +26,6 @@ public class SavingEdit extends AppCompatActivity {
     String key;
     SavingModel savingModel;
     EditText nameOfSaving, goal, currentAmount, startDate, endDate, description;
-    Spinner currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +58,6 @@ public class SavingEdit extends AppCompatActivity {
         startDate = (EditText) findViewById(R.id.startDate);
         endDate = (EditText) findViewById(R.id.endDate);
         description = (EditText) findViewById(R.id.description);
-        currency = (Spinner) findViewById(R.id.currency);
-
-        typeOfCurrency();
 
         nameOfSaving.setText(saving.getName());
         goal.setText(saving.getGoal());
@@ -77,20 +68,7 @@ public class SavingEdit extends AppCompatActivity {
 
         currentAmount.setFocusable(false);
         startDate.setFocusable(false);
-        currency.setEnabled(false);
         endDate.setShowSoftInputOnFocus(false);
-    }
-
-    private void typeOfCurrency() {
-        // currencySpinner
-        Spinner currencySpinner = (Spinner) findViewById(R.id.currency);
-
-        List<String> currency = new ArrayList<String>();
-        currency.add("VND");
-
-        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currency);
-        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        currencySpinner.setAdapter(currencyAdapter);
     }
 
     private Saving getValue(){
@@ -100,9 +78,8 @@ public class SavingEdit extends AppCompatActivity {
         String currentAmount1 = currentAmount.getText().toString();
         String end_date = endDate.getText().toString();
         String desciption1 = description.getText().toString();
-        String currentUnit = currency.getSelectedItem().toString();
 
-        Saving saving = new Saving(name, goal1, currentAmount1, currentUnit, start_date,
+        Saving saving = new Saving(name, goal1, currentAmount1, start_date,
                 end_date, desciption1);
         return saving;
     }
@@ -146,7 +123,7 @@ public class SavingEdit extends AppCompatActivity {
 
             savingModel.update(key, updateData);
 
-            Intent intent = new Intent(this, WalletDetai.class);
+            Intent intent = new Intent(this, SavingDetail.class);
             intent.putExtra("key", key);
             intent.putExtra("saving", (Serializable) update);
             startActivity(intent);

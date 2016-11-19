@@ -45,5 +45,6 @@
     <string name="edit_budget_tittle">Budget edit</string>
     <string name="edit_events_tittle">Event edit</string>
     <string name="tips_tittle">Tips</string>
+    <string name="setting_tittle">Settings</string>
     <string name="done">Done</string>
 </resources>
