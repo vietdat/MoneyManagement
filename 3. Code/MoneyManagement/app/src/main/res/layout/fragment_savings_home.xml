@@ -1,28 +1,76 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.hcmut.moneymanagement.activity.Savings.SavingsHome">
+    android:orientation="vertical"
+    tools:context=".activity.Category.CategoryHome">
 
-    <android.support.design.widget.AppBarLayout
+    <TabHost
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:id="@+id/tabHost">
 
-            <!-- TODO: Update blank fragment layout -->
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabs"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabMode="fixed"
-                app:tabGravity="fill"/>
-    </android.support.design.widget.AppBarLayout>
+                android:layout_height="wrap_content" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-</FrameLayout>
+                <LinearLayout
+                    android:id="@+id/tabRunning"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/lvRunning"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="#b5b5b5"
+                        android:dividerHeight="1dp"
+                        android:listSelector="@drawable/list_selector" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tabFinish"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/lvFinish"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="#b5b5b5"
+                        android:dividerHeight="1dp"
+                        android:listSelector="@drawable/list_selector" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnNew"
+        android:src="@drawable/ic_add"
+        app:borderWidth="2dp"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"/>
+</RelativeLayout>

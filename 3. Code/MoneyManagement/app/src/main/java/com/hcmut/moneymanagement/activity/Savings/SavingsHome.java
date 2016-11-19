@@ -1,30 +1,38 @@
 package com.hcmut.moneymanagement.activity.Savings;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TabHost;
 
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.models.SavingModel;
+import com.hcmut.moneymanagement.objects.Saving;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.io.Serializable;
 
 public class SavingsHome extends Fragment implements View.OnClickListener {
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private TabHost tabHost;
+    private ListView lvRunning;
+    private ListView lvFinish;
+    FloatingActionButton addButton;
+    FloatingActionButton editButton;
+    FloatingActionButton deleteButton;
+    private SavingModel savingModel;
+    private Saving chooseSaving = new Saving();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        savingModel = new SavingModel();
     }
 
     @Override
@@ -32,20 +40,39 @@ public class SavingsHome extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_savings_home, container, false);
 
-        viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+        // TabHost Init
+        tabHost = (TabHost) rootView.findViewById(R.id.tabHost);
+        tabHost.setup();
 
-        tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        //Running
+        TabHost.TabSpec tabRunning = tabHost.newTabSpec("Running");
+        tabRunning.setContent(R.id.tabRunning);
+        tabRunning.setIndicator("Running");
+        tabHost.addTab(tabRunning);
+        lvRunning = (ListView) rootView.findViewById(R.id.lvRunning);
+
+        //Finish
+        TabHost.TabSpec tabFinish = tabHost.newTabSpec("Finish");
+        tabFinish.setContent(R.id.tabFinish);
+        tabFinish.setIndicator("Finish");
+        tabHost.addTab(tabFinish);
+        lvFinish = (ListView) rootView.findViewById(R.id.lvFinish);
+
+        selecteItemInListViewRunning();
+        selecteItemInListViewFinish();
+
+        addButton = (FloatingActionButton) rootView.findViewById(R.id.btnNew);
+        addButton.setOnClickListener(this);
 
         return rootView;
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
-        adapter.addFrag(new SavingRunning(), "RUNNING");
-        adapter.addFrag(new SavingRunning(), "FINISH");
-        viewPager.setAdapter(adapter);
+    @Override
+    public void onStart() {
+        super.onStart();
+        savingModel.initSavingAdapter(getActivity());
+        lvRunning.setAdapter(savingModel.getSavingsRunningAdapter());
+        lvFinish.setAdapter(savingModel.getSavingsFinishAdapter());
     }
 
     @Override
@@ -60,36 +87,40 @@ public class SavingsHome extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-
-    }
-
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFrag(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
+        if(view == addButton) {
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), SavingsAdd.class);
+            getActivity().startActivity(intent);
         }
     }
+
+    private void selecteItemInListViewRunning() {
+        lvRunning.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Saving saving = savingModel.savingsRunning.get(position);
+                Intent intent = new Intent(getActivity(), SavingDetail.class);
+                String key = savingModel.keyRunnings.get(position);
+                intent.putExtra("key", key);
+                intent.putExtra("saving", (Serializable) saving);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void selecteItemInListViewFinish() {
+        lvFinish.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Saving saving = savingModel.savingsFinish.get(position);
+                Intent intent = new Intent(getActivity(), SavingDetail.class);
+                String key = savingModel.keyFinishs.get(position);
+                intent.putExtra("key", key);
+                intent.putExtra("saving", (Serializable) saving);
+                startActivity(intent);
+            }
+        });
+    }
+
 
 }

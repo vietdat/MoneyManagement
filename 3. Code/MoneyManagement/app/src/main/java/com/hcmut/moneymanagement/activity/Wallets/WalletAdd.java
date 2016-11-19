@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Wallet;
+package com.hcmut.moneymanagement.activity.Wallets;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -28,11 +27,10 @@ import com.hcmut.moneymanagement.objects.Wallet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddNewWalletActivity extends AppCompatActivity implements View.OnClickListener {
+public class WalletAdd extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
     private WalletCategoryModel walletCategoryModel;
-    private Button btnSaving;
     private EditText input_name, startMoney, note;
     private Spinner typeOfAccount, currency;
     private WalletModel walletModel;
@@ -40,7 +38,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wallet);
+        setContentView(R.layout.activity_wallet_add);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -52,12 +50,10 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
         init();
         typeOfTransaction ();
         typeOfCurrency();
-        btnSaving.setOnClickListener(this);
 
     }
 
     private void init() {
-        btnSaving = (Button) findViewById(R.id.btnSaving);
         input_name = (EditText) findViewById(R.id.input_name);
         startMoney = (EditText) findViewById(R.id.startMoney);
         note = (EditText) findViewById(R.id.note);
@@ -84,7 +80,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
      */
     private void typeOfTransaction () {
         // typeOfAccount
-        walletCategoryModel = new WalletCategoryModel(AddNewWalletActivity.this);
+        walletCategoryModel = new WalletCategoryModel(WalletAdd.this);
 
         typeOfAccount.setAdapter(walletCategoryModel.getNames());
         typeOfAccount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -93,8 +89,8 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
                 String selected = typeOfAccount.getSelectedItem().toString();
                     if(selected.equals("Create new")){
                         // Create dialog
-                        final EditText input = new EditText(AddNewWalletActivity.this);
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AddNewWalletActivity.this);
+                        final EditText input = new EditText(WalletAdd.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(WalletAdd.this);
                         builder.setTitle("New wallet");
                         builder.setView(input);
 
@@ -140,13 +136,26 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.mnDone) {
+            walletModel.add(getValue());
+            walletModel.getReference().addChildEventListener(onWalletChildListener);
+            return true;
+        }
+
+        if(id == android.R.id.home){
+            WalletAdd.this.finish();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_transaction, menu);
+        getMenuInflater().inflate(R.menu.menu_wallet_add, menu);
         return true;
     }
 
@@ -158,19 +167,15 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        if(view == btnSaving) {
-            walletModel.add(getValue());
 
-            walletModel.getReference().addChildEventListener(onWalletChildListener);
-        }
     }
 
     // on child added
     private ChildEventListener onWalletChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(AddNewWalletActivity.this,"Successful",Toast.LENGTH_LONG).show();
-            AddNewWalletActivity.this.finish();
+            Toast.makeText(WalletAdd.this,"Add new wallet success",Toast.LENGTH_SHORT).show();
+            WalletAdd.this.finish();
         }
 
         @Override
@@ -190,7 +195,7 @@ public class AddNewWalletActivity extends AppCompatActivity implements View.OnCl
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Toast.makeText(AddNewWalletActivity.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(WalletAdd.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
         }
     };
 }

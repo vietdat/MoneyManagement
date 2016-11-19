@@ -11,6 +11,7 @@ public class UserModel extends Model {
     public UserModel(){
         // Database reference of current user
         reference = FirebaseDatabase.getInstance().getReference().child(uidEncrypted);
+        reference.keepSynced(true);
     }
 
     public void initUserData(){
