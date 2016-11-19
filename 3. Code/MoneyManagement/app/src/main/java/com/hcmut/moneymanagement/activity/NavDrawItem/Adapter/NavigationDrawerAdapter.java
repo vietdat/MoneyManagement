@@ -5,14 +5,16 @@ package com.hcmut.moneymanagement.activity.NavDrawItem.Adapter;
  */
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hcmut.moneymanagement.activity.NavDrawItem.model.NavDrawerItem;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.activity.NavDrawItem.model.NavDrawerItem;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,6 +46,11 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     public void onBindViewHolder(MyViewHolder holder, int position) {
         NavDrawerItem current = data.get(position);
         holder.title.setText(current.getTitle());
+        String uri_icon = "drawable/" + current.getNameOfImage();
+        int ImageResoure = context.getResources().getIdentifier(uri_icon, null,
+                context.getApplicationContext().getPackageName());
+        Drawable image = context.getResources().getDrawable(ImageResoure);
+        holder.icon.setImageDrawable(image);
     }
 
     @Override
@@ -53,10 +60,12 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title;
+        ImageView icon;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
+            icon = (ImageView) itemView.findViewById(R.id.icon1);
         }
     }
 }

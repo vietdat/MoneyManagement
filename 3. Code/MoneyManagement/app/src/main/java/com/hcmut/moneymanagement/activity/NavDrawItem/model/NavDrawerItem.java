@@ -6,15 +6,25 @@ package com.hcmut.moneymanagement.activity.NavDrawItem.model;
 public class NavDrawerItem {
     private boolean showNotify;
     private String title;
+    private String nameOfImage;
 
 
     public NavDrawerItem() {
 
     }
 
-    public NavDrawerItem(boolean showNotify, String title) {
+    public String getNameOfImage() {
+        return nameOfImage;
+    }
+
+    public void setNameOfImage(String nameOfImage) {
+        this.nameOfImage = nameOfImage;
+    }
+
+    public NavDrawerItem(boolean showNotify, String title, String nameOfImage) {
         this.showNotify = showNotify;
         this.title = title;
+        this.nameOfImage = nameOfImage;
     }
 
     public boolean isShowNotify() {

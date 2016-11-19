@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,6 +19,7 @@
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar" />
+
         </LinearLayout>
 
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -53,11 +53,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp">
-                    <EditText android:id="@+id/goal"
+                    <EditText android:id="@+id/etEndtDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter end date" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+                    <EditText android:id="@+id/amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:hint="Goal" />
+                        android:hint="Amount" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -65,69 +76,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp">
-                    <EditText android:id="@+id/currentAmount"
+                    <EditText android:id="@+id/category"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
-                        android:hint="Current amount" />
+                        android:inputType="text"
+                        android:hint="Category" />
                 </android.support.design.widget.TextInputLayout>
-
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:text="Currency"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvCurrency" />
-
-                    <Spinner
-                        android:id="@+id/currency"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-                </LinearLayout>
-
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp">
-                    <EditText android:id="@+id/startDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
-                        android:hint="Start date" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp">
-                    <EditText android:id="@+id/endDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="End date" />
-                </android.support.design.widget.TextInputLayout>
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp">
-
                     <EditText android:id="@+id/description"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:lines="3"
-                        android:inputType="textShortMessage"
-                        android:gravity="top|left"
-                        android:scrollbars="vertical"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
                         android:hint="Description" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>

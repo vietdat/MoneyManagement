@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.NavDrawItem.Adapter.NavigationDrawerAdapter;
 import com.hcmut.moneymanagement.activity.NavDrawItem.model.NavDrawerItem;
+import com.hcmut.moneymanagement.models.WalletModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,9 @@ public class FragmentDrawer extends Fragment {
     private NavigationDrawerAdapter adapter;
     private View containerView;
     private static String[] titles = null;
+    private static String[] icons = null;
     private FragmentDrawerListener drawerListener;
+    private WalletModel walletModel;
 
     public FragmentDrawer() {
 
@@ -50,6 +53,7 @@ public class FragmentDrawer extends Fragment {
         for (int i = 0; i < titles.length; i++) {
             NavDrawerItem navItem = new NavDrawerItem();
             navItem.setTitle(titles[i]);
+            navItem.setNameOfImage(icons[i]);
             data.add(navItem);
         }
         return data;
@@ -59,8 +63,11 @@ public class FragmentDrawer extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        walletModel = new WalletModel();
+        walletModel.initNameAdapter(getContext());
         // drawer labels
         titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
+        icons = getActivity().getResources().getStringArray(R.array.nav_drawer_icon);
     }
 
     @Override

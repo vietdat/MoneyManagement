@@ -1,15 +1,18 @@
 package com.hcmut.moneymanagement.activity.Transaction;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -69,11 +72,13 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         previousTypeSelected = "";
 
         dateView = (EditText) findViewById(R.id.input_date);
+        dateView.setInputType(InputType.TYPE_NULL);
         // Set default date is today
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String today = df.format(c.getTime());
         dateView.setText(today);
+        dateView.setOnClickListener(this);
 
         typeTransaction = (Spinner) findViewById(R.id.typeTransaction);
         category = (Spinner) findViewById(R.id.category);
@@ -284,12 +289,14 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
     public void onStart(){
         super.onStart();
+
         dateView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
-                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog =
-                            new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
-                    android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
+                    android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     dialog.show(ft, "DatePicker");
                 }
             }
@@ -299,6 +306,15 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
     @Override
     public void onClick(View view) {
+        if(view == dateView) {
+            com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog =
+                    new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
+            android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+            InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            dialog.show(ft, "DatePicker");
+        }
     }
 
 }

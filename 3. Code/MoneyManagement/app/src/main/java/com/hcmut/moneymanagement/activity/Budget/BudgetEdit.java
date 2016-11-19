@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Events;
+package com.hcmut.moneymanagement.activity.Budget;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,40 +12,43 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.models.EventModel;
-import com.hcmut.moneymanagement.objects.Event;
+import com.hcmut.moneymanagement.models.BudgetModel;
+import com.hcmut.moneymanagement.models.ExpenseCategoryModel;
+import com.hcmut.moneymanagement.objects.Budget;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EventEdit extends AppCompatActivity {
+public class BudgetEdit extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    Event event;
-    String key;
-    private EditText input_name, input_end_date, description, spent;
-    EventModel eventModel;
+    private EditText input_name, input_end_date, description, amount, category;
+    private BudgetModel budgetModel;
+    private String key;
+    private Budget budget;
+    private ExpenseCategoryModel expenseCategoryModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_edit);
+        setContentView(R.layout.activity_budget_edit);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String title = getString(R.string.edit_events_tittle);
+        String title = getString(R.string.edit_budget_tittle);
         getSupportActionBar().setTitle(title);
 
-        event = new Event();
+        budget = new Budget();
 
         Bundle extras = getIntent().getExtras();
         key = extras.getString("key");
-        event = (Event) getIntent().getSerializableExtra("event");
-        eventModel = new EventModel();
+        budget = (Budget) getIntent().getSerializableExtra("budget");
+        budgetModel = new BudgetModel();
 
         //add data to view
         initData();
@@ -54,32 +57,40 @@ public class EventEdit extends AppCompatActivity {
     private void initData() {
         input_name = (EditText) findViewById(R.id.input_name);
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
-        spent = (EditText) findViewById(R.id.spent);
         description = (EditText) findViewById(R.id.description);
-
-        input_name.setText(event.getName());
-        input_end_date.setText(event.getEndDate());
-        spent.setText(String.valueOf(event.getSpent()) + " VND");
-        description.setText(event.getDescription());
+        amount = (EditText) findViewById(R.id.amount);
+        category = (EditText) findViewById(R.id.category);
 
         input_end_date.setShowSoftInputOnFocus(false);
-        spent.setFocusable(false);
+
+        input_name.setText(budget.getName());
+        input_end_date.setText(budget.getEndDate());
+        description.setText(budget.getDescription());
+        amount.setText(budget.getAmount());
+        category.setText(budget.getCategory());
+
+        budgetModel = new BudgetModel();
+
+        amount.setFocusable(false);
+        category.setFocusable(false);
     }
 
-    private Event getValue() {
+    private Budget getValue(){
         String name = input_name.getText().toString();
         String end_date = input_end_date.getText().toString();
-        int spent1 = event.getSpent();
-        String desciption1 = description.getText().toString();
+        String desciption = description.getText().toString();
+        String initAmount = amount.getText().toString();
+        String categoryName = category.getText().toString();
+        String currentAmount = budget.getCurrentAmount();
 
-        Event event = new Event(name, end_date, "VND", desciption1, spent1);
-        return event;
+        Budget budget1 = new Budget(name, end_date, initAmount, desciption, categoryName, currentAmount);
+
+        return budget1;
     }
 
-    @Override
     public void onStart(){
         super.onStart();
-        input_end_date = (EditText) findViewById(R.id.etEndtDate);
+
         input_end_date.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
@@ -106,25 +117,25 @@ public class EventEdit extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.mnDone) {
-            Event update = getValue();
+            Budget update = getValue();
             Map<String, Object> updateData = new HashMap<String, Object>();
-            updateData.put(eventModel.encrypt("name"), eventModel.encrypt(update.getName()));
-            updateData.put(eventModel.encrypt("endDate"), eventModel.encrypt(update.getEndDate()));
-            updateData.put(eventModel.encrypt("description"), eventModel.encrypt(update.getDescription()));
+            updateData.put(budgetModel.encrypt("name"), budgetModel.encrypt(update.getName()));
+            updateData.put(budgetModel.encrypt("endDate"), budgetModel.encrypt(update.getEndDate()));
+            updateData.put(budgetModel.encrypt("description"), budgetModel.encrypt(update.getDescription()));
 
-            eventModel.update(key, updateData);
+            budgetModel.update(key, updateData);
 
-            Intent intent = new Intent(this, EventsDetail.class);
+            Intent intent = new Intent(this, BudgetDetail.class);
             intent.putExtra("key", key);
-            intent.putExtra("event", (Serializable) update);
+            intent.putExtra("budget", (Serializable) update);
             startActivity(intent);
-            EventEdit.this.finish();
+            BudgetEdit.this.finish();
 
             return true;
         }
 
         if(id == android.R.id.home){
-            EventEdit.this.finish();
+            BudgetEdit.this.finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

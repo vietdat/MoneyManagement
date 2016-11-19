@@ -1,11 +1,13 @@
 package com.hcmut.moneymanagement.activity.Events;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -57,6 +59,8 @@ public class EventsAdd extends AppCompatActivity {
 
         walletModel = new WalletModel();
         walletModel.initNameAdapter(getApplicationContext());
+
+        input_end_date.setShowSoftInputOnFocus(false);
 
         typeOfCurrency();
 
@@ -119,6 +123,8 @@ public class EventsAdd extends AppCompatActivity {
                 if(hasfocus){
                     com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
                     android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     dialog.show(ft, "DatePicker");
                 }
             }
@@ -130,7 +136,7 @@ public class EventsAdd extends AppCompatActivity {
     private ChildEventListener onSavingChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(EventsAdd.this,"Add new event successful",Toast.LENGTH_LONG).show();
+            Toast.makeText(EventsAdd.this,"Add new event successful",Toast.LENGTH_SHORT).show();
             EventsAdd.this.finish();
         }
 

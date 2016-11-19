@@ -1,5 +1,6 @@
 package com.hcmut.moneymanagement.activity.Savings;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -76,6 +78,7 @@ public class SavingEdit extends AppCompatActivity {
         currentAmount.setFocusable(false);
         startDate.setFocusable(false);
         currency.setEnabled(false);
+        endDate.setShowSoftInputOnFocus(false);
     }
 
     private void typeOfCurrency() {
@@ -107,12 +110,14 @@ public class SavingEdit extends AppCompatActivity {
     public void onStart(){
         super.onStart();
 
-        endDate = (EditText) findViewById(R.id.etEndtDate);
+        endDate = (EditText) findViewById(R.id.endDate);
         endDate.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
                     com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
                     android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     dialog.show(ft, "DatePicker");
                 }
             }
