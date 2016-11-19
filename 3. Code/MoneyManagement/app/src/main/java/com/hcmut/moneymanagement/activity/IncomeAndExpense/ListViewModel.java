@@ -1,8 +1,5 @@
 package com.hcmut.moneymanagement.activity.IncomeAndExpense;
 
-/**
- * Created by Admin on 15-Oct-16.
- */
 public class ListViewModel {
     private String date_time;
     private String amount;

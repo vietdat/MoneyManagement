@@ -8,10 +8,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.hcmut.moneymanagement.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class IncomeAndExpenseHome extends AppCompatActivity {
@@ -25,9 +28,6 @@ public class IncomeAndExpenseHome extends AppCompatActivity {
         setContentView(R.layout.activity_income_and_expense_home);
 
         init();
-
-
-
     }
 
     private void init() {
@@ -40,20 +40,51 @@ public class IncomeAndExpenseHome extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.w("Tab position", String.valueOf(tab.getPosition()));
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        SimpleDateFormat format = new SimpleDateFormat("MMMM");
+        Calendar c = Calendar.getInstance();
+        String month1 = format.format(c.getTime());
+        int m1 = c.get(Calendar.MONTH)+1;
+
+        c.add(Calendar.MONTH, -1);
+        int m2 = c.get(Calendar.MONTH)+1;
+        String month2 = format.format(c.getTime());
+
+        c.add(Calendar.MONTH, -1);
+        int m3 = c.get(Calendar.MONTH)+1;
+        String month3 = format.format(c.getTime());
+
+        /*
+        Log.w("month 1", month1);
+        Log.w("month 2", month2);
+        Log.w("month 3", month3);
+        Log.w("month int", String.valueOf(m1));
+        Log.w("month int", String.valueOf(m2));
+        Log.w("month int", String.valueOf(m3));
+        */
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new FragmentIE(), "ONE");
-        adapter.addFrag(new FragmentIE(), "TWO");
-        adapter.addFrag(new FragmentIE(), "THREE");
-        adapter.addFrag(new FragmentIE(), "FOUR");
-        adapter.addFrag(new FragmentIE(), "FIVE");
-        adapter.addFrag(new FragmentIE(), "SIX");
-        adapter.addFrag(new FragmentIE(), "SEVEN");
-        adapter.addFrag(new FragmentIE(), "EIGHT");
-        adapter.addFrag(new FragmentIE(), "NINE");
-        adapter.addFrag(new FragmentIE(), "TEN");
+        adapter.addFrag(new FragmentIE("Income", m1), month1);
+        adapter.addFrag(new FragmentIE("Income", m2), month2);
+        adapter.addFrag(new FragmentIE("Income", m3), month3);
         viewPager.setAdapter(adapter);
     }
 
