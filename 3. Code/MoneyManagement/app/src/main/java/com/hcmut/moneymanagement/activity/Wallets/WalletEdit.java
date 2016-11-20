@@ -100,15 +100,15 @@ public class WalletEdit extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selected = typeOfAccount.getSelectedItem().toString();
-                if(selected.equals("Create new")){
+                if(selected.equals(getResources().getString(R.string.create_new))){
                     // Create dialog
                     final EditText input = new EditText(WalletEdit.this);
                     AlertDialog.Builder builder = new AlertDialog.Builder(WalletEdit.this);
-                    builder.setTitle("New wallet");
+                    builder.setTitle(getResources().getString(R.string.new_wallet));
                     builder.setView(input);
 
                     // Add the buttons to Dialogs
-                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             //add to database
                             dialog.dismiss();
@@ -116,7 +116,7 @@ public class WalletEdit extends AppCompatActivity {
                             walletCategoryModel.add(category);
                         }
                     });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }

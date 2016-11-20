@@ -8,9 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -21,14 +19,10 @@ import com.hcmut.moneymanagement.models.EventModel;
 import com.hcmut.moneymanagement.models.WalletModel;
 import com.hcmut.moneymanagement.objects.Event;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EventsAdd extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private EditText input_name, input_end_date, description;
-    private Spinner curentUnit;
     private WalletModel walletModel;
 
     private EventModel eventModel;
@@ -62,30 +56,15 @@ public class EventsAdd extends AppCompatActivity {
 
         input_end_date.setShowSoftInputOnFocus(false);
 
-        typeOfCurrency();
-
         eventModel = new EventModel();
-    }
-
-    private void typeOfCurrency() {
-        // currencySpinner
-        curentUnit = (Spinner) findViewById(R.id.currencyUnit);
-
-        List<String> currency = new ArrayList<String>();
-        currency.add("VND");
-
-        ArrayAdapter<String> currencyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currency);
-        currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        curentUnit.setAdapter(currencyAdapter);
     }
 
     private Event getValue(){
         String name = input_name.getText().toString();
         String end_date = input_end_date.getText().toString();
         String desciption = description.getText().toString();
-        String currentUnit = curentUnit.getSelectedItem().toString();
 
-        Event event = new Event(name, end_date, currentUnit, desciption);
+        Event event = new Event(name, end_date, desciption);
 
         return event;
     }
@@ -136,7 +115,7 @@ public class EventsAdd extends AppCompatActivity {
     private ChildEventListener onSavingChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(EventsAdd.this,"Add new event successful",Toast.LENGTH_SHORT).show();
+            Toast.makeText(EventsAdd.this,getResources().getString(R.string.new_event),Toast.LENGTH_SHORT).show();
             EventsAdd.this.finish();
         }
 
@@ -157,7 +136,7 @@ public class EventsAdd extends AppCompatActivity {
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Toast.makeText(EventsAdd.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(EventsAdd.this,getResources().getString(R.string.database_err),Toast.LENGTH_LONG).show();
         }
     };
 }

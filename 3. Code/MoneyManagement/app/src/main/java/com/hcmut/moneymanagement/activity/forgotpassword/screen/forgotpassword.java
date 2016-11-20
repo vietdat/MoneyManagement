@@ -51,12 +51,12 @@ public class forgotpassword extends AppCompatActivity implements View.OnClickLis
         String email = editText_email.getText().toString().trim();
         if(TextUtils.isEmpty(email)) {
             //email is empty
-            Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.enter_email), Toast.LENGTH_SHORT).show();
             //Stopping the function execution further
             return;
         }
 
-        progressDialog.setMessage("Reset password...");
+        progressDialog.setMessage(getResources().getString(R.string.reset_password));
         progressDialog.show();
 
         firebaseAuth.sendPasswordResetEmail(email)

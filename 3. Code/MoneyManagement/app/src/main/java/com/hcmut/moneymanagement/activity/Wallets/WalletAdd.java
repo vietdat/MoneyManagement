@@ -63,17 +63,17 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
         String initAmount = startMoney.getText().toString();
 
         if(name.equals("")){
-            Toast.makeText(WalletAdd.this,"Please input name",Toast.LENGTH_SHORT).show();
+            Toast.makeText(WalletAdd.this,getResources().getString(R.string.please_input_name),Toast.LENGTH_SHORT).show();
             return null;
         }
 
         if(initAmount.equals("")){
-            Toast.makeText(WalletAdd.this,"Please input name",Toast.LENGTH_SHORT).show();
+            Toast.makeText(WalletAdd.this,getResources().getString(R.string.please_input_amount),Toast.LENGTH_SHORT).show();
             return null;
         }
 
         if(type.equals("")){
-            Toast.makeText(WalletAdd.this,"Please connect internet to get data!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(WalletAdd.this,getResources().getString(R.string.please_connect_network),Toast.LENGTH_SHORT).show();
             return null;
         }
 
@@ -96,15 +96,15 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selected = typeOfAccount.getSelectedItem().toString();
-                    if(selected.equals("Create new")){
+                    if(selected.equals(getResources().getString(R.string.create_new))){
                         // Create dialog
                         final EditText input = new EditText(WalletAdd.this);
                         AlertDialog.Builder builder = new AlertDialog.Builder(WalletAdd.this);
-                        builder.setTitle("New wallet");
+                        builder.setTitle(getResources().getString(R.string.new_wallet));
                         builder.setView(input);
 
                         // Add the buttons to Dialogs
-                        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 //add to database
                                 dialog.dismiss();
@@ -112,7 +112,7 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
                                 walletCategoryModel.add(category);
                             }
                         });
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
@@ -174,7 +174,7 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
     private ChildEventListener onWalletChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(WalletAdd.this,"Add new wallet success",Toast.LENGTH_SHORT).show();
+            Toast.makeText(WalletAdd.this,getResources().getString(R.string.add_new_wallet_success),Toast.LENGTH_SHORT).show();
             WalletAdd.this.finish();
         }
 
@@ -195,7 +195,7 @@ public class WalletAdd extends AppCompatActivity implements View.OnClickListener
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Toast.makeText(WalletAdd.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(WalletAdd.this,getResources().getString(R.string.database_err),Toast.LENGTH_LONG).show();
         }
     };
 }

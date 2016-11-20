@@ -3,6 +3,7 @@ package com.hcmut.moneymanagement.activity.Transaction;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
+import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.models.ExpenseCategoryModel;
 import com.hcmut.moneymanagement.models.IncomeCategoryModel;
 import com.hcmut.moneymanagement.models.SavingModel;
@@ -28,7 +29,9 @@ public class AdapterController {
         this.context = context;
 
         // Transaction Type Adapter
-        String[] transactionTypes = {"Income", "Expense", "Saving", "Transfer"};
+        String[] transactionTypes = {context.getResources().getString(R.string.income),
+                context.getResources().getString(R.string.expense), context.getResources().getString(R.string.saving),
+                context.getResources().getString(R.string.transfer)};
         transactionTypeAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, transactionTypes);
         transactionTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

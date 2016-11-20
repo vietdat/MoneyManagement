@@ -45,7 +45,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:hint="Name" />
+                        android:hint="@string/name" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -57,7 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:hint="Goal" />
+                        android:hint="@string/goal" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -69,7 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:hint="Current amount" />
+                        android:hint="@string/current_amount" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -81,7 +81,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:hint="Start date" />
+                        android:hint="@string/start_date" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -93,7 +93,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:hint="End date" />
+                        android:hint="@string/end_date" />
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -110,7 +110,7 @@
                         android:inputType="textShortMessage"
                         android:gravity="top|left"
                         android:scrollbars="vertical"
-                        android:hint="Description" />
+                        android:hint="@string/description" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
         </ScrollView>

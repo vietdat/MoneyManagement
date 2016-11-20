@@ -34,7 +34,7 @@
             android:layout_width="80dip"
             android:layout_height="wrap_content"
             android:textColor="#040404"
-            android:text="Goal"
+            android:text="@string/goal"
             android:textSize="15sp" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_width="80dip"
             android:layout_height="wrap_content"
             android:textColor="#040404"
-            android:text="Left"
+            android:text="@string/left"
             android:textSize="15sp"/>
 
         <TextView
@@ -74,7 +74,7 @@
             android:layout_width="80dip"
             android:layout_height="wrap_content"
             android:textColor="#040404"
-            android:text="Current"
+            android:text="@string/current"
             android:textSize="15sp"/>
 
         <TextView

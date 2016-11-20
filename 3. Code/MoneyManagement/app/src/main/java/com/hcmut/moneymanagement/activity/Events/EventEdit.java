@@ -59,7 +59,7 @@ public class EventEdit extends AppCompatActivity {
 
         input_name.setText(event.getName());
         input_end_date.setText(event.getEndDate());
-        spent.setText(String.valueOf(event.getSpent()) + " VND");
+        spent.setText(String.valueOf(event.getSpent()));
         description.setText(event.getDescription());
 
         input_end_date.setShowSoftInputOnFocus(false);
@@ -72,7 +72,7 @@ public class EventEdit extends AppCompatActivity {
         int spent1 = event.getSpent();
         String desciption1 = description.getText().toString();
 
-        Event event = new Event(name, end_date, "VND", desciption1, spent1);
+        Event event = new Event(name, end_date, desciption1, spent1);
         return event;
     }
 
