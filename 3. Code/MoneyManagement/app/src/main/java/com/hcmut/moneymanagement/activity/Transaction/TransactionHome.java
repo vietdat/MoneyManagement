@@ -78,6 +78,11 @@ public class TransactionHome extends Fragment implements View.OnClickListener {
                    intent.putExtra("type", "Expense");
                    intent.setClass(getActivity(), IncomeAndExpenseHome.class);
                    getActivity().startActivity(intent);
+               }else{
+                   Intent intent = new Intent();
+                   intent.putExtra("type", "Saving");
+                   intent.setClass(getActivity(), IncomeAndExpenseHome.class);
+                   getActivity().startActivity(intent);
                }
 
             }

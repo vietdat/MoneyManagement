@@ -1,8 +1,5 @@
 package com.hcmut.moneymanagement.activity.CustomListView.Model;
 
-/**
- * Created by Admin on 15-Oct-16.
- */
 public class ListViewModel {
     private String title;
     private String description;
