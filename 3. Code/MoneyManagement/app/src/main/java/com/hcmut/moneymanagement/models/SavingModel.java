@@ -75,10 +75,6 @@ public class SavingModel extends Model {
                     Object objcurrent_amount = snapshot.child(encrypt("current_amount")).getValue();
                     saving.setCurrent_amount(decrypt(objcurrent_amount.toString()));
 
-                    //currency unit
-                    Object objcurrent_unit = snapshot.child(encrypt("current_unit")).getValue();
-                    saving.setCurrent_unit(decrypt(objcurrent_unit.toString()));
-
                     //Satrt date
                     Object objStartDate = snapshot.child(encrypt("startDate")).getValue();
                     saving.setStartDate(decrypt(objStartDate.toString()));

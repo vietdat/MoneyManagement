@@ -1,15 +1,18 @@
 package com.hcmut.moneymanagement.activity.Transaction;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -69,11 +72,13 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         previousTypeSelected = "";
 
         dateView = (EditText) findViewById(R.id.input_date);
+        dateView.setInputType(InputType.TYPE_NULL);
         // Set default date is today
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String today = df.format(c.getTime());
         dateView.setText(today);
+        dateView.setOnClickListener(this);
 
         typeTransaction = (Spinner) findViewById(R.id.typeTransaction);
         category = (Spinner) findViewById(R.id.category);
@@ -100,17 +105,17 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
             // If the selection has changed
             String selected = typeTransaction.getSelectedItem().toString();
             if( !previousTypeSelected.equals(selected) ) {
-                if (selected.equals("Income")) {
+                if (selected.equals(getResources().getString(R.string.income))) {
                     category.setAdapter(adapterController.getIncomeCategoryAdapter());
-                } else if (selected.equals("Expense")) {
+                } else if (selected.equals(getResources().getString(R.string.expense))) {
                     category.setAdapter(adapterController.getExpenseCategoryAdapter());
-                } else if(selected.equals("Saving")) {
+                } else if(selected.equals(getResources().getString(R.string.saving))) {
                     category.setAdapter(adapterController.getSavingNameAdapter());
-                    tvCategory.setText("Saving name");
-                } else if(selected.equals("Transfer")) {
+                    tvCategory.setText(getResources().getString(R.string.saving_name));
+                } else if(selected.equals(getResources().getString(R.string.transfer))) {
                     category.setAdapter(adapterController.getWalletAdapter());
-                    tvCategory.setText("To wallet");
-                    tvWallet.setText("From wallet");
+                    tvCategory.setText(getResources().getString(R.string.to_wallet));
+                    tvWallet.setText(getResources().getString(R.string.from_wallet));
                 }
                 previousTypeSelected = selected;
             }
@@ -128,26 +133,26 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String selected = category.getSelectedItem().toString();
-            if(selected.equals("Create new")){
+            if(selected.equals(getResources().getString(R.string.create_new))){
                 // Create dialog
                 final EditText input = new EditText(AddTransactionActivity.this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddTransactionActivity.this);
-                builder.setTitle("New category");
+                builder.setTitle(getResources().getString(R.string.new_category));
                 builder.setView(input);
 
                 // Add the buttons to Dialogs
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if(previousTypeSelected.equals("Income")){
+                        if(previousTypeSelected.equals(getResources().getString(R.string.income))){
                             dialog.dismiss();
                             adapterController.addIncomeCategory(input.getText().toString());
-                        }else if(previousTypeSelected.equals("Expense")){
+                        }else if(previousTypeSelected.equals(getResources().getString(R.string.expense))){
                             dialog.dismiss();
                             adapterController.addExpenseCategory(input.getText().toString());
                         }
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -169,7 +174,8 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     private ChildEventListener onTransactionChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(AddTransactionActivity.this,"Add transaction successful",Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddTransactionActivity.this,getResources().getString(R.string.add_transaction_successful),
+                    Toast.LENGTH_SHORT).show();
             AddTransactionActivity.this.finish();
         }
 
@@ -190,7 +196,8 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Toast.makeText(AddTransactionActivity.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(AddTransactionActivity.this,getResources().getString(R.string.database_err),
+                    Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -211,6 +218,12 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         int id = item.getItemId();
         if (id == R.id.mnDone) {
             String typeOfTransactionValue = typeTransaction.getSelectedItem().toString().trim();
+
+            if(amouthOfMoney.getText().toString().equals("")){
+                Toast.makeText(AddTransactionActivity.this,getResources().getString(R.string.input_amount),
+                        Toast.LENGTH_SHORT).show();
+                return false;
+            }
             int moneyAmount = Integer.parseInt(amouthOfMoney.getText().toString());
             String dateViewValue = dateView.getText().toString().trim();
             String descriptionValue = description.getText().toString().trim();
@@ -284,12 +297,14 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
     public void onStart(){
         super.onStart();
+
         dateView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
-                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog =
-                            new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
-                    android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
+                    android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     dialog.show(ft, "DatePicker");
                 }
             }
@@ -299,6 +314,15 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
     @Override
     public void onClick(View view) {
+        if(view == dateView) {
+            com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog =
+                    new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
+            android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+            InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            dialog.show(ft, "DatePicker");
+        }
     }
 
 }

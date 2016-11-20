@@ -9,7 +9,6 @@ public class Event extends Object implements Serializable {
 
     public String name;
     public String endDate;
-    public String current_unit;
     public int spent;
     public String description;
 
@@ -17,20 +16,16 @@ public class Event extends Object implements Serializable {
 
     }
 
-    public Event(String name, String endDate, String current_unit,
-                 String description) {
+    public Event(String name, String endDate, String description) {
         this.name = name;
         this.endDate = endDate;
-        this.current_unit = current_unit;
         this.description = description;
         this.spent = 0;
     }
 
-    public Event(String name, String endDate, String current_unit,
-                 String description, int spent) {
+    public Event(String name, String endDate, String description, int spent) {
         this.name = name;
         this.endDate = endDate;
-        this.current_unit = current_unit;
         this.description = description;
         this.spent = 0;
     }
@@ -50,15 +45,6 @@ public class Event extends Object implements Serializable {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
-
-    public String getCurrent_unit() {
-        return current_unit;
-    }
-
-    public void setCurrent_unit(String current_unit) {
-        this.current_unit = current_unit;
-    }
-
 
     public String getDescription() {
         return description;

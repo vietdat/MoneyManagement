@@ -29,6 +29,24 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp" />
 
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/wallet"
+            app:siBorderWidth="1dp"
+            android:id="@+id/circleView2"
+            android:layout_above="@+id/text_username"
+            android:layout_alignStart="@+id/amount" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/amount"
+            android:text="200 000$"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="53dp"
+            android:layout_alignTop="@+id/text_username"
+            android:layout_alignParentEnd="true" />
+
     </RelativeLayout>
 
 

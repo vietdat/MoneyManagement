@@ -46,28 +46,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:hint="Name" />
+                        android:hint="@string/name" />
                 </android.support.design.widget.TextInputLayout>
-
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:text="Current unit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tvcurrencyUnit" />
-
-                    <Spinner
-                        android:id="@+id/currencyUnit"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-                </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -77,7 +57,7 @@
                     <EditText android:id="@+id/etEndtDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Enter end date" />
+                        android:hint="@string/end_date" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -89,7 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:hint="Description" />
+                        android:hint="@string/description" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
         </ScrollView>

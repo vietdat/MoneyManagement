@@ -14,6 +14,17 @@
         <item>Tools</item>
         <item>Logout</item>
     </string-array>
+    <string-array name="nav_drawer_icon">
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+        <item>ic_add</item>
+    </string-array>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
@@ -22,14 +33,103 @@
     <string name="transaction_title">Activity</string>
     <string name="add_transaction_title">Add activity</string>
     <string name="wallet_title">Wallet</string>
+    <string name="to_wallet">To wallet</string>
+    <string name="from_wallet">From wallet</string>
     <string name="savings">Savings</string>
     <string name="add_wallet_title">Add new wallet</string>
     <string name="add_saving_tittle">Add new saving</string>
+    <string name="add_budget_tittle">Add new budget</string>
     <string name="add_event_tittle">Add new event</string>
     <string name="detail_event_tittle">Event detail</string>
+    <string name="saving_name">Saving name</string>
     <string name="detail_saving_tittle">Saving detail</string>
+    <string name="detail_budget_tittle">Budget detail</string>
     <string name="edit_saving_tittle">Saving edit</string>
+    <string name="edit_budget_tittle">Budget edit</string>
     <string name="edit_events_tittle">Event edit</string>
     <string name="tips_tittle">Tips</string>
+    <string name="setting_tittle">Settings</string>
     <string name="done">Done</string>
+    <string name="create_new">Create new</string>
+    <string name="new_category">New category</string>
+    <string name="add_transaction_successful">Add transaction successful</string>
+    <string name="input_amount">Please input amount</string>
+    <string name="database_err">Error Establishing a Database Connection</string>
+    <string name="running">Running</string>
+    <string name="finish">Finnish</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="wallet">Wallet</string>
+    <string name="add_new">Add new</string>
+    <string name="add_new_category">Please enter new category name.</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="delete_confirm">Deletion Confirm</string>
+    <string name="sure_delete_category">Are you sure you want to delete this category?</string>
+    <string name="no_item">No Item Selected!</string>
+    <string name="select_item">Please select a category from the list.</string>
+    <string name="new_event">Add new event successful</string>
+    <string name="new_saving">Add new saving successful</string>
+    <string name="enter_email">Please enter email</string>
+    <string name="enter_password">Please enter password</string>
+    <string name="reset_password">Reset password...</string>
+    <string name="register_user">Register user...</string>
+    <string name="create_account">Create account...</string>
+    <string name="auth_fail">Auth fail</string>
+    <string name="successful">Successful!</string>
+    <string name="login_fail">Login fail!</string>
+    <string name="least_3_character">At least 3 characters</string>
+    <string name="enter_valid_email">Enter a valid email address</string>
+    <string name="password_not_match">Password and confirm password do not match</string>
+    <string name="budget_add_success">Add new budget successful!</string>
+    <string name="category">Category</string>
+    <string name="budgets">Budgets</string>
+    <string name="saving">Saving</string>
+    <string name="transfer">Transfer</string>
+    <string name="events">Events</string>
+    <string name="graphs">Graphs</string>
+    <string name="tools">Tools</string>
+    <string name="please_input_name">Please input name</string>
+    <string name="please_input_amount">Please input amount</string>
+    <string name="please_connect_network">Please connect network to get data</string>
+    <string name="new_wallet">New wallet</string>
+    <string name="add_new_wallet_success">Add new wallet success</string>
+    <string name="transaction_type">Transaction_type</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="enter_date">Enter date</string>
+    <string name="select_wallet">Select wallet</string>
+    <string name="enter_description">Enter description</string>
+    <string name="name">Name</string>
+    <string name="enter_end_date">Enter end date</string>
+    <string name="amount">Amount</string>
+    <string name="date">Date</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
+    <string name="description">Description</string>
+    <string name="spent">Spent</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="we_just_need">We just need your registed Email id to sent your password reset instructions</string>
+    <string name="email">Email</string>
+    <string name="reset_password_">Reset password</string>
+    <string name="back">Back</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="no_account">No account yet? Create one</string>
+    <string name="goal">Goal</string>
+    <string name="current_amount">Current amount</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="create_account_">Create account</string>
+    <string name="already_member">Already a member? Login</string>
+    <string name="account_type">Account type</string>
+    <string name="start_money">Start money</string>
+    <string name="note">Note</string>
+    <string name="left">Left</string>
+    <string name="current">Current</string>
+    <string name="title_set_new_password_dialog">Nhập mật khẩu mới</string>
+    <string name="title_confirm_password_dialog">Xác nhập mật khẩu</string>
+    <string name="title_confirm_old_password_dialog">Xác nhập mật khẩu cũ</string>
+    <string name="question_set_new_password">Bạn có muốn nhập mật khẩu mới?</string>
+    <string name="txt_info">Thông báo</string>
+    <string name="wrong_password">Wrong password</string>
 </resources>

@@ -1,13 +1,10 @@
 package com.hcmut.moneymanagement.activity.Wallets;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +22,6 @@ public class WalletHome extends Fragment implements View.OnClickListener {
     ListView lv;
     FloatingActionButton addButton;
     private WalletModel  walletModel;
-    FloatingActionButton btnEdit;
-    FloatingActionButton btnDelete;
-    WalletAdapter walletAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,23 +50,6 @@ public class WalletHome extends Fragment implements View.OnClickListener {
         Log.w("Create View", "nothing");
         // Inflate the layout for this fragment
         return rootView;
-    }
-
-    private void showNoItemSelectedDialog(){
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        alertDialogBuilder
-                .setTitle("No Item Selected!")
-                .setMessage("Please select a category from the list.")
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-        Dialog dialog = alertDialogBuilder.create();
-        dialog.show();
     }
 
     @Override

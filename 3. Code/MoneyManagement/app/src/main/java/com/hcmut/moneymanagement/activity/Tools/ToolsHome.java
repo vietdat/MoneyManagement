@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.CustomListView.Model.ListViewModel;
+import com.hcmut.moneymanagement.activity.Tools.Settings.SettingsHome;
 import com.hcmut.moneymanagement.activity.Tools.Tips.TipsHome;
 
 import java.util.ArrayList;
@@ -116,6 +117,9 @@ public class ToolsHome extends Fragment implements View.OnClickListener {
                     Dialog dialog = builder.create();
 
                     dialog.show();
+                } else if (position == 4) {
+                    Intent intent = new Intent(getActivity(), SettingsHome.class);
+                    startActivity(intent);
                 }
 
 

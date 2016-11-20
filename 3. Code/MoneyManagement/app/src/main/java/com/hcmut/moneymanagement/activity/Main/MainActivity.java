@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.activity.Budget.BudgetHome;
 import com.hcmut.moneymanagement.activity.Category.CategoryHome;
 import com.hcmut.moneymanagement.activity.Events.EventsHome;
 import com.hcmut.moneymanagement.activity.Graph.GraphHome;
@@ -23,6 +24,7 @@ import com.hcmut.moneymanagement.activity.Tools.ToolsHome;
 import com.hcmut.moneymanagement.activity.Transaction.TransactionHome;
 import com.hcmut.moneymanagement.activity.Wallets.WalletHome;
 import com.hcmut.moneymanagement.activity.login.screen.Login;
+import com.hcmut.moneymanagement.models.WalletModel;
 
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener, View.OnClickListener {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
     private MenuItem mSearchAction;
+    private WalletModel walletModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         setContentView(R.layout.activity_transactions);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -62,10 +64,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
-
-
-
         return true;
     }
 
@@ -97,27 +95,27 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
             case 2:
                 fragment = new CategoryHome();
-                title = "Category";
+                title = getResources().getString(R.string.category);
                 break;
             case 3:
                 fragment = new SavingsHome();
-                title = "Savings";
+                title = getResources().getString(R.string.saving);
                 break;
             case 4:
-                fragment = new SavingsHome();
-                title = "Budgets";
+                fragment = new BudgetHome();
+                title = getResources().getString(R.string.budgets);
                 break;
             case 5:
                 fragment = new EventsHome();
-                title = "Events";
+                title = getResources().getString(R.string.events);
                 break;
             case 6:
                 fragment = new GraphHome();
-                title = "Graphs";
+                title = getResources().getString(R.string.graphs);
                 break;
             case 7:
                 fragment = new ToolsHome();
-                title = "Tools";
+                title = getResources().getString(R.string.tools);
                 break;
             //Log out
             case 8:

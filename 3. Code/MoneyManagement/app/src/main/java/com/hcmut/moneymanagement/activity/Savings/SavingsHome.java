@@ -24,8 +24,6 @@ public class SavingsHome extends Fragment implements View.OnClickListener {
     private ListView lvRunning;
     private ListView lvFinish;
     FloatingActionButton addButton;
-    FloatingActionButton editButton;
-    FloatingActionButton deleteButton;
     private SavingModel savingModel;
     private Saving chooseSaving = new Saving();
 
@@ -45,16 +43,16 @@ public class SavingsHome extends Fragment implements View.OnClickListener {
         tabHost.setup();
 
         //Running
-        TabHost.TabSpec tabRunning = tabHost.newTabSpec("Running");
+        TabHost.TabSpec tabRunning = tabHost.newTabSpec(getResources().getString(R.string.running));
         tabRunning.setContent(R.id.tabRunning);
-        tabRunning.setIndicator("Running");
+        tabRunning.setIndicator(getResources().getString(R.string.running));
         tabHost.addTab(tabRunning);
         lvRunning = (ListView) rootView.findViewById(R.id.lvRunning);
 
         //Finish
-        TabHost.TabSpec tabFinish = tabHost.newTabSpec("Finish");
+        TabHost.TabSpec tabFinish = tabHost.newTabSpec(getResources().getString(R.string.finish));
         tabFinish.setContent(R.id.tabFinish);
-        tabFinish.setIndicator("Finish");
+        tabFinish.setIndicator(getResources().getString(R.string.finish));
         tabHost.addTab(tabFinish);
         lvFinish = (ListView) rootView.findViewById(R.id.lvFinish);
 

@@ -1,5 +1,6 @@
 package com.hcmut.moneymanagement.activity.Events;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.hcmut.moneymanagement.R;
@@ -57,9 +59,10 @@ public class EventEdit extends AppCompatActivity {
 
         input_name.setText(event.getName());
         input_end_date.setText(event.getEndDate());
-        spent.setText(String.valueOf(event.getSpent()) + " VND");
+        spent.setText(String.valueOf(event.getSpent()));
         description.setText(event.getDescription());
 
+        input_end_date.setShowSoftInputOnFocus(false);
         spent.setFocusable(false);
     }
 
@@ -69,7 +72,7 @@ public class EventEdit extends AppCompatActivity {
         int spent1 = event.getSpent();
         String desciption1 = description.getText().toString();
 
-        Event event = new Event(name, end_date, "VND", desciption1, spent1);
+        Event event = new Event(name, end_date, desciption1, spent1);
         return event;
     }
 
@@ -82,6 +85,8 @@ public class EventEdit extends AppCompatActivity {
                 if(hasfocus){
                     com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
                     android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(view.getWindowToken(), 0);
                     dialog.show(ft, "DatePicker");
                 }
             }

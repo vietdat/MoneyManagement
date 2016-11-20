@@ -30,7 +30,7 @@ public class WalletModel extends Model{
     private ArrayList<String> names;
 
     public ArrayList<Wallet> wallets;
-
+    private int currentAmountOfWallet;
     private ArrayAdapter<String> nameAdapter;
     private WalletAdapter walletAdapter;
 
@@ -40,6 +40,7 @@ public class WalletModel extends Model{
         names = new ArrayList<String>();
         wallets = new ArrayList<Wallet>();
         keys = new ArrayList<String>();
+        currentAmountOfWallet = 0;
 
         // Wallets refecence
         reference = FirebaseDatabase.getInstance().getReference()
@@ -64,10 +65,6 @@ public class WalletModel extends Model{
                     //get type
                     Object objType = walletSnapshot.child(encrypt("type")).getValue();
                     wallet.setType(decrypt(objType.toString()));
-
-                    //currencyUnit
-                    Object objCurrencyUnit = walletSnapshot.child(encrypt("currencyUnit")).getValue();
-                    wallet.setCurrencyUnit(decrypt(objCurrencyUnit.toString()));
 
                     //description
                     Object objDescription = walletSnapshot.child(encrypt("description")).getValue();
@@ -106,12 +103,18 @@ public class WalletModel extends Model{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 keys.clear();
                 names.clear();
-                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
-                    Object objWallet = categorySnapshot.child(encrypt("name")).getValue();
+                currentAmountOfWallet = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Object objWallet = snapshot.child(encrypt("name")).getValue();
                     names.add(decrypt(objWallet.toString()));
-                    keys.add(categorySnapshot.getKey());
+                    keys.add(snapshot.getKey());
+                    Object objCureentAmount = snapshot.child(encrypt("currentAmount")).getValue();
+                    if (objCureentAmount != null) {
+                        int currentAmount = Integer.parseInt(objCureentAmount.toString());
+                        currentAmountOfWallet += currentAmount;
+                    }
+                    nameAdapter.notifyDataSetChanged();
                 }
-                nameAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -161,6 +164,10 @@ public class WalletModel extends Model{
         return  null;
     }
 
+    public int getCurrentAmountOfWallet() {
+        return currentAmountOfWallet;
+    }
+
     public WalletAdapter getWalletAdapter() {
         if(walletAdapter!=null){
             return walletAdapter;
@@ -193,6 +200,8 @@ public class WalletModel extends Model{
             }
         });
     }
+
+
 
     public void decreateMoneyAmount(String key, int amount){
         this.increaseMoneyAmount(key, -amount);

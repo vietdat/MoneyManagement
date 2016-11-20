@@ -70,7 +70,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         progressDialog = new ProgressDialog(SignUp.this, R.style.AppTheme_Dark_Dialog);
 
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
+        progressDialog.setMessage(getResources().getString(R.string.create_account));
 
         String name = editTextUserName.getText().toString();
         final String email = editTextEmail.getText().toString();
@@ -99,13 +99,13 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Toast.makeText(SignUp.this,"Auth fail",Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignUp.this,getResources().getString(R.string.auth_fail),Toast.LENGTH_LONG).show();
                         }
                         else  {
                             createUserData();
                             progressDialog.dismiss();
                             progressDialog.dismiss();
-                            Toast.makeText(SignUp.this,"Successful!",Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignUp.this,getResources().getString(R.string.successful),Toast.LENGTH_LONG).show();
                             startActivity(new Intent(SignUp.this,Login.class));
 
                         }
@@ -120,7 +120,6 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
         userModel.initUserData();
         userModel.write("username",userName);
-
     }
 
     @Override
@@ -137,7 +136,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     //If sign up fail => call it.
     private void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), getResources().getString(R.string.login_fail), Toast.LENGTH_LONG).show();
 
         btnSignUp.setEnabled(true);
     }
@@ -152,7 +151,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         String confirmPassword = editTextConfirmPassword.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
-            editTextUserName.setError("at least 3 characters");
+            editTextUserName.setError(getResources().getString(R.string.least_3_character));
             valid = false;
         } else {
             editTextUserName.setError(null);
@@ -167,21 +166,21 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 //        }
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextEmail.setError("enter a valid email address");
+            editTextEmail.setError(getResources().getString(R.string.enter_valid_email));
             valid = false;
         } else {
             editTextEmail.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            editTextPassword.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty()) {
+            editTextPassword.setError(getResources().getString(R.string.enter_password));
             valid = false;
         } else {
             editTextPassword.setError(null);
         }
 
         if (!password.equals(confirmPassword)){
-            editTextConfirmPassword.setError("Password and confirm password don't match");
+            editTextConfirmPassword.setError(getResources().getString(R.string.password_not_match));
             valid = false;
         } else {
             editTextConfirmPassword.setError(null);

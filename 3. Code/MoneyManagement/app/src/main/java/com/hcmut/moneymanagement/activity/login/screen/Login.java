@@ -2,6 +2,7 @@ package com.hcmut.moneymanagement.activity.login.screen;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,11 +20,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.Main.MainActivity;
+import com.hcmut.moneymanagement.activity.Tools.Settings.LockApp.ConfigLockApp;
+import com.hcmut.moneymanagement.activity.Tools.Settings.LockApp.DialogPassword;
 import com.hcmut.moneymanagement.activity.forgotpassword.screen.forgotpassword;
 import com.hcmut.moneymanagement.activity.signup.screen.SignUp;
 
 public class Login extends Activity implements View.OnClickListener{
-
+    public static Context context;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private Button buttonSignIn;
@@ -37,14 +40,21 @@ public class Login extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
-
+        context = this;
         firebaseAuth = FirebaseAuth.getInstance();
 
+        //Check already login
         if(firebaseAuth.getCurrentUser() != null){
-            //profile activity here
-            finish();
-            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            boolean isNoLock = ConfigLockApp.config.getString(ConfigLockApp.IS_LOCK,"").isEmpty();
+            if(isNoLock) {
+                finish();
+                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            } else {
+                DialogPassword dp = new DialogPassword(Login.this,DialogPassword.TYPE_LOCK_SCREEN);
+                dp.show();
+            }
+
         }
 
         editTextEmail = (EditText) findViewById(R.id.input_email);
@@ -66,7 +76,7 @@ public class Login extends Activity implements View.OnClickListener{
 
         if(TextUtils.isEmpty(email)) {
             //email is empty
-            Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.enter_email), Toast.LENGTH_SHORT).show();
 
             //Stopping the function execution further
             return;
@@ -74,7 +84,7 @@ public class Login extends Activity implements View.OnClickListener{
 
         if(TextUtils.isEmpty(password)) {
             //password is empty
-            Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.enter_password), Toast.LENGTH_SHORT).show();
 
             //Stopping the function execution further
             return;
@@ -84,7 +94,7 @@ public class Login extends Activity implements View.OnClickListener{
         //we will first show a progress dialog
 
 
-        progressDialog.setMessage("Registering user...");
+        progressDialog.setMessage(getResources().getString(R.string.register_user));
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
