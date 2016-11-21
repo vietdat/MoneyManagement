@@ -123,35 +123,4 @@ public abstract class CategoryModel extends Model{
         }
         return null;
     }
-
-    public String getNameByKey(final String key){
-        String name = "";
-
-        /*
-        final Semaphore semaphore = new Semaphore(0);
-        try {
-            DatabaseReference itemReference = reference.child(key);
-            itemReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Object objName = dataSnapshot.child(encrypt("name")).getValue();
-
-                    name = objName.toString();
-                    semaphore.release();
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.w(TAG, "loadCategory:onCancelled", databaseError.toException());
-                }
-            });
-
-            semaphore.acquire();
-        }catch (InterruptedException ex){
-            Log.w(TAG, ex.toString());
-        }
-        */
-
-        return name;
-    }
 }

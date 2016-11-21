@@ -12,11 +12,21 @@ import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.R;
+
+import com.hcmut.moneymanagement.activity.CustomListView.Adapter.TransactionAdapter;
+import com.hcmut.moneymanagement.activity.CustomListView.Model.Transaction;
+
 import com.hcmut.moneymanagement.activity.DetailIncomeAndExpense.DetailIncomeAndExpense;
+import com.hcmut.moneymanagement.models.CategoryModel;
+import com.hcmut.moneymanagement.models.ExpenseCategoryModel;
 import com.hcmut.moneymanagement.models.IncomeCategoryModel;
+import com.hcmut.moneymanagement.models.Model;
+import com.hcmut.moneymanagement.models.SavingModel;
 import com.hcmut.moneymanagement.models.TransactionModel;
+import com.hcmut.moneymanagement.objects.Category;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -24,12 +34,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class FragmentIE extends android.support.v4.app.Fragment {
     private ListView lv;
-    private ArrayList<ListViewModel> items;
-    private MyArrayAdapter transactions;
+    private ArrayList<Transaction> items;
+    private TransactionAdapter transactions;
 
     private String type; // Transaction types: {"Income", "Expense", "Saving"}
     private int month;  // month of the transaction
@@ -53,7 +64,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
         lv = (ListView)rootView.findViewById(R.id.lv_income_expense);
 
         items = new ArrayList<>();
-        transactions = new MyArrayAdapter(getActivity(), R.layout.list_row_income, items);
+        transactions = new TransactionAdapter(getActivity(), R.layout.transaction_item, items);
         lv.setAdapter(transactions);
 
         addItemToListView();
@@ -70,32 +81,58 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                     Object objType = transactionSnapshot.child(transactionModel.encrypt("type")).getValue();
                     if (objType != null) {
                         if (objType.toString().equals(type)) {
-                            Object objAmount = transactionSnapshot.child(transactionModel.encrypt("money")).getValue();
-                            Object objDate = transactionSnapshot.child(transactionModel.encrypt("date")).getValue();
-                            Object objCateId = transactionSnapshot.child(transactionModel.encrypt("category")).getValue();
+                            final Object objAmount = transactionSnapshot.child(transactionModel.encrypt("money")).getValue();
+                            final Object objDate = transactionSnapshot.child(transactionModel.encrypt("date")).getValue();
+                            final Object objCateId = transactionSnapshot.child(transactionModel.encrypt("category")).getValue();
 
-                            //IncomeCategoryModel incomeCategoryModel = new IncomeCategoryModel();
-                            //String cate_name = incomeCategoryModel.getNameByKey(objCateId.toString());
 
-                            if (objAmount != null && objDate != null) {
-                                DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                                try {
-                                    Date itemDate = format.parse(objDate.toString());
+                            if (objAmount != null && objDate != null && objCateId != null ){
+                                final Model categoryModel;
+                                DatabaseReference itemReference;
+                                if( type.equals("Income") ){
+                                    categoryModel = new IncomeCategoryModel();
+                                }else if( type.equals("Expense") ){
+                                    categoryModel = new ExpenseCategoryModel();
+                                }else{
+                                    categoryModel = new SavingModel();
+                                }
 
-                                    Calendar cal = Calendar.getInstance();
-                                    cal.setTime(itemDate);
-                                    int itemMonth = cal.get(Calendar.MONTH) + 1;
+                                itemReference = categoryModel.getReference().child(objCateId.toString());
 
-                                    if (itemMonth == month) {
-                                        if(type.equals("Income")) {
-                                            items.add(new ListViewModel(objDate.toString(), "+ " + objAmount.toString()));
-                                        }else if( type.equals("Expense") ){
-                                            items.add(new ListViewModel(objDate.toString(), "- " + objAmount.toString()));
+                                itemReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        Object objCateName = dataSnapshot.child(categoryModel.encrypt("name")).getValue();
+                                        if( objCateName != null) {
+                                            DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                                            try {
+                                                Date itemDate = format.parse(objDate.toString());
+
+                                                Calendar cal = Calendar.getInstance();
+                                                cal.setTime(itemDate);
+                                                int itemMonth = cal.get(Calendar.MONTH) + 1;
+
+                                                if (itemMonth == month) {
+                                                    if (type.equals("Income")) {
+                                                        items.add(new Transaction(objCateName.toString(), objDate.toString(), "+ " + objAmount.toString()));
+                                                    } else if (type.equals("Expense")) {
+                                                        items.add(new Transaction(objCateName.toString(), objDate.toString(), "- " + objAmount.toString()));
+                                                    }else{
+                                                        items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" + objAmount.toString()));
+                                                    }
+                                                    transactions.notifyDataSetChanged();
+                                                }
+                                            } catch (ParseException ex) {
+                                                ex.printStackTrace();
+                                            }
                                         }
                                     }
-                                } catch (ParseException ex) {
-                                    ex.printStackTrace();
-                                }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
                             }
                         }
                     }
