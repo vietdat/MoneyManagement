@@ -31,7 +31,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="transaction_title">Activity</string>
-    <string name="add_transaction_title">Add activity</string>
+    <string name="add_transaction_title">Thêm hoạt động</string>
     <string name="wallet_title">Wallet</string>
     <string name="to_wallet">To wallet</string>
     <string name="from_wallet">From wallet</string>
@@ -89,7 +89,7 @@
     <string name="transfer">Transfer</string>
     <string name="events">Events</string>
     <string name="graphs">Graphs</string>
-    <string name="tools">Tools</string>
+    <string name="tools">Công cụ</string>
     <string name="please_input_name">Please input name</string>
     <string name="please_input_amount">Please input amount</string>
     <string name="please_connect_network">Please connect network to get data</string>
@@ -124,11 +124,9 @@
     <string name="account_type">Account type</string>
     <string name="start_money">Start money</string>
     <string name="note">Note</string>
-    <string name="left">Left</string>
-    <string name="current">Current</string>
-    <string name="title_set_new_password_dialog">Nhập mật khẩu mới</string>
-    <string name="title_confirm_password_dialog">Xác nhập mật khẩu</string>
-    <string name="title_confirm_old_password_dialog">Xác nhập mật khẩu cũ</string>
-    <string name="question_set_new_password">Bạn có muốn nhập mật khẩu mới?</string>
-    <string name="txt_info">Thông báo</string>
+    <string name="wrong_password">Wrong password</string>
+    <string name="forgot_password_lockapp">Forgot pattern lock? Please login!</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="english">English</string>
+    <string name="change_laguage">Ngôn ngữ</string>
 </resources>

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import com.hcmut.moneymanagement.activity.Tools.Settings.SettingsHome;
 import com.hcmut.moneymanagement.activity.Tools.Tips.TipsHome;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ToolsHome extends Fragment implements View.OnClickListener {
     ListView lv;
@@ -60,6 +63,7 @@ public class ToolsHome extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_tools_home, container, false);
         lv = (ListView) rootView.findViewById(R.id.lvTools);
         addItemToListView();

@@ -55,7 +55,7 @@ public class BudgetAdd extends AppCompatActivity {
 
         budgetModel = new BudgetModel();
         expenseCategoryModel = new ExpenseCategoryModel();
-        expenseCategoryModel.initListViewAdapter(getApplicationContext());
+        expenseCategoryModel.initSpinnerAdapter(getBaseContext());
         category.setAdapter(expenseCategoryModel.getNameAdapter());
     }
 

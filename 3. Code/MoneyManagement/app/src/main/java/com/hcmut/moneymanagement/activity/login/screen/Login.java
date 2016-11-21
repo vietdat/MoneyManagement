@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -52,9 +53,9 @@ public class Login extends Activity implements View.OnClickListener{
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             } else {
                 DialogPassword dp = new DialogPassword(Login.this,DialogPassword.TYPE_LOCK_SCREEN);
+                dp.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 dp.show();
             }
-
         }
 
         editTextEmail = (EditText) findViewById(R.id.input_email);

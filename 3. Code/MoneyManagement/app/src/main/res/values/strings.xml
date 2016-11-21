@@ -126,10 +126,15 @@
     <string name="note">Note</string>
     <string name="left">Left</string>
     <string name="current">Current</string>
-    <string name="title_set_new_password_dialog">Nhập mật khẩu mới</string>
-    <string name="title_confirm_password_dialog">Xác nhập mật khẩu</string>
-    <string name="title_confirm_old_password_dialog">Xác nhập mật khẩu cũ</string>
-    <string name="question_set_new_password">Bạn có muốn nhập mật khẩu mới?</string>
-    <string name="txt_info">Thông báo</string>
+    <string name="title_set_new_password_dialog">New password</string>
+    <string name="title_confirm_password_dialog">Confirm password</string>
+    <string name="title_confirm_old_password_dialog">Input old password</string>
+    <string name="input_password">Input password</string>
+    <string name="question_set_new_password">Are you sure create new password?</string>
+    <string name="txt_info">Note</string>
     <string name="wrong_password">Wrong password</string>
+    <string name="forgot_password_lockapp">Forgot pattern lock? Please login!</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="english">English</string>
+    <string name="change_laguage">Change language</string>
 </resources>

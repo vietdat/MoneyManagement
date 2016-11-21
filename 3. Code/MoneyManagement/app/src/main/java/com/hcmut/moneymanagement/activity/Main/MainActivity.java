@@ -30,7 +30,7 @@ import com.hcmut.moneymanagement.models.WalletModel;
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener, View.OnClickListener {
 
     private static String TAG = MainActivity.class.getSimpleName();
-
+    public static String currency = "USD";
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
     private MenuItem mSearchAction;

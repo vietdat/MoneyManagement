@@ -2,6 +2,8 @@ package com.hcmut.moneymanagement.activity.Tools.Settings;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,14 +21,33 @@ import com.hcmut.moneymanagement.activity.Tools.Settings.LockApp.DialogPassword;
 import com.hcmut.moneymanagement.activity.Tools.ToolsAdapter;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class SettingsHome extends AppCompatActivity {
     ListView lv;
     Toolbar mToolbar;
     static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences mPrefs = getSharedPreferences("language", MODE_PRIVATE);
+        String lang = mPrefs.getString("language", "0");
+
+        String languageToLoad;
+        if (lang.equals("1")) {
+            languageToLoad = "vi"; // your language
+        } else {
+            languageToLoad = "en"; // your language
+        }
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+
+
         setContentView(R.layout.activity_settings_home);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -43,7 +64,6 @@ public class SettingsHome extends AppCompatActivity {
         selecteItemInListView();
     }
 
-
     //add item to listview
     private void addItemToListView() {
         final ArrayList<ListViewModel> arr = new ArrayList<>();
@@ -56,7 +76,7 @@ public class SettingsHome extends AppCompatActivity {
         } else {
             setting3 = new ListViewModel("ic_profile", "Remove lock", "Thong tin ve vi tien cua ban");
         }
-        ListViewModel setting4 = new ListViewModel("ic_profile", "Change language", "Thong tin ve vi tien cua ban");
+        ListViewModel setting4 = new ListViewModel("ic_profile", getApplicationContext().getString(R.string.change_laguage), "Thong tin ve vi tien cua ban");
         arr.add(setting1);
         arr.add(setting2);
         arr.add(setting3);
@@ -64,6 +84,7 @@ public class SettingsHome extends AppCompatActivity {
 
         ToolsAdapter mayArr = new ToolsAdapter(this, R.layout.tool_item, arr);
 
+        mayArr.notifyDataSetChanged();
         lv.setAdapter(mayArr);
     }
 
@@ -90,7 +111,31 @@ public class SettingsHome extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 if(position == 0) {
+                    AlertDialog.Builder adb = new AlertDialog.Builder(context);
+                    CharSequence items[] = new CharSequence[] {"USD","VND"};
+                    final SharedPreferences mPrefs = getSharedPreferences("language", MODE_PRIVATE);
+                    String currency = mPrefs.getString("currency", "0");
+                    int pos;
+                    if (currency.equals("1")) {
+                        pos = 1;
+                    } else {
+                        pos = 0;
+                    }
 
+                    adb.setSingleChoiceItems(items, pos, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface d, int n) {
+                            SharedPreferences.Editor edit = mPrefs.edit();
+                            edit.putString("currency", Integer.toString(n));
+
+                            edit.commit();
+                            d.dismiss();
+                            finish();
+                        }
+                    });
+                    adb.setPositiveButton("Cancel", null);
+                    adb.setTitle("Choose type currency");
+                    adb.show();
                 } else if(position == 1) {
 
                 } else if(position == 2) {
@@ -120,14 +165,38 @@ public class SettingsHome extends AppCompatActivity {
                                     })
                                     .setIcon(android.R.drawable.ic_dialog_alert)
                                     .show();
-
                         }
                     } else {
                         DialogPassword dp = new DialogPassword(context,DialogPassword.TYPE_UNLOCK);
                         dp.show();
                     }
                 } else if(position == 3) {
+                    AlertDialog.Builder adb = new AlertDialog.Builder(context);
+                    CharSequence items[] = new CharSequence[] {context.getApplicationContext().getString(R.string.english),
+                            context.getApplicationContext().getString(R.string.vietnamese)};
+                    final SharedPreferences mPrefs = getSharedPreferences("language", MODE_PRIVATE);
+                    String lang = mPrefs.getString("language", "0");
+                    int pos;
+                    if (lang.equals("1")) {
+                        pos = 1;
+                    } else {
+                        pos = 0;
+                    }
 
+                    adb.setSingleChoiceItems(items, pos, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface d, int n) {
+                            SharedPreferences.Editor edit = mPrefs.edit();
+                            edit.putString("language", Integer.toString(n));
+
+                            edit.commit();
+                            d.dismiss();
+                            finish();
+                        }
+                    });
+                    adb.setPositiveButton("Cancel", null);
+                    adb.setTitle("Choose language");
+                    adb.show();
                 }
             }
         });

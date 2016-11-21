@@ -2,11 +2,15 @@ package com.hcmut.moneymanagement.activity.splash.screen;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.login.screen.LoginScreen;
+
+import java.util.Locale;
 
 /**
  * Created by Admin on 29-Sep-16.
@@ -19,6 +23,25 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle saveIntanceState){
         super.onCreate(saveIntanceState);
+
+        SharedPreferences mPrefs = getSharedPreferences("language", MODE_PRIVATE);
+        String lang = mPrefs.getString("language", "0");
+        String currency = mPrefs.getString("currency", "0");
+            String languageToLoad;
+            if (lang.equals("1")) {
+                languageToLoad = "vi"; // your language
+            } else {
+                languageToLoad = "en"; // your language
+            }
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+
+
+
         setContentView(R.layout.splashscreen);
 
         new Handler().postDelayed(new Runnable() {
