@@ -51,13 +51,15 @@ public class TransactionHome extends Fragment implements View.OnClickListener {
     //add item to listview
     private void addItemToListView() {
         final ArrayList<ListViewModel> arr = new ArrayList<>();
-        ListViewModel income = new ListViewModel("ic_profile", "Income", "Thong tin ve thu nhap cua ban");
-        ListViewModel expense = new ListViewModel("ic_profile", "Expense", "Thong tin ve chi tieu cua ban");
-        ListViewModel saving = new ListViewModel("ic_profile", "Saving", "Thong tin ve vi tien cua ban");
+        ListViewModel income = new ListViewModel("ic_profile", getContext().getString(R.string.income), getContext().getString(R.string.income_activity));
+        ListViewModel expense = new ListViewModel("ic_profile", getContext().getString(R.string.expense), getContext().getString(R.string.expense_activity));
+        ListViewModel saving = new ListViewModel("ic_profile", getContext().getString(R.string.saving), getContext().getString(R.string.saving_activity));
+        ListViewModel transfer = new ListViewModel("ic_profile", getContext().getString(R.string.transfer), getContext().getString(R.string.transfer_activity));
 
         arr.add(income);
         arr.add(expense);
         arr.add(saving);
+        arr.add(transfer);
 
         MyArrayAdapter mayArr = new MyArrayAdapter(getActivity(), R.layout.list_row, arr);
 
@@ -78,9 +80,14 @@ public class TransactionHome extends Fragment implements View.OnClickListener {
                    intent.putExtra("type", "Expense");
                    intent.setClass(getActivity(), IncomeAndExpenseHome.class);
                    getActivity().startActivity(intent);
-               }else{
+               } else if(i == 2){
                    Intent intent = new Intent();
                    intent.putExtra("type", "Saving");
+                   intent.setClass(getActivity(), IncomeAndExpenseHome.class);
+                   getActivity().startActivity(intent);
+               } else{
+                   Intent intent = new Intent();
+                   intent.putExtra("type", "Transfer");
                    intent.setClass(getActivity(), IncomeAndExpenseHome.class);
                    getActivity().startActivity(intent);
                }

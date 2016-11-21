@@ -137,4 +137,8 @@
     <string name="vietnamese">Vietnamese</string>
     <string name="english">English</string>
     <string name="change_laguage">Change language</string>
+    <string name="income_activity">Information about income</string>
+    <string name="expense_activity">Information about expense</string>
+    <string name="saving_activity">Information about savings</string>
+    <string name="transfer_activity">Information about transfer money</string>
 </resources>
