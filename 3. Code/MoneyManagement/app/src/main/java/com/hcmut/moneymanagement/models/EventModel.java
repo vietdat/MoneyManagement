@@ -63,10 +63,6 @@ public class EventModel extends Model {
                     Object obj = snapshot.child(encrypt("name")).getValue();
                     event.setName(decrypt(obj.toString()));
 
-                    //currency unit
-                    Object objcurrent_unit = snapshot.child(encrypt("current_unit")).getValue();
-                    event.setCurrent_unit(decrypt(objcurrent_unit.toString()));
-
                     //End date
                     Object objEndDate = snapshot.child(encrypt("endDate")).getValue();
                     event.setEndDate(decrypt(objEndDate.toString()));

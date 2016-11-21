@@ -116,7 +116,7 @@ public class BudgetAdd extends AppCompatActivity {
     private ChildEventListener onSavingChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(BudgetAdd.this,"Add new budget successful",Toast.LENGTH_SHORT).show();
+            Toast.makeText(BudgetAdd.this,R.string.budget_add_success,Toast.LENGTH_SHORT).show();
             BudgetAdd.this.finish();
         }
 
@@ -137,7 +137,7 @@ public class BudgetAdd extends AppCompatActivity {
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Toast.makeText(BudgetAdd.this,"Error Establishing a Database Connection",Toast.LENGTH_SHORT).show();
+            Toast.makeText(BudgetAdd.this,R.string.database_err,Toast.LENGTH_SHORT).show();
         }
     };
 }

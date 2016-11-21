@@ -132,7 +132,7 @@ public class SavingsAdd extends AppCompatActivity {
     private ChildEventListener onSavingChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(SavingsAdd.this,"Add new saving successful",Toast.LENGTH_LONG).show();
+            Toast.makeText(SavingsAdd.this,getResources().getString(R.string.new_saving),Toast.LENGTH_LONG).show();
             SavingsAdd.this.finish();
         }
 
@@ -153,7 +153,7 @@ public class SavingsAdd extends AppCompatActivity {
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Toast.makeText(SavingsAdd.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(SavingsAdd.this,getResources().getString(R.string.database_err),Toast.LENGTH_LONG).show();
         }
     };
 }

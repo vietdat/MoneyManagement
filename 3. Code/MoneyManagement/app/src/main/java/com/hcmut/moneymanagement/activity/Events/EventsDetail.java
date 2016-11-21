@@ -54,7 +54,7 @@ public class EventsDetail extends AppCompatActivity {
 
         input_name.setText(event.getName());
         input_end_date.setText(event.getEndDate());
-        spent.setText(String.valueOf(event.getSpent()) + " VND");
+        spent.setText(String.valueOf(event.getSpent()));
         description.setText(event.getDescription());
 
         input_name.setFocusable(false);

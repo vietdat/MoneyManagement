@@ -34,7 +34,7 @@
             android:layout_width="80dip"
             android:layout_height="wrap_content"
             android:textColor="#040404"
-            android:text="End Date"
+            android:text="@string/end_date"
             android:textSize="15sp"/>
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_width="80dip"
             android:layout_height="wrap_content"
             android:textColor="#040404"
-            android:text="Current amount"
+            android:text="@string/current_amount"
             android:textSize="15sp"/>
 
         <TextView
@@ -74,7 +74,7 @@
             android:layout_width="80dip"
             android:layout_height="wrap_content"
             android:textColor="#040404"
-            android:text="Category"
+            android:text="@string/category"
             android:textSize="15sp"/>
 
         <TextView

@@ -5,23 +5,18 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.preference.DialogPreference;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
 
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.Transaction.AdapterController;
-import com.hcmut.moneymanagement.activity.Transaction.AddTransactionActivity;
 import com.hcmut.moneymanagement.models.ExpenseCategoryModel;
 import com.hcmut.moneymanagement.models.IncomeCategoryModel;
 import com.hcmut.moneymanagement.models.WalletCategoryModel;
@@ -29,7 +24,6 @@ import com.hcmut.moneymanagement.objects.Category;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class CategoryHome extends Fragment{
     private TabHost tabHost;
@@ -61,17 +55,17 @@ public class CategoryHome extends Fragment{
 
         TabHost.TabSpec tabIncome = tabHost.newTabSpec("Income");
         tabIncome.setContent(R.id.tabIncome);
-        tabIncome.setIndicator("Income");
+        tabIncome.setIndicator(getResources().getString(R.string.income));
         tabHost.addTab(tabIncome);
 
         TabHost.TabSpec tabExpense = tabHost.newTabSpec("Expense");
         tabExpense.setContent(R.id.tabExpense);
-        tabExpense.setIndicator("Expense");
+        tabExpense.setIndicator(getResources().getString(R.string.expense));
         tabHost.addTab(tabExpense);
 
         TabHost.TabSpec tabWallet = tabHost.newTabSpec("Wallet");
         tabWallet.setContent(R.id.tabWallet);
-        tabWallet.setIndicator("Wallet");
+        tabWallet.setIndicator(getResources().getString(R.string.wallet));
         tabHost.addTab(tabWallet);
 
         // Init Models
@@ -141,10 +135,10 @@ public class CategoryHome extends Fragment{
 
             final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
             alertDialogBuilder
-                    .setTitle("Add New")
-                    .setMessage("Please enter new category name.")
+                    .setTitle(getResources().getString(R.string.add_new))
+                    .setMessage(getResources().getString(R.string.add_new_category))
                     .setView(input)
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String value = input.getText().toString().trim();
@@ -162,7 +156,7 @@ public class CategoryHome extends Fragment{
                             }
                         }
                     })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -192,10 +186,10 @@ public class CategoryHome extends Fragment{
 
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                 alertDialogBuilder
-                        .setTitle("Edit")
-                        .setMessage("Please enter new category name.")
+                        .setTitle(getResources().getString(R.string.edit))
+                        .setMessage(getResources().getString(R.string.add_new_category))
                         .setView(input)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String value = input.getText().toString().trim();
@@ -218,7 +212,7 @@ public class CategoryHome extends Fragment{
                                 }
                             }
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -242,10 +236,10 @@ public class CategoryHome extends Fragment{
             if(selectedPosition != -1){
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                 alertDialogBuilder
-                        .setTitle("Deletion Confirm")
-                        .setMessage("Are you sure you want to delete this category?")
+                        .setTitle(getResources().getString(R.string.delete_confirm))
+                        .setMessage(getResources().getString(R.string.sure_delete_category))
                         .setIcon(android.R.drawable.ic_dialog_info)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if(tabHost.getCurrentTab() == 0){
@@ -263,7 +257,7 @@ public class CategoryHome extends Fragment{
                                 dialog.dismiss();
                             }
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -281,10 +275,10 @@ public class CategoryHome extends Fragment{
     private void showNoItemSelectedDialog(){
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder
-                .setTitle("No Item Selected!")
-                .setMessage("Please select a category from the list.")
+                .setTitle(getResources().getString(R.string.no_item))
+                .setMessage(getResources().getString(R.string.select_item))
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

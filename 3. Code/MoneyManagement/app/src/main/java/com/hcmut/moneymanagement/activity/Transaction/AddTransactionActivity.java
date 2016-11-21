@@ -105,17 +105,17 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
             // If the selection has changed
             String selected = typeTransaction.getSelectedItem().toString();
             if( !previousTypeSelected.equals(selected) ) {
-                if (selected.equals("Income")) {
+                if (selected.equals(getResources().getString(R.string.income))) {
                     category.setAdapter(adapterController.getIncomeCategoryAdapter());
-                } else if (selected.equals("Expense")) {
+                } else if (selected.equals(getResources().getString(R.string.expense))) {
                     category.setAdapter(adapterController.getExpenseCategoryAdapter());
-                } else if(selected.equals("Saving")) {
+                } else if(selected.equals(getResources().getString(R.string.saving))) {
                     category.setAdapter(adapterController.getSavingNameAdapter());
-                    tvCategory.setText("Saving name");
-                } else if(selected.equals("Transfer")) {
+                    tvCategory.setText(getResources().getString(R.string.saving_name));
+                } else if(selected.equals(getResources().getString(R.string.transfer))) {
                     category.setAdapter(adapterController.getWalletAdapter());
-                    tvCategory.setText("To wallet");
-                    tvWallet.setText("From wallet");
+                    tvCategory.setText(getResources().getString(R.string.to_wallet));
+                    tvWallet.setText(getResources().getString(R.string.from_wallet));
                 }
                 previousTypeSelected = selected;
             }
@@ -133,26 +133,26 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String selected = category.getSelectedItem().toString();
-            if(selected.equals("Create new")){
+            if(selected.equals(getResources().getString(R.string.create_new))){
                 // Create dialog
                 final EditText input = new EditText(AddTransactionActivity.this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddTransactionActivity.this);
-                builder.setTitle("New category");
+                builder.setTitle(getResources().getString(R.string.new_category));
                 builder.setView(input);
 
                 // Add the buttons to Dialogs
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if(previousTypeSelected.equals("Income")){
+                        if(previousTypeSelected.equals(getResources().getString(R.string.income))){
                             dialog.dismiss();
                             adapterController.addIncomeCategory(input.getText().toString());
-                        }else if(previousTypeSelected.equals("Expense")){
+                        }else if(previousTypeSelected.equals(getResources().getString(R.string.expense))){
                             dialog.dismiss();
                             adapterController.addExpenseCategory(input.getText().toString());
                         }
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -174,7 +174,8 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     private ChildEventListener onTransactionChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(AddTransactionActivity.this,"Add transaction successful",Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddTransactionActivity.this,getResources().getString(R.string.add_transaction_successful),
+                    Toast.LENGTH_SHORT).show();
             AddTransactionActivity.this.finish();
         }
 
@@ -195,7 +196,8 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
-            Toast.makeText(AddTransactionActivity.this,"Error Establishing a Database Connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(AddTransactionActivity.this,getResources().getString(R.string.database_err),
+                    Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -218,7 +220,8 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
             String typeOfTransactionValue = typeTransaction.getSelectedItem().toString().trim();
 
             if(amouthOfMoney.getText().toString().equals("")){
-                Toast.makeText(AddTransactionActivity.this,"Please input amount",Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddTransactionActivity.this,getResources().getString(R.string.input_amount),
+                        Toast.LENGTH_SHORT).show();
                 return false;
             }
             int moneyAmount = Integer.parseInt(amouthOfMoney.getText().toString());
