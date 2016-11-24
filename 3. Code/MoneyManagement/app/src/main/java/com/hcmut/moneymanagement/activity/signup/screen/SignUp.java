@@ -104,10 +104,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                         else  {
                             createUserData();
                             progressDialog.dismiss();
-                            progressDialog.dismiss();
                             Toast.makeText(SignUp.this,getResources().getString(R.string.successful),Toast.LENGTH_LONG).show();
                             startActivity(new Intent(SignUp.this,Login.class));
-
                         }
                     }
                 });
@@ -136,7 +134,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     //If sign up fail => call it.
     private void onSignupFailed() {
-        Toast.makeText(getBaseContext(), getResources().getString(R.string.login_fail), Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), getResources().getString(R.string.sign_up_fail), Toast.LENGTH_LONG).show();
 
         btnSignUp.setEnabled(true);
     }

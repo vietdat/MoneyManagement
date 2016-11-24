@@ -113,7 +113,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                                                         items.add(new Transaction(objCateName.toString(), objDate.toString(), "+ " + objAmount.toString()));
                                                     } else if (type.equals("Expense")) {
                                                         items.add(new Transaction(objCateName.toString(), objDate.toString(), "- " + objAmount.toString()));
-                                                    }else if(type.equals("Saving")){
+                                                    } else if(type.equals("Saving")){
                                                         items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" + objAmount.toString()));
                                                     } else {
                                                         DatabaseReference reference = walletModel.getReference().child(objWalletId.toString());

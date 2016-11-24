@@ -18,7 +18,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.Main.MainActivity;
 import com.hcmut.moneymanagement.activity.Tools.Settings.LockApp.ConfigLockApp;
@@ -49,7 +48,6 @@ public class Login extends Activity implements View.OnClickListener{
             boolean isNoLock = ConfigLockApp.config.getString(ConfigLockApp.IS_LOCK,"").isEmpty();
             if(isNoLock) {
                 finish();
-                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             } else {
                 DialogPassword dp = new DialogPassword(Login.this,DialogPassword.TYPE_LOCK_SCREEN);

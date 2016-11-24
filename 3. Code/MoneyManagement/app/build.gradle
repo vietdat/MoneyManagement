@@ -39,7 +39,7 @@ dependencies {
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
     compile 'com.google.android.gms:play-services-appindexing:9.4.0'
     compile 'com.android.support:cardview-v7:24.2.1'
-    compile 'com.numetriclabz.numandroidcharts:numandroidcharts:1.0.3'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     compile project(path: ':materiallockview')
 }
 

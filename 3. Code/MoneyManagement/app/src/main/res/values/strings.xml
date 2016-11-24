@@ -79,6 +79,7 @@
     <string name="auth_fail">Auth fail</string>
     <string name="successful">Successful!</string>
     <string name="login_fail">Login fail!</string>
+    <string name="sign_up_fail">Sign up fail!</string>
     <string name="least_3_character">At least 3 characters</string>
     <string name="enter_valid_email">Enter a valid email address</string>
     <string name="password_not_match">Password and confirm password do not match</string>
@@ -141,4 +142,8 @@
     <string name="expense_activity">Information about expense</string>
     <string name="saving_activity">Information about savings</string>
     <string name="transfer_activity">Information about transfer money</string>
+    <string name="type">Type</string>
+    <string name="netIncome">Net income</string>
+    <string name="byTime">By time</string>
+    <string name="byCategory">By category</string>
 </resources>

@@ -47,7 +47,7 @@ public class BudgetAdapter extends ArrayAdapter<Budget> {
 
         //Gán giá trị cho những control đó
         budgetName.setText(budget.getName());
-        current_amount.setText(String.valueOf(budget.getAmount()));
+        current_amount.setText(String.valueOf(budget.getCurrentAmount()));
         endDate.setText(budget.getEndDate());
         category.setText(budget.getCategory());
 

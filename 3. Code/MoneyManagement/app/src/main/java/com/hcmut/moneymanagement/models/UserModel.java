@@ -9,6 +9,7 @@ import com.hcmut.moneymanagement.objects.Wallet;
 
 public class UserModel extends Model {
     public UserModel(){
+        Utils.getDatabase();
         // Database reference of current user
         reference = FirebaseDatabase.getInstance().getReference().child(uidEncrypted);
         reference.keepSynced(true);

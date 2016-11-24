@@ -204,7 +204,7 @@ public class BudgetModel extends Model {
                     int currentAmount = Integer.parseInt(objCurrentAmount.toString());
                     currentAmount -= amount;
                     Map<String, Object> update = new HashMap<String, Object>();
-                    update.put(encrypt("spent"), String.valueOf(currentAmount));
+                    update.put(encrypt("currentAmount"), String.valueOf(currentAmount));
 
                     budgetReference.updateChildren(update);
                 }
