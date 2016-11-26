@@ -17,15 +17,14 @@
             android:layout_height="70dp"
             android:src="@drawable/ic_profile"
             app:siBorderWidth="1dp"
-            android:id="@+id/circleView"
+            android:id="@+id/iconProfile"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/circleView"
+            android:layout_below="@+id/iconProfile"
             android:id="@+id/text_username"
-            android:text="Le Viet Dat"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp" />
 
@@ -34,14 +33,13 @@
             android:layout_height="70dp"
             android:src="@drawable/wallet"
             app:siBorderWidth="1dp"
-            android:id="@+id/circleView2"
+            android:id="@+id/iconWallet"
             android:layout_above="@+id/text_username"
             android:layout_alignStart="@+id/amount" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/amount"
-            android:text="200 000$"
             android:layout_marginLeft="20dp"
             android:layout_marginEnd="53dp"
             android:layout_alignTop="@+id/text_username"

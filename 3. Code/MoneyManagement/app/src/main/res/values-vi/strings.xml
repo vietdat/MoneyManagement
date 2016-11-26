@@ -133,5 +133,17 @@
     <string name="expense_activity">Thông tin về hoạt động chi tiêu</string>
     <string name="saving_activity">Thông tin về hoạt động tiết kiệm</string>
     <string name="transfer_activity">Thông tin về hoạt động chuyển tiền</string>
+    <string name="type">Type</string>
+    <string name="netIncome">Net income</string>
+    <string name="byTime">By time</string>
+    <string name="byCategory">By category</string>
+    <string name="sign_up_fail">Sign up fail</string>
+    <string name="tips">Tips</string>
+    <string name="usd">USD</string>
+    <string name="vnd">VND</string>
+    <string name="jpy">JPY</string>
+    <string name="cny">CNY</string>
+    <string name="eur">EUR</string>
+    <string name="rud">RUD</string>
 
 </resources>

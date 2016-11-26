@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,11 +17,11 @@ import android.widget.ListView;
 
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.CustomListView.Model.ListViewModel;
+import com.hcmut.moneymanagement.activity.Tools.Exchanger.ExchangeHome;
 import com.hcmut.moneymanagement.activity.Tools.Settings.SettingsHome;
 import com.hcmut.moneymanagement.activity.Tools.Tips.TipsHome;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class ToolsHome extends Fragment implements View.OnClickListener {
     ListView lv;
@@ -41,7 +39,7 @@ public class ToolsHome extends Fragment implements View.OnClickListener {
     //add item to listview
     private void addItemToListView() {
         final ArrayList<ListViewModel> arr = new ArrayList<>();
-        ListViewModel tips = new ListViewModel("ic_profile", "Tips", "Thong tin ve thu nhap cua ban");
+        ListViewModel tips = new ListViewModel("ic_profile", getContext().getString(R.string.tips), "Thong tin ve thu nhap cua ban");
         ListViewModel atmFinder = new ListViewModel("ic_profile", "ATM Finder", "Thong tin ve chi tieu cua ban");
         ListViewModel bankFinder = new ListViewModel("ic_profile", "Bank Finder", "Thong tin ve vi tien cua ban");
         ListViewModel exchanger = new ListViewModel("ic_profile", "Exchanger", "Thong tin ve vi tien cua ban");
@@ -94,7 +92,16 @@ public class ToolsHome extends Fragment implements View.OnClickListener {
                 if(position == 0) {
                     Intent intent = new Intent(getActivity(), TipsHome.class);
                     startActivity(intent);
-                } else if(position == 1 || position == 2) {
+                }
+                else if (position == 1) {
+                    Uri gmmIntentUri = Uri.parse("geo:10.8435,-106.75820?q=" + Uri.encode("atms"));
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        startActivity(mapIntent);
+                    }
+                }
+                else if(position == 2) {
                     final EditText input = new EditText(getActivity());
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Enter bank name");
@@ -121,7 +128,12 @@ public class ToolsHome extends Fragment implements View.OnClickListener {
                     Dialog dialog = builder.create();
 
                     dialog.show();
-                } else if (position == 4) {
+                }
+                else if (position == 3) {
+                    Intent intent = new Intent(getActivity(), ExchangeHome.class);
+                    startActivity(intent);
+                }
+                else if (position == 4) {
                     Intent intent = new Intent(getActivity(), SettingsHome.class);
                     startActivity(intent);
                 }

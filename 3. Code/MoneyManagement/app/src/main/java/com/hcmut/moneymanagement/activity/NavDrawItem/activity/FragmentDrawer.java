@@ -13,10 +13,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.NavDrawItem.Adapter.NavigationDrawerAdapter;
 import com.hcmut.moneymanagement.activity.NavDrawItem.model.NavDrawerItem;
+import com.hcmut.moneymanagement.models.UserNameModel;
 import com.hcmut.moneymanagement.models.WalletModel;
 
 import java.util.ArrayList;
@@ -36,6 +39,10 @@ public class FragmentDrawer extends Fragment {
     private static String[] icons = null;
     private FragmentDrawerListener drawerListener;
     private WalletModel walletModel;
+    private UserNameModel userNameModel;
+    private CircularImageView imageIcon, walletIcon;
+    private TextView userName, amountAllWallet;
+
 
     public FragmentDrawer() {
 
@@ -64,7 +71,9 @@ public class FragmentDrawer extends Fragment {
         super.onCreate(savedInstanceState);
 
         walletModel = new WalletModel();
-        walletModel.initNameAdapter(getContext());
+        userNameModel = new UserNameModel();
+
+
         // drawer labels
         titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
         icons = getActivity().getResources().getStringArray(R.array.nav_drawer_icon);
@@ -93,6 +102,12 @@ public class FragmentDrawer extends Fragment {
             }
         }));
 
+        imageIcon = (CircularImageView) layout.findViewById(R.id.iconProfile);
+        walletIcon = (CircularImageView) layout.findViewById(R.id.iconWallet);
+        userName = (TextView) layout.findViewById(R.id.text_username);
+        amountAllWallet = (TextView) layout.findViewById(R.id.amount);
+        userNameModel.initNameAdapter(userName);
+        walletModel.totalAmount(amountAllWallet);
 
         return layout;
     }
@@ -100,6 +115,7 @@ public class FragmentDrawer extends Fragment {
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
         containerView = getActivity().findViewById(fragmentId);
+
         mDrawerLayout = drawerLayout;
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
@@ -128,7 +144,6 @@ public class FragmentDrawer extends Fragment {
                 mDrawerToggle.syncState();
             }
         });
-
     }
 
     public static interface ClickListener {

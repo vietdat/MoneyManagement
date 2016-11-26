@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -115,6 +116,29 @@ public class WalletModel extends Model{
                     }
                     nameAdapter.notifyDataSetChanged();
                 }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadWallet:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    public void totalAmount(final TextView amount){
+        //Event Listenner
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentAmountOfWallet = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Object objCureentAmount = snapshot.child(encrypt("currentAmount")).getValue();
+                    if (objCureentAmount != null) {
+                        int currentAmount = Integer.parseInt(objCureentAmount.toString());
+                        currentAmountOfWallet += currentAmount;
+                    }
+                }
+                amount.setText(String.valueOf(currentAmountOfWallet));
             }
 
             @Override
