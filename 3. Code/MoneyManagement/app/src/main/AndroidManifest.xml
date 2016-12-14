@@ -61,7 +61,12 @@
         <activity android:name=".activity.Budget.BudgetDetail" />
         <activity android:name=".activity.Tools.Settings.SettingsHome" />
         <activity android:name=".activity.Tools.Settings.LockApp.PatternLock" />
-        <activity android:name=".activity.Tools.Exchanger.ExchangeHome"></activity>
+        <activity android:name=".activity.Tools.Exchanger.ExchangeHome" />
+        <activity android:name=".activity.Wallets.WalletHistory" />
+        <activity android:name=".activity.Budget.BudgetHis" />
+        <activity android:name=".activity.Savings.SavingHis" />
+        <activity android:name=".activity.Events.EventHis" />
+        <activity android:name=".activity.Tools.AbousUs.AboutUs"></activity>
     </application>
 
 </manifest>

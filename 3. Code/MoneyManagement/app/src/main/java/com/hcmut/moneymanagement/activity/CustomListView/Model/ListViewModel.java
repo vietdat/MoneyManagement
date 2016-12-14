@@ -5,6 +5,10 @@ public class ListViewModel {
     private String description;
     private String icon;
 
+    public ListViewModel() {
+
+    }
+
     public ListViewModel(String icon, String title, String description) {
         this.title = title;
         this.icon = icon;

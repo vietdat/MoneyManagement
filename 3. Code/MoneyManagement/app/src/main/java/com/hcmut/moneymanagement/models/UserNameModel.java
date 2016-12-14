@@ -43,4 +43,8 @@ public class UserNameModel extends Model{
         return userName;
     }
 
+    public void setUserName(String userName) {
+        reference.setValue(userName);
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.hcmut.moneymanagement.activity.Main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +28,8 @@ import com.hcmut.moneymanagement.activity.Wallets.WalletHome;
 import com.hcmut.moneymanagement.activity.login.screen.Login;
 import com.hcmut.moneymanagement.models.WalletModel;
 
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener, View.OnClickListener {
 
@@ -40,6 +44,22 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transactions);
+        SharedPreferences mPrefs = getSharedPreferences("language", MODE_PRIVATE);
+        String lang = mPrefs.getString("language", "0");
+
+        String languageToLoad;
+        if (lang.equals("1")) {
+            languageToLoad = "vi"; // your language
+        } else {
+            languageToLoad = "en"; // your language
+        }
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getResources().updateConfiguration(config,
+                getResources().getDisplayMetrics());
+
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -49,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
-
         // display the first navigation drawer view on app launch
         displayView(0);
+
 
     }
 
@@ -70,8 +90,38 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences mPrefs = getSharedPreferences("language", MODE_PRIVATE);
+        String lang = mPrefs.getString("language", "0");
+
+        String languageToLoad;
+        if (lang.equals("1")) {
+            languageToLoad = "vi"; // your language
+        } else {
+            languageToLoad = "en"; // your language
+        }
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getResources().updateConfiguration(config,
+                getResources().getDisplayMetrics());
+
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        drawerFragment = (FragmentDrawer)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+        drawerFragment.setDrawerListener(this);
     }
 
 

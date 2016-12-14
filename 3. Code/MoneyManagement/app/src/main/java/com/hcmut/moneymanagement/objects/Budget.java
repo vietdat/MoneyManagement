@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class Budget extends Object implements Serializable {
     public String name;
+    public String startDate;
     public String endDate;
     public String amount;
     public String description;
@@ -17,8 +18,9 @@ public class Budget extends Object implements Serializable {
 
     }
 
-    public Budget(String name, String endDate, String amount, String description, String category) {
+    public Budget(String name, String startDate, String endDate, String amount, String description, String category) {
         this.name = name;
+        this.startDate = startDate;
         this.endDate = endDate;
         this.amount = amount;
         this.description = description;
@@ -26,9 +28,10 @@ public class Budget extends Object implements Serializable {
         this.currentAmount = amount;
     }
 
-    public Budget(String name, String endDate, String amount, String description, String category,
+    public Budget(String name,String startDate, String endDate, String amount, String description, String category,
                   String currentAmount) {
         this.name = name;
+        this.startDate = startDate;
         this.endDate = endDate;
         this.amount = amount;
         this.description = description;
@@ -82,5 +85,13 @@ public class Budget extends Object implements Serializable {
 
     public void setCurrentAmount(String currentAmount) {
         this.currentAmount = currentAmount;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 }

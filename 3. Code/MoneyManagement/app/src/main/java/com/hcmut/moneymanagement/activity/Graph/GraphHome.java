@@ -97,6 +97,7 @@ public class GraphHome extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if(position == 0) {
+                    spinner2.setEnabled(true);
                     if(spinner2.getSelectedItemPosition() == 0) {
                         pieChart.setVisibility(View.INVISIBLE);
                         chart.setVisibility(View.VISIBLE);
@@ -107,6 +108,7 @@ public class GraphHome extends Fragment implements View.OnClickListener {
                         drawIncomeAndCategory(11);
                     }
                 } else if(position == 1) {
+                    spinner2.setEnabled(true);
                     if(spinner2.getSelectedItemPosition() == 0) {
                         pieChart.setVisibility(View.INVISIBLE);
                         chart.setVisibility(View.VISIBLE);
@@ -119,6 +121,7 @@ public class GraphHome extends Fragment implements View.OnClickListener {
                 } else {
                     pieChart.setVisibility(View.INVISIBLE);
                     drawNetIncomeAndTime();
+                    spinner2.setEnabled(false);
                 }
             }
 

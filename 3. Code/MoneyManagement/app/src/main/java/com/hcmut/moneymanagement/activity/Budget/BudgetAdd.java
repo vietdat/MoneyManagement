@@ -1,6 +1,7 @@
 package com.hcmut.moneymanagement.activity.Budget;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +24,7 @@ import com.hcmut.moneymanagement.objects.Budget;
 public class BudgetAdd extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    private EditText input_name, input_end_date, description, amount;
+    private EditText input_name, input_end_date, description, amount, startDate;
     private BudgetModel budgetModel;
     private Spinner category;
     private ExpenseCategoryModel expenseCategoryModel;
@@ -47,11 +48,21 @@ public class BudgetAdd extends AppCompatActivity {
     private void init() {
         input_name = (EditText) findViewById(R.id.input_name);
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
+        startDate = (EditText) findViewById(R.id.etStartDate);
         description = (EditText) findViewById(R.id.description);
         amount = (EditText) findViewById(R.id.amount);
         category = (Spinner) findViewById(R.id.category);
 
+//        SharedPreferences pre= getSharedPreferences("currency", 0);
+//        String lang = pre.getString("currency", "0");
+//        if (lang.equals("1")) {
+//            amount.setHintTextAppearance(getApplicationContext().getString(R.string.amount) + "(đ)");
+//        } else {
+//            amount.setHintTextAppearance(getApplicationContext().getString(R.string.amount) + "($)");
+//        }
+
         input_end_date.setShowSoftInputOnFocus(false);
+        startDate.setShowSoftInputOnFocus(false);
 
         budgetModel = new BudgetModel();
         expenseCategoryModel = new ExpenseCategoryModel();
@@ -62,11 +73,12 @@ public class BudgetAdd extends AppCompatActivity {
     private Budget getValue() {
         String name = input_name.getText().toString();
         String end_date = input_end_date.getText().toString();
+        String start_date = startDate.getText().toString();
         String desciption = description.getText().toString();
         String currentAmount = amount.getText().toString();
         String categoryName = category.getSelectedItem().toString();
 
-        Budget budget = new Budget(name, end_date, currentAmount, desciption, categoryName);
+        Budget budget = new Budget(name,start_date, end_date, currentAmount, desciption, categoryName);
 
         return budget;
     }
@@ -100,6 +112,19 @@ public class BudgetAdd extends AppCompatActivity {
         super.onStart();
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
         input_end_date.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            public void onFocusChange(View view, boolean hasfocus){
+                if(hasfocus){
+                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
+                    android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    dialog.show(ft, "DatePicker");
+                }
+            }
+
+        });
+        startDate = (EditText) findViewById(R.id.etStartDate);
+        startDate.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
                     com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);

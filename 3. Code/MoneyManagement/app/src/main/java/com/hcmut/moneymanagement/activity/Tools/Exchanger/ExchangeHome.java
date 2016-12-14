@@ -6,12 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.hcmut.moneymanagement.R;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class ExchangeHome extends AppCompatActivity {
     private Toolbar mToolbar;
     private Spinner type;
     private EditText usd, vnd, jpy, cny, rud, eur, amount;
+    DecimalFormat df = new DecimalFormat("#.##");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,16 @@ public class ExchangeHome extends AppCompatActivity {
 
         init();
         exchange();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+            ExchangeHome.this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void init() {
@@ -148,26 +162,26 @@ public class ExchangeHome extends AppCompatActivity {
     }
 
     private String USDtoUSD(Double usd) {
-        return String.valueOf(usd);
+        return String.valueOf(df.format(usd));
     }
 
     private String USDtoVND(Double usd) {
-        return String.valueOf(usd*22680);
+        return String.valueOf(df.format(usd*22680));
     }
 
     private String USDtoJPY(Double usd) {
-        return String.valueOf(usd*113.21);
+        return String.valueOf(df.format(usd*113.21));
     }
 
     private String USDtoCNY(Double usd) {
-        return String.valueOf(usd*6.92);
+        return String.valueOf(df.format(usd*6.92));
     }
 
     private String USDtoEUR(Double usd) {
-        return String.valueOf(usd*0.94);
+        return String.valueOf(df.format(usd*0.94));
     }
 
     private String USDtoRUB(Double usd) {
-        return String.valueOf(usd*64.94);
+        return String.valueOf(df.format(usd*64.94));
     }
 }

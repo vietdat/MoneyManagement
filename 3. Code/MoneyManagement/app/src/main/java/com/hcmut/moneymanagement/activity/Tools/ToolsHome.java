@@ -38,20 +38,17 @@ public class ToolsHome extends Fragment implements View.OnClickListener {
 
     //add item to listview
     private void addItemToListView() {
-        final ArrayList<ListViewModel> arr = new ArrayList<>();
-        ListViewModel tips = new ListViewModel("ic_profile", getContext().getString(R.string.tips), "Thong tin ve thu nhap cua ban");
-        ListViewModel atmFinder = new ListViewModel("ic_profile", "ATM Finder", "Thong tin ve chi tieu cua ban");
-        ListViewModel bankFinder = new ListViewModel("ic_profile", "Bank Finder", "Thong tin ve vi tien cua ban");
-        ListViewModel exchanger = new ListViewModel("ic_profile", "Exchanger", "Thong tin ve vi tien cua ban");
-        ListViewModel settings = new ListViewModel("ic_profile", "Settings", "Thong tin ve vi tien cua ban");
-        ListViewModel aboutUs = new ListViewModel("ic_profile", "About us", "Thong tin ve vi tien cua ban");
 
-        arr.add(tips);
-        arr.add(atmFinder);
-        arr.add(bankFinder);
-        arr.add(exchanger);
-        arr.add(settings);
-        arr.add(aboutUs);
+        final ArrayList<ListViewModel> arr = new ArrayList<>();
+        String[] titles = getResources().getStringArray(R.array.tool_array);
+        String[] icons = getResources().getStringArray(R.array.tool_icon_array);
+
+        for (int i = 0; i < titles.length; i++) {
+            ListViewModel lv = new ListViewModel();
+            lv.setTitle(titles[i]);
+            lv.setIcon(icons[i]);
+            arr.add(lv);
+        }
 
         ToolsAdapter mayArr = new ToolsAdapter(getActivity(), R.layout.tool_item, arr);
 

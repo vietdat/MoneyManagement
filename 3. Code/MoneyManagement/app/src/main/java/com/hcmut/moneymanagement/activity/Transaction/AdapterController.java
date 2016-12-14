@@ -40,7 +40,7 @@ public class AdapterController {
         walletModel.initNameAdapter(context);
         walletAdapter = walletModel.getNameAdapter();
 
-        // Income Category Adapter
+        // income Category Adapter
         incomeCategoryModel = new IncomeCategoryModel();
         incomeCategoryModel.initSpinnerAdapter(context);
         incomeAdapter = incomeCategoryModel.getNameAdapter();

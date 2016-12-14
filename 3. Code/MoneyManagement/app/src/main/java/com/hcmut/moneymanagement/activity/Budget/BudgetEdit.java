@@ -23,7 +23,7 @@ import java.util.Map;
 public class BudgetEdit extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    private EditText input_name, input_end_date, description, amount, category;
+    private EditText input_name, input_end_date, description, amount, category, startDate;
     private BudgetModel budgetModel;
     private String key;
     private Budget budget;
@@ -57,14 +57,17 @@ public class BudgetEdit extends AppCompatActivity {
     private void initData() {
         input_name = (EditText) findViewById(R.id.input_name);
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
+        startDate = (EditText) findViewById(R.id.etStartDate);
         description = (EditText) findViewById(R.id.description);
         amount = (EditText) findViewById(R.id.amount);
         category = (EditText) findViewById(R.id.category);
 
         input_end_date.setShowSoftInputOnFocus(false);
+        startDate.setShowSoftInputOnFocus(false);
 
         input_name.setText(budget.getName());
         input_end_date.setText(budget.getEndDate());
+        startDate.setText(budget.getStartDate());
         description.setText(budget.getDescription());
         amount.setText(budget.getAmount());
         category.setText(budget.getCategory());
@@ -72,18 +75,21 @@ public class BudgetEdit extends AppCompatActivity {
         budgetModel = new BudgetModel();
 
         amount.setFocusable(false);
+        startDate.setFocusable(false);
+        input_end_date.setFocusable(false);
         category.setFocusable(false);
     }
 
     private Budget getValue(){
         String name = input_name.getText().toString();
         String end_date = input_end_date.getText().toString();
+        String start_date = startDate.getText().toString();
         String desciption = description.getText().toString();
         String initAmount = amount.getText().toString();
         String categoryName = category.getText().toString();
         String currentAmount = budget.getCurrentAmount();
 
-        Budget budget1 = new Budget(name, end_date, initAmount, desciption, categoryName, currentAmount);
+        Budget budget1 = new Budget(name, start_date, end_date, initAmount, desciption, categoryName, currentAmount);
 
         return budget1;
     }

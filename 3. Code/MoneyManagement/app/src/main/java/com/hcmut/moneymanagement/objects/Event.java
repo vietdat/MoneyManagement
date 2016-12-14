@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Event extends Object implements Serializable {
 
     public String name;
+    public String startDate;
     public String endDate;
     public int spent;
     public String description;
@@ -16,18 +17,20 @@ public class Event extends Object implements Serializable {
 
     }
 
-    public Event(String name, String endDate, String description) {
+    public Event(String name, String startDate, String endDate, String description) {
         this.name = name;
+        this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
         this.spent = 0;
     }
 
-    public Event(String name, String endDate, String description, int spent) {
+    public Event(String name, String startDate, String endDate, String description, int spent) {
         this.name = name;
+        this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
-        this.spent = 0;
+        this.spent = spent;
     }
 
     public String getName() {
@@ -60,6 +63,14 @@ public class Event extends Object implements Serializable {
 
     public void setSpent(int spent) {
         this.spent = spent;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
 

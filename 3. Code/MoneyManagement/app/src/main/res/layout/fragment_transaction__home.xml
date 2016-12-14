@@ -6,13 +6,14 @@
     android:orientation="vertical"
     tools:context=".activity.Transaction.TransactionHome">
 
-
     <ListView
         android:id="@+id/transaction_home_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:divider="#b5b5b5"
-        android:dividerHeight="1dp"/>
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/list_selector" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"

@@ -9,6 +9,7 @@ import android.os.Handler;
 
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.login.screen.LoginScreen;
+import com.hcmut.moneymanagement.models.Utils;
 
 import java.util.Locale;
 
@@ -25,8 +26,9 @@ public class SplashScreen extends Activity {
         super.onCreate(saveIntanceState);
 
         SharedPreferences mPrefs = getSharedPreferences("language", MODE_PRIVATE);
+        SharedPreferences mPrefs2 = getSharedPreferences("currency", MODE_PRIVATE);
         String lang = mPrefs.getString("language", "0");
-        String currency = mPrefs.getString("currency", "0");
+        String currency = mPrefs2.getString("currency", "0");
             String languageToLoad;
             if (lang.equals("1")) {
                 languageToLoad = "vi"; // your language
@@ -40,7 +42,7 @@ public class SplashScreen extends Activity {
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
 
-
+        Utils.getDatabase();
 
         setContentView(R.layout.splashscreen);
 

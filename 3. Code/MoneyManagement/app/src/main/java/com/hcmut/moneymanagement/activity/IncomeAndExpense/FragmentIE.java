@@ -1,5 +1,6 @@
 package com.hcmut.moneymanagement.activity.IncomeAndExpense;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.CustomListView.Adapter.TransactionAdapter;
 import com.hcmut.moneymanagement.activity.CustomListView.Model.Transaction;
+import com.hcmut.moneymanagement.models.ChangeCurrency;
 import com.hcmut.moneymanagement.models.ExpenseCategoryModel;
 import com.hcmut.moneymanagement.models.IncomeCategoryModel;
 import com.hcmut.moneymanagement.models.Model;
@@ -33,7 +35,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
     private ArrayList<Transaction> items;
     private TransactionAdapter transactions;
 
-    private String type; // Transaction types: {"Income", "Expense", "Saving"}
+    private String type; // Transaction types: {"income", "Expense", "saving"}
     private int month;  // month of the transaction
 
     public FragmentIE(String type, int month) {
@@ -108,13 +110,32 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                                                 cal.setTime(itemDate);
                                                 int itemMonth = cal.get(Calendar.MONTH) + 1;
 
+                                                SharedPreferences pre= getContext().getSharedPreferences("currency", 0);
+                                                final String lang = pre.getString("currency", "0");
+                                                String currency;
+                                                final ChangeCurrency cc = new ChangeCurrency();
                                                 if (itemMonth == month) {
                                                     if (type.equals("Income")) {
-                                                        items.add(new Transaction(objCateName.toString(), objDate.toString(), "+ " + objAmount.toString()));
+                                                        if (lang.equals("1")) {
+                                                            items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" +
+                                                                    cc.changeMoneyUSDToVND(objAmount.toString()) + "đ"));
+                                                        } else {
+                                                            items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" + "$ " + objAmount.toString()));
+                                                        }
                                                     } else if (type.equals("Expense")) {
-                                                        items.add(new Transaction(objCateName.toString(), objDate.toString(), "- " + objAmount.toString()));
+                                                        if (lang.equals("1")) {
+                                                            items.add(new Transaction(objCateName.toString(), objDate.toString(), "-" +
+                                                                    cc.changeMoneyUSDToVND(objAmount.toString()) + "đ"));
+                                                        } else {
+                                                            items.add(new Transaction(objCateName.toString(), objDate.toString(), "-" + "$ " + objAmount.toString()));
+                                                        }
                                                     } else if(type.equals("Saving")){
-                                                        items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" + objAmount.toString()));
+                                                        if (lang.equals("1")) {
+                                                            items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" +
+                                                                    cc.changeMoneyUSDToVND(objAmount.toString()) + "đ"));
+                                                        } else {
+                                                            items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" + "$" + objAmount.toString()));
+                                                        }
                                                     } else {
                                                         DatabaseReference reference = walletModel.getReference().child(objWalletId.toString());
                                                         reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -122,7 +143,12 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                                                              public void onDataChange(DataSnapshot dataSnapshot) {
                                                                  Object objWalletName = dataSnapshot.child(categoryModel.encrypt("name")).getValue();
 
-                                                                 items.add(new Transaction("From " + objCateName.toString() + " to " + objWalletName.toString(), objDate.toString(), objAmount.toString()));
+                                                                 if (lang.equals("1")) {
+                                                                     items.add(new Transaction("From " + objCateName.toString() + " to " + objWalletName.toString(), objDate.toString(), "+" +
+                                                                             cc.changeMoneyUSDToVND(objAmount.toString()) + "đ"));
+                                                                 } else {
+                                                                     items.add(new Transaction("From " + objCateName.toString() + " to " + objWalletName.toString(), objDate.toString(), "+" + "$"+ objAmount.toString()));
+                                                                 }
                                                                  transactions.notifyDataSetChanged();
                                                              }
 

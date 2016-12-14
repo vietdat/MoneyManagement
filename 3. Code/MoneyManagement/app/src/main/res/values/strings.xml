@@ -4,7 +4,7 @@
     <string name="feedback_forgotpassword_message">You will receive an email with instructions on how to reset your password in a few minutes. Please check your email and follow the instructions to reset your password.</string>
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
-        <item>Transactions</item>
+        <item>Activitys</item>
         <item>Wallets</item>
         <item>Categories</item>
         <item>Savings</item>
@@ -15,15 +15,15 @@
         <item>Logout</item>
     </string-array>
     <string-array name="nav_drawer_icon">
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
+        <item>ic_activity</item>
+        <item>ic_wallet</item>
+        <item>ic_category</item>
+        <item>ic_saving</item>
+        <item>ic_budget</item>
+        <item>ic_event</item>
+        <item>ic_graph</item>
+        <item>ic_tool</item>
+        <item>ic_logout</item>
     </string-array>
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open</string>
@@ -40,17 +40,17 @@
     <string name="add_saving_tittle">Add saving</string>
     <string name="add_budget_tittle">Add budget</string>
     <string name="add_event_tittle">Add event</string>
-    <string name="detail_event_tittle"></string>
+    <string name="detail_event_tittle">Event detail</string>
     <string name="saving_name">Saving name</string>
-    <string name="detail_saving_tittle"></string>
-    <string name="detail_budget_tittle"></string>
+    <string name="detail_saving_tittle">Saving detail</string>
+    <string name="detail_budget_tittle">Budget detail</string>
     <string name="edit_saving_tittle">Edit saving</string>
     <string name="edit_budget_tittle">Edit budget</string>
     <string name="edit_events_tittle">Edit event</string>
     <string name="tips_tittle">Tips</string>
     <string name="setting_tittle">Setting</string>
     <string name="done">Done</string>
-    <string name="create_new">New category</string>
+    <string name="create_new">Create new</string>
     <string name="new_category">New category</string>
     <string name="add_transaction_successful">Transaction has been added successfully</string>
     <string name="input_amount">You must fill amount field</string>
@@ -163,5 +163,25 @@
         <item>EUR</item>
         <item>RUB</item>
     </string-array>
+
+    <string-array name="tool_array">
+        <item>Tips</item>
+        <item>ATM Finder</item>
+        <item>Bank Finder</item>
+        <item>Exchanger</item>
+        <item>Settings</item>
+        <!--<item>About us</item>-->
+    </string-array>
+    <string-array name="tool_icon_array">
+        <item>ic_tip</item>
+        <item>ic_atm</item>
+        <item>ic_bank_tool</item>
+        <item>ic_exchanger</item>
+        <item>ic_setting</item>
+        <!--<item>ic_about_us</item>-->
+    </string-array>
+
+    <string name="enter_username">Enter user name</string>
+    <string name="valid_name">Please input name has greater than 3 character</string>
 
 </resources>

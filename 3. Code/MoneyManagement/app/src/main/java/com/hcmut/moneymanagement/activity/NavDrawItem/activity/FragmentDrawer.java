@@ -55,7 +55,6 @@ public class FragmentDrawer extends Fragment {
     public static List<NavDrawerItem> getData() {
         List<NavDrawerItem> data = new ArrayList<>();
 
-
         // preparing navigation drawer items
         for (int i = 0; i < titles.length; i++) {
             NavDrawerItem navItem = new NavDrawerItem();
@@ -73,18 +72,16 @@ public class FragmentDrawer extends Fragment {
         walletModel = new WalletModel();
         userNameModel = new UserNameModel();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
 
         // drawer labels
         titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
         icons = getActivity().getResources().getStringArray(R.array.nav_drawer_icon);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflating view layout
-        View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
 
         adapter = new NavigationDrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(adapter);
@@ -102,12 +99,20 @@ public class FragmentDrawer extends Fragment {
             }
         }));
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflating view layout
+        View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+
         imageIcon = (CircularImageView) layout.findViewById(R.id.iconProfile);
-        walletIcon = (CircularImageView) layout.findViewById(R.id.iconWallet);
         userName = (TextView) layout.findViewById(R.id.text_username);
         amountAllWallet = (TextView) layout.findViewById(R.id.amount);
         userNameModel.initNameAdapter(userName);
-        walletModel.totalAmount(amountAllWallet);
+//        walletModel.totalAmount(amountAllWallet, getContext());
 
         return layout;
     }

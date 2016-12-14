@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.models.BudgetModel;
 import com.hcmut.moneymanagement.models.EventModel;
+import com.hcmut.moneymanagement.models.InputEditTextFormat;
 import com.hcmut.moneymanagement.models.TransactionModel;
 import com.hcmut.moneymanagement.objects.Transaction;
 
@@ -100,6 +101,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         eventModel.initEventAdapter(AddTransactionActivity.this);
         budgetModel = new BudgetModel();
         budgetModel.initBudgetAdapter(AddTransactionActivity.this);
+        amouthOfMoney.addTextChangedListener(new InputEditTextFormat(amouthOfMoney, "#,###"));
 
     }
 
@@ -138,7 +140,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String selected = category.getSelectedItem().toString();
-            if(selected.equals(getResources().getString(R.string.create_new))){
+            if(selected.equals("Create new")){
                 // Create dialog
                 final EditText input = new EditText(AddTransactionActivity.this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddTransactionActivity.this);
@@ -229,7 +231,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
                         Toast.LENGTH_SHORT).show();
                 return false;
             }
-            int moneyAmount = Integer.parseInt(amouthOfMoney.getText().toString());
+            int moneyAmount = Integer.parseInt(amouthOfMoney.getText().toString().substring(1));
             String dateViewValue = dateView.getText().toString().trim();
             String descriptionValue = description.getText().toString().trim();
             String walletId = adapterController.walletModel.keys

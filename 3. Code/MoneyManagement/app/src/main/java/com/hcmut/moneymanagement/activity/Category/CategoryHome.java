@@ -53,7 +53,7 @@ public class CategoryHome extends Fragment{
         tabHost = (TabHost) rootView.findViewById(R.id.tabHost);
         tabHost.setup();
 
-        TabHost.TabSpec tabIncome = tabHost.newTabSpec("Income");
+        TabHost.TabSpec tabIncome = tabHost.newTabSpec("income");
         tabIncome.setContent(R.id.tabIncome);
         tabIncome.setIndicator(getResources().getString(R.string.income));
         tabHost.addTab(tabIncome);
@@ -86,7 +86,7 @@ public class CategoryHome extends Fragment{
             }
         });
 
-        // Income category Listview init
+        // income category Listview init
         lvIncome = (ListView) rootView.findViewById(R.id.lvIncomeCategories);
         lvIncome.setAdapter(incomeCategoryModel.getNameAdapter());
         lvIncome.setOnItemClickListener(new AdapterView.OnItemClickListener() {

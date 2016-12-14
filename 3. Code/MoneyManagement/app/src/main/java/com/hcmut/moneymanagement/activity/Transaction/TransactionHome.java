@@ -51,10 +51,10 @@ public class TransactionHome extends Fragment implements View.OnClickListener {
     //add item to listview
     private void addItemToListView() {
         final ArrayList<ListViewModel> arr = new ArrayList<>();
-        ListViewModel income = new ListViewModel("ic_profile", getContext().getString(R.string.income), getContext().getString(R.string.income_activity));
-        ListViewModel expense = new ListViewModel("ic_profile", getContext().getString(R.string.expense), getContext().getString(R.string.expense_activity));
-        ListViewModel saving = new ListViewModel("ic_profile", getContext().getString(R.string.saving), getContext().getString(R.string.saving_activity));
-        ListViewModel transfer = new ListViewModel("ic_profile", getContext().getString(R.string.transfer), getContext().getString(R.string.transfer_activity));
+        ListViewModel income = new ListViewModel("income", getContext().getString(R.string.income), getContext().getString(R.string.income_activity));
+        ListViewModel expense = new ListViewModel("outcome", getContext().getString(R.string.expense), getContext().getString(R.string.expense_activity));
+        ListViewModel saving = new ListViewModel("saving", getContext().getString(R.string.saving), getContext().getString(R.string.saving_activity));
+        ListViewModel transfer = new ListViewModel("tranfer", getContext().getString(R.string.transfer), getContext().getString(R.string.transfer_activity));
 
         arr.add(income);
         arr.add(expense);

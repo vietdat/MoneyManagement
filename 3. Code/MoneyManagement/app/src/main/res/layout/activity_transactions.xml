@@ -32,7 +32,6 @@
 
     </LinearLayout>
 
-
     <fragment
         android:id="@+id/fragment_navigation_drawer"
         android:name="com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer"
