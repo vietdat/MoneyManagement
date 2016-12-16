@@ -1,12 +1,13 @@
 package com.hcmut.moneymanagement.activity.CustomListView.Model;
 
-/**
- * Created by Admin on 15-Oct-16.
- */
 public class ListViewModel {
     private String title;
     private String description;
     private String icon;
+
+    public ListViewModel() {
+
+    }
 
     public ListViewModel(String icon, String title, String description) {
         this.title = title;

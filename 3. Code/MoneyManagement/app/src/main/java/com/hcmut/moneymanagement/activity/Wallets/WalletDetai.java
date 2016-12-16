@@ -3,6 +3,7 @@ package com.hcmut.moneymanagement.activity.Wallets;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.models.ChangeCurrency;
 import com.hcmut.moneymanagement.models.WalletCategoryModel;
 import com.hcmut.moneymanagement.models.WalletModel;
 import com.hcmut.moneymanagement.objects.Category;
@@ -64,7 +66,19 @@ public class WalletDetai extends AppCompatActivity {
         typeOfAccount();
 
         nameOfWallet.setText(wallet.getName());
-        currentAmount.setText(String.valueOf(wallet.getCurrentAmount()));
+        SharedPreferences pre= getSharedPreferences("currency", 0);
+        String lang = pre.getString("currency", "0");
+        ChangeCurrency cc = new ChangeCurrency();
+        if (lang.equals("1")) {
+            currentAmount.setText(cc.changeMoneyUSDToVND(String.valueOf(wallet.getCurrentAmount())) + "đ");
+        } else {
+            if(wallet.getCurrentAmount() < 0) {
+                currentAmount.setText("-$" + String.valueOf(-wallet.getCurrentAmount()));
+
+            }else {
+                currentAmount.setText("$" + String.valueOf(wallet.getCurrentAmount()));
+            }
+        }
         note.setText(wallet.getDescription());
         int spinnerPosition = walletCategoryModel.getNames().getPosition(wallet.getType());
         typeOfAccount.setSelection(spinnerPosition);
@@ -126,7 +140,7 @@ public class WalletDetai extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_wallet_detai, menu);
+        getMenuInflater().inflate(R.menu.menu_wallet_his, menu);
         return true;
     }
 
@@ -145,6 +159,15 @@ public class WalletDetai extends AppCompatActivity {
 
         if(id == R.id.mnDelete){
             walletModel.remove(key);
+            WalletDetai.this.finish();
+            return true;
+        }
+
+        if(id == R.id.mnHis) {
+            Intent intent = new Intent(this, WalletHistory.class);
+            intent.putExtra("key", key);
+            intent.putExtra("wallet", (Serializable) wallet);
+            startActivity(intent);
             WalletDetai.this.finish();
             return true;
         }

@@ -58,31 +58,30 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void userSignUp() {
-        Log.d(TAG, "Sign up");
-
         if (!validate()) {
             onSignupFailed();
             return;
         }
+        else {
+            btnSignUp.setEnabled(false);
 
-        btnSignUp.setEnabled(false);
+            progressDialog = new ProgressDialog(SignUp.this, R.style.AppTheme_Dark_Dialog);
 
-        progressDialog = new ProgressDialog(SignUp.this, R.style.AppTheme_Dark_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage(getResources().getString(R.string.create_account));
 
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage(getResources().getString(R.string.create_account));
+            String name = editTextUserName.getText().toString();
+            final String email = editTextEmail.getText().toString();
+            final String password = editTextPassword.getText().toString();
 
-        String name = editTextUserName.getText().toString();
-        final String email = editTextEmail.getText().toString();
-        final String password = editTextPassword.getText().toString();
-
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressDialog.show();
-                onSignupHandler(email, password);
-            }
-        });
+            this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.show();
+                    onSignupHandler(email, password);
+                }
+            });
+        }
     }
 
 
@@ -100,14 +99,13 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Toast.makeText(SignUp.this,getResources().getString(R.string.auth_fail),Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                         }
                         else  {
                             createUserData();
                             progressDialog.dismiss();
-                            progressDialog.dismiss();
                             Toast.makeText(SignUp.this,getResources().getString(R.string.successful),Toast.LENGTH_LONG).show();
                             startActivity(new Intent(SignUp.this,Login.class));
-
                         }
                     }
                 });
@@ -136,8 +134,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
     //If sign up fail => call it.
     private void onSignupFailed() {
-        Toast.makeText(getBaseContext(), getResources().getString(R.string.login_fail), Toast.LENGTH_LONG).show();
-
+        Toast.makeText(getBaseContext(), getResources().getString(R.string.sign_up_fail), Toast.LENGTH_SHORT).show();
         btnSignUp.setEnabled(true);
     }
 

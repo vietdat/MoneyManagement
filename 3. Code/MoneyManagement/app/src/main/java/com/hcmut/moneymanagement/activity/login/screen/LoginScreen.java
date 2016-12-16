@@ -60,7 +60,8 @@ public class LoginScreen extends Activity {
         layouts = new int[]{
                 R.layout.login_slide_1,
                 R.layout.login_slide_2,
-                R.layout.login_slide_3};
+                R.layout.login_slide_3,
+                R.layout.login_slide_4};
 
         // adding bottom dots
         addBottomDots(0);

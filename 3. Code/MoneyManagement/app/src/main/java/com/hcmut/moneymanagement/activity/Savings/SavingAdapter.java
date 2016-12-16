@@ -1,13 +1,16 @@
 package com.hcmut.moneymanagement.activity.Savings;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.models.ChangeCurrency;
 import com.hcmut.moneymanagement.objects.Saving;
 
 import java.text.ParseException;
@@ -45,15 +48,22 @@ public class SavingAdapter extends ArrayAdapter<Saving> {
             Saving saving = savings.get(position);
 
             TextView savingName = (TextView) convertView.findViewById(R.id.saving_name);
-            TextView goal = (TextView) convertView.findViewById(R.id.goal);
-            TextView left = (TextView) convertView.findViewById(R.id.left);
-            TextView currentAmount = (TextView) convertView.findViewById(R.id.current);
+            ProgressBar androidProgressBar = (ProgressBar) convertView.findViewById(R.id.horizontal_progress_bar);
+
+            int progressStatusCounter = Integer.parseInt(saving.getCurrent_amount());
+
+            androidProgressBar.setMax(Integer.valueOf(saving.getGoal()));
+            androidProgressBar.setProgress(progressStatusCounter);
+            TextView goal = (TextView) convertView.findViewById(R.id.endAmount);
+            TextView start = (TextView) convertView.findViewById(R.id.startAmount);
+//            TextView currentAmount = (TextView) convertView.findViewById(R.id.current);
 
             //Gán giá trị cho những control đó
             savingName.setText(saving.getName());
-            goal.setText(String.valueOf(saving.getGoal()));
 
-
+            SharedPreferences pre= context.getSharedPreferences("currency", 0);
+            String lang = pre.getString("currency", "0");
+            String currency;
             SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
             try {
                 Date endDate = df.parse(saving.getEndDate());
@@ -64,12 +74,24 @@ public class SavingAdapter extends ArrayAdapter<Saving> {
                 if(i < 0) {
                     i = 0;
                 }
-                left.setText(String.valueOf(i));
+//                left.setText(String.valueOf(i));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-            currentAmount.setText(saving.getCurrent_amount());
+            ChangeCurrency cc = new ChangeCurrency();
+
+            if (lang.equals("1")) {
+                currency = "đ";
+                goal.setText(cc.changeMoneyUSDToVND(saving.getGoal()) + currency);
+                start.setText(cc.changeMoneyUSDToVND(saving.getStartAmount()) + currency);
+            } else {
+                currency = "$";
+                goal.setText(currency + saving.getGoal());
+                start.setText(currency + saving.getStartAmount());
+            }
+
+//            currentAmount.setText(saving.getCurrent_amount());
 
             return convertView;
         }

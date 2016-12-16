@@ -22,7 +22,7 @@ import com.hcmut.moneymanagement.objects.Event;
 public class EventsAdd extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    private EditText input_name, input_end_date, description;
+    private EditText input_name, input_end_date, description, startDate;
     private WalletModel walletModel;
 
     private EventModel eventModel;
@@ -49,12 +49,14 @@ public class EventsAdd extends AppCompatActivity {
     private void init() {
         input_name = (EditText) findViewById(R.id.input_name);
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
+        startDate = (EditText) findViewById(R.id.etStartDate);
         description = (EditText) findViewById(R.id.description);
 
         walletModel = new WalletModel();
         walletModel.initNameAdapter(getApplicationContext());
 
         input_end_date.setShowSoftInputOnFocus(false);
+        startDate.setShowSoftInputOnFocus(false);
 
         eventModel = new EventModel();
     }
@@ -62,9 +64,10 @@ public class EventsAdd extends AppCompatActivity {
     private Event getValue(){
         String name = input_name.getText().toString();
         String end_date = input_end_date.getText().toString();
+        String start_date = startDate.getText().toString();
         String desciption = description.getText().toString();
 
-        Event event = new Event(name, end_date, desciption);
+        Event event = new Event(name, start_date, end_date, desciption);
 
         return event;
     }
@@ -98,6 +101,20 @@ public class EventsAdd extends AppCompatActivity {
         super.onStart();
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
         input_end_date.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            public void onFocusChange(View view, boolean hasfocus){
+                if(hasfocus){
+                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
+                    android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    dialog.show(ft, "DatePicker");
+                }
+            }
+
+        });
+
+        startDate = (EditText) findViewById(R.id.etStartDate);
+        startDate.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
                     com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);

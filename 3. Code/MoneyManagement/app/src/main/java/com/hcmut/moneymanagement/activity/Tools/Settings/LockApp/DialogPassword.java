@@ -1,10 +1,16 @@
 package com.hcmut.moneymanagement.activity.Tools.Settings.LockApp;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,8 +21,12 @@ import com.hcmut.moneymanagement.activity.Main.MainActivity;
 
 import java.util.List;
 
+
+/**
+ * Created by BiDo on 11/19/2016.
+ */
 public class DialogPassword  extends Dialog implements
-        View.OnClickListener {
+        android.view.View.OnClickListener {
     static final public  Integer TYPE_SET_NEW_PASSWORD = 1;
     static public  Integer TYPE_CONFIRM_NEW_PASSWORD = 2;
     static public  Integer TYPE_CONFIRM_OLD_PASSWORD = 3;
@@ -45,9 +55,19 @@ public class DialogPassword  extends Dialog implements
         super.onCreate(savedInstanceState);
         //config dialog
         dialogPassword = this;
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialogPassword.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.gravity = Gravity.CENTER;
+        dialogPassword.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+        dialogPassword.getWindow().setAttributes(lp);
+
         dialogPassword.setCanceledOnTouchOutside(false);
-        dialogPassword.setCancelable(false);
+        dialogPassword.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogPassword.setContentView(R.layout.dialog_password);
+//        dialogPassword.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //init obj view
         titleDialog = (TextView) findViewById(R.id.title_dialog);
@@ -56,7 +76,7 @@ public class DialogPassword  extends Dialog implements
         // created new password
         if(typeDialog.equals(TYPE_SET_NEW_PASSWORD)){
             //set tilte
-            titleDialog.setText(R.string.title_set_new_password_dialog);
+            titleDialog.setText(R.string.title_confirm_password_dialog);
             //set event
             materialLockView.setOnPatternListener(new MaterialLockView.OnPatternListener() {
                 @Override
@@ -88,6 +108,7 @@ public class DialogPassword  extends Dialog implements
                         //checkLockApp.setChecked(true);
                         dialogPassword.hide();
                     }else{
+                        materialLockView.setDisplayMode(MaterialLockView.DisplayMode.Wrong);
                         Toast.makeText(context,"Mật khẩu không đúng",Toast.LENGTH_LONG).show();
                     }
                     super.onPatternDetected(pattern, SimplePattern);
@@ -107,6 +128,7 @@ public class DialogPassword  extends Dialog implements
                         DialogPassword dp = new DialogPassword(context,DialogPassword.TYPE_SET_NEW_PASSWORD);
                         dp.show();
                     }else{
+                        materialLockView.setDisplayMode(MaterialLockView.DisplayMode.Wrong);
                         Toast.makeText(context,"Mật khẩu không đúng",Toast.LENGTH_LONG).show();
                     }
                     super.onPatternDetected(pattern, SimplePattern);
@@ -115,7 +137,7 @@ public class DialogPassword  extends Dialog implements
         }// unlock app
         else if(typeDialog.equals(TYPE_UNLOCK)){
             //set tilte
-            titleDialog.setText(R.string.title_confirm_password_dialog);
+            titleDialog.setText(R.string.input_password);
             // set event
             materialLockView.setOnPatternListener(new MaterialLockView.OnPatternListener() {
                 @Override
@@ -127,9 +149,8 @@ public class DialogPassword  extends Dialog implements
                         Toast.makeText(context,"Gỡ khóa thành công",Toast.LENGTH_LONG).show();
                         //checkLockApp.setChecked(false);
                         dialogPassword.hide();
-
-
                     }else{
+                        materialLockView.setDisplayMode(MaterialLockView.DisplayMode.Wrong);
                         Toast.makeText(context,"Mật khẩu không đúng",Toast.LENGTH_LONG).show();
                     }
                     super.onPatternDetected(pattern, SimplePattern);
@@ -138,19 +159,19 @@ public class DialogPassword  extends Dialog implements
         }//lock screen when is checked lock
         else if(typeDialog.equals(TYPE_LOCK_SCREEN)){
             //set tilte
-            titleDialog.setText(R.string.title_confirm_password_dialog);
+            titleDialog.setText(R.string.input_password);
             //set event
             materialLockView.setOnPatternListener(new MaterialLockView.OnPatternListener() {
                 @Override
                 public void onPatternDetected(List<MaterialLockView.Cell> pattern, String SimplePattern) {
                     String pass = ConfigLockApp.config.getString(ConfigLockApp.KEY_PATTERNLOCK,"");
                     if(pass.isEmpty()||SimplePattern.equals(pass)){
-                        Intent intent = new Intent(context, MainActivity.class);
-                        context.startActivity(intent);
+                        ((Activity) context).finish();
+                        context.startActivity(new Intent(context, MainActivity.class));
                         dialogPassword.hide();
                     }else{
                         materialLockView.setDisplayMode(MaterialLockView.DisplayMode.Wrong);
-                        Toast.makeText(context,getContext().getString(R.string.wrong_password),Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Mật khẩu không đúng",Toast.LENGTH_LONG).show();
                     }
 
                     super.onPatternDetected(pattern, SimplePattern);
@@ -162,4 +183,5 @@ public class DialogPassword  extends Dialog implements
     public void onClick(View v) {
 
     }
+
 }

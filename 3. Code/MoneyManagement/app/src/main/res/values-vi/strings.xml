@@ -1,134 +1,178 @@
 <resources>
     <string name="app_name">MoneyManagement</string>
-    <string name="feedback_forgotpassword_title">Success</string>
-    <string name="feedback_forgotpassword_message">A link to reset your password has been sent. Please Check your email.</string>
+    <string name="feedback_forgotpassword_title">Thành công</string>
+    <string name="feedback_forgotpassword_message">Một link cài đặt lại mật khẩu đã được gửi đến bạn. Làm ơn kiểm tra email.</string>
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
-        <item>Activitys</item>
-        <item>Wallets</item>
-        <item>Categorys</item>
-        <item>Savings</item>
-        <item>Budgets</item>
-        <item>Events</item>
-        <item>Graphs</item>
-        <item>Tools</item>
-        <item>Logout</item>
+        <item>Hoạt động</item>
+        <item>Ví tiền</item>
+        <item>Danh mục</item>
+        <item>Tiết kiệm</item>
+        <item>Ngân quỹ</item>
+        <item>Sự kiện</item>
+        <item>Biểu đồ</item>
+        <item>Công cụ</item>
+        <item>Đăng xuất</item>
     </string-array>
     <string-array name="nav_drawer_icon">
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
-        <item>ic_add</item>
+        <item>ic_activity</item>
+        <item>ic_wallet</item>
+        <item>ic_category</item>
+        <item>ic_saving</item>
+        <item>ic_budget</item>
+        <item>ic_event</item>
+        <item>ic_graph</item>
+        <item>ic_tool</item>
+        <item>ic_logout</item>
     </string-array>
-    <string name="action_settings">Settings</string>
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
+    <string name="action_settings">Cài đặt</string>
+    <string name="drawer_open">Mở</string>
+    <string name="drawer_close">Đóng</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="transaction_title">Activity</string>
-    <string name="add_transaction_title">Add activity</string>
-    <string name="wallet_title">Wallet</string>
-    <string name="to_wallet">To wallet</string>
-    <string name="from_wallet">From wallet</string>
-    <string name="savings">Savings</string>
-    <string name="add_wallet_title">Add new wallet</string>
-    <string name="add_saving_tittle">Add new saving</string>
-    <string name="add_budget_tittle">Add new budget</string>
-    <string name="add_event_tittle">Add new event</string>
-    <string name="detail_event_tittle">Event detail</string>
-    <string name="saving_name">Saving name</string>
-    <string name="detail_saving_tittle">Saving detail</string>
-    <string name="detail_budget_tittle">Budget detail</string>
-    <string name="edit_saving_tittle">Saving edit</string>
-    <string name="edit_budget_tittle">Budget edit</string>
-    <string name="edit_events_tittle">Event edit</string>
+    <string name="transaction_title">Hoạt động</string>
+    <string name="add_transaction_title">Thêm hoạt động</string>
+    <string name="wallet_title">Ví tiền</string>
+    <string name="to_wallet">Đến ví</string>
+    <string name="from_wallet">Từ ví</string>
+    <string name="savings">Tiết kiệm</string>
+    <string name="add_wallet_title">Thêm mới ví tiền</string>
+    <string name="add_saving_tittle">Thêm mới tiết kiệm</string>
+    <string name="add_budget_tittle">Thêm mới ngân quĩ</string>
+    <string name="add_event_tittle">Thêm mới sự kiện</string>
+    <string name="detail_event_tittle">Chi tiết sự kiện</string>
+    <string name="saving_name">Tên tiết kiệm</string>
+    <string name="detail_saving_tittle">Chi tiết tiết kiệm</string>
+    <string name="detail_budget_tittle">Chi tiết ngân quĩ</string>
+    <string name="edit_saving_tittle">Sửa thông tin tiết kiện</string>
+    <string name="edit_budget_tittle">Sửa thông tin ngân quĩ</string>
+    <string name="edit_events_tittle">Sửa thông tin sự kiện</string>
     <string name="tips_tittle">Tips</string>
-    <string name="setting_tittle">Settings</string>
-    <string name="done">Done</string>
+    <string name="setting_tittle">Cài đặt</string>
+    <string name="done">Xong</string>
     <string name="create_new">Create new</string>
-    <string name="new_category">New category</string>
-    <string name="add_transaction_successful">Add transaction successful</string>
-    <string name="input_amount">Please input amount</string>
+    <string name="new_category">Danh mục mới</string>
+    <string name="add_transaction_successful">Thêm giao dịch thành công</string>
+    <string name="input_amount">Làm ơn, nhập số tiền</string>
     <string name="database_err">Error Establishing a Database Connection</string>
-    <string name="running">Running</string>
-    <string name="finish">Finnish</string>
-    <string name="income">Income</string>
-    <string name="expense">Expense</string>
-    <string name="wallet">Wallet</string>
-    <string name="add_new">Add new</string>
-    <string name="add_new_category">Please enter new category name.</string>
+    <string name="running">Đang diễn ra</string>
+    <string name="finish">Kết thúc</string>
+    <string name="income">Thu nhập</string>
+    <string name="expense">Chi tiêu</string>
+    <string name="wallet">Ví tiền</string>
+    <string name="add_new">Thêm mới</string>
+    <string name="add_new_category">Làm ơn nhập danh mục mới</string>
     <string name="ok">Ok</string>
-    <string name="cancel">Cancel</string>
-    <string name="edit">Edit</string>
-    <string name="delete_confirm">Deletion Confirm</string>
-    <string name="sure_delete_category">Are you sure you want to delete this category?</string>
-    <string name="no_item">No Item Selected!</string>
-    <string name="select_item">Please select a category from the list.</string>
-    <string name="new_event">Add new event successful</string>
-    <string name="new_saving">Add new saving successful</string>
-    <string name="enter_email">Please enter email</string>
-    <string name="enter_password">Please enter password</string>
+    <string name="cancel">Hủy</string>
+    <string name="edit">Sửa</string>
+    <string name="delete_confirm">Xác nhận xóa</string>
+    <string name="sure_delete_category">Bạn chắc chắn xóa danh mục này?</string>
+    <string name="no_item">Không item nào được chọn!!</string>
+    <string name="select_item">Chọn danh mục từ danh sách</string>
+    <string name="new_event">Thêm mới sự kiện thành công</string>
+    <string name="new_saving">Thêm mới tiết kiệm thành công</string>
+    <string name="enter_email">Nhập email</string>
+    <string name="enter_password">Nhập mật khẩu</string>
     <string name="reset_password">Reset password...</string>
     <string name="register_user">Register user...</string>
     <string name="create_account">Create account...</string>
     <string name="auth_fail">Auth fail</string>
-    <string name="successful">Successful!</string>
+    <string name="successful">Thành công!</string>
     <string name="login_fail">Login fail!</string>
-    <string name="least_3_character">At least 3 characters</string>
-    <string name="enter_valid_email">Enter a valid email address</string>
-    <string name="password_not_match">Password and confirm password do not match</string>
-    <string name="budget_add_success">Add new budget successful!</string>
-    <string name="category">Category</string>
-    <string name="budgets">Budgets</string>
-    <string name="saving">Saving</string>
-    <string name="transfer">Transfer</string>
-    <string name="events">Events</string>
-    <string name="graphs">Graphs</string>
-    <string name="tools">Tools</string>
-    <string name="please_input_name">Please input name</string>
-    <string name="please_input_amount">Please input amount</string>
-    <string name="please_connect_network">Please connect network to get data</string>
-    <string name="new_wallet">New wallet</string>
-    <string name="add_new_wallet_success">Add new wallet success</string>
-    <string name="transaction_type">Transaction_type</string>
-    <string name="enter_amount">Enter amount</string>
-    <string name="enter_date">Enter date</string>
-    <string name="select_wallet">Select wallet</string>
-    <string name="enter_description">Enter description</string>
-    <string name="name">Name</string>
-    <string name="enter_end_date">Enter end date</string>
-    <string name="amount">Amount</string>
-    <string name="date">Date</string>
-    <string name="start_date">Start date</string>
-    <string name="end_date">End date</string>
-    <string name="description">Description</string>
-    <string name="spent">Spent</string>
-    <string name="forgot_password">Forgot password?</string>
-    <string name="we_just_need">We just need your registed Email id to sent your password reset instructions</string>
+    <string name="least_3_character">Ít nhất 3 ký tự</string>
+    <string name="enter_valid_email">Làm ơn điền đúng email</string>
+    <string name="password_not_match">Mật khẩu và xác nhận mật khẩu không giống nhau</string>
+    <string name="budget_add_success">Thêm ngân quỹ thành công</string>
+    <string name="category">Danh mục</string>
+    <string name="budgets">Ngân quỹ</string>
+    <string name="saving">Tiết kiệm</string>
+    <string name="transfer">Chuyển tiền</string>
+    <string name="events">Sự kiện</string>
+    <string name="graphs">Đồ thị</string>
+    <string name="tools">Công cụ</string>
+    <string name="please_input_name">Làm ơn nhập tên</string>
+    <string name="please_input_amount">Làm ơn nhập số tiền</string>
+    <string name="please_connect_network">Làm ơn kết nối data</string>
+    <string name="new_wallet">Ví mới</string>
+    <string name="add_new_wallet_success">Thêm ví mới thành công</string>
+    <string name="transaction_type">Loại giao dịch</string>
+    <string name="enter_amount">Nhập số tiền</string>
+    <string name="enter_date">Nhập ngày</string>
+    <string name="select_wallet">Chọn ví</string>
+    <string name="enter_description">Mô tả</string>
+    <string name="name">Tên</string>
+    <string name="enter_end_date">Nhập ngày kết thúc</string>
+    <string name="amount">Số tiền</string>
+    <string name="date">Ngày</string>
+    <string name="start_date">Ngày bắt đầu</string>
+    <string name="end_date">Ngày kết thúc</string>
+    <string name="description">Mô tả</string>
+    <string name="spent">Đã chi</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="we_just_need">Chúng tôi cần email đăng ký của bạn để gửi mật khẩu mới.</string>
     <string name="email">Email</string>
-    <string name="reset_password_">Reset password</string>
-    <string name="back">Back</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="no_account">No account yet? Create one</string>
-    <string name="goal">Goal</string>
-    <string name="current_amount">Current amount</string>
-    <string name="confirm_password">Confirm password</string>
-    <string name="create_account_">Create account</string>
-    <string name="already_member">Already a member? Login</string>
-    <string name="account_type">Account type</string>
-    <string name="start_money">Start money</string>
+    <string name="reset_password_">Cài đặt lại mật khẩu</string>
+    <string name="back">Quay lại</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="no_account">Chưa có tài khoản? Tạo mới?</string>
+    <string name="goal">Mục tiêu</string>
+    <string name="current_amount">Số tiền hiện tại</string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="create_account_">Tạo tài khoản</string>
+    <string name="already_member">Đã có tài khoản? Đăng nhập?</string>
+    <string name="account_type">Loại tài khoản</string>
+    <string name="start_money">Số tiền bắt đầu</string>
     <string name="note">Note</string>
-    <string name="left">Left</string>
-    <string name="current">Current</string>
-    <string name="title_set_new_password_dialog">Nhập mật khẩu mới</string>
-    <string name="title_confirm_password_dialog">Xác nhập mật khẩu</string>
-    <string name="title_confirm_old_password_dialog">Xác nhập mật khẩu cũ</string>
-    <string name="question_set_new_password">Bạn có muốn nhập mật khẩu mới?</string>
-    <string name="txt_info">Thông báo</string>
+    <string name="wrong_password">Sai password</string>
+    <string name="forgot_password_lockapp">Quên pattern password? Đăng nhập bằng tài khoản!</string>
+    <string name="vietnamese">Tiếng việt</string>
+    <string name="english">Tiếng anh</string>
+    <string name="change_laguage">Ngôn ngữ</string>
+    <string name="income_activity">Thông tin về hoạt động thu nhập</string>
+    <string name="expense_activity">Thông tin về hoạt động chi tiêu</string>
+    <string name="saving_activity">Thông tin về hoạt động tiết kiệm</string>
+    <string name="transfer_activity">Thông tin về hoạt động chuyển tiền</string>
+    <string name="type">Loại</string>
+    <string name="netIncome">Net income</string>
+    <string name="byTime">Theo thời gian</string>
+    <string name="byCategory">Theo danh mục</string>
+    <string name="sign_up_fail">Đăng nhập thất bại</string>
+    <string name="tips">Tips</string>
+    <string name="usd">USD</string>
+    <string name="vnd">VND</string>
+    <string name="jpy">JPY</string>
+    <string name="cny">CNY</string>
+    <string name="eur">EUR</string>
+    <string name="rud">RUD</string>
+    <string name="exchange">Qui đổi tiền tệ</string>
+
+    <string-array name="currency_array">
+        <item>USD</item>
+        <item>VND</item>
+        <item>JPY</item>
+        <item>CNY</item>
+        <item>EUR</item>
+        <item>RUB</item>
+    </string-array>
+
+    <string-array name="tool_array">
+        <item>Tips</item>
+        <item>Tìm ATM</item>
+        <item>Tìm ngân hàng</item>
+        <item>Qui đổi tiền tệ</item>
+        <item>Cài đặt</item>
+        <!--<item>About us</item>-->
+    </string-array>
+    <string-array name="tool_icon_array">
+        <item>ic_tip</item>
+        <item>ic_atm</item>
+        <item>ic_bank_tool</item>
+        <item>ic_exchanger</item>
+        <item>ic_setting</item>
+        <!--<item>ic_about_us</item>-->
+    </string-array>
+
+    <string name="enter_username">Nhập user name</string>
+    <string name="valid_name">Nhập name ít nhất 3 ký tự</string>
 </resources>

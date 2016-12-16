@@ -67,6 +67,10 @@ public class EventModel extends Model {
                     Object objEndDate = snapshot.child(encrypt("endDate")).getValue();
                     event.setEndDate(decrypt(objEndDate.toString()));
 
+                    //End date
+                    Object objStartDate = snapshot.child(encrypt("startDate")).getValue();
+                    event.setStartDate(decrypt(objStartDate.toString()));
+
                     //Spent
                     Object objSpent = snapshot.child(encrypt("spent")).getValue();
                     event.setSpent(Integer.parseInt(decrypt(objSpent.toString())));

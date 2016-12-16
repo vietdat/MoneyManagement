@@ -99,6 +99,10 @@ public class BudgetModel extends Model {
                     Object objcurrent_unit = snapshot.child(encrypt("amount")).getValue();
                     budget.setAmount(decrypt(objcurrent_unit.toString()));
 
+                    //Start date
+                    Object objStartDate = snapshot.child(encrypt("startDate")).getValue();
+                    budget.setStartDate(decrypt(objStartDate.toString()));
+
                     //End date
                     Object objEndDate = snapshot.child(encrypt("endDate")).getValue();
                     budget.setEndDate(decrypt(objEndDate.toString()));
@@ -204,7 +208,7 @@ public class BudgetModel extends Model {
                     int currentAmount = Integer.parseInt(objCurrentAmount.toString());
                     currentAmount -= amount;
                     Map<String, Object> update = new HashMap<String, Object>();
-                    update.put(encrypt("spent"), String.valueOf(currentAmount));
+                    update.put(encrypt("currentAmount"), String.valueOf(currentAmount));
 
                     budgetReference.updateChildren(update);
                 }

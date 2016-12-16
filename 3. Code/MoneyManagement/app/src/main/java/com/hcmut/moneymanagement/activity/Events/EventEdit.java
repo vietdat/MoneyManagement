@@ -24,7 +24,7 @@ public class EventEdit extends AppCompatActivity {
     private Toolbar mToolbar;
     Event event;
     String key;
-    private EditText input_name, input_end_date, description, spent;
+    private EditText input_name, input_end_date, description, spent, startDate;
     EventModel eventModel;
 
     @Override
@@ -54,25 +54,29 @@ public class EventEdit extends AppCompatActivity {
     private void initData() {
         input_name = (EditText) findViewById(R.id.input_name);
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
+        startDate = (EditText) findViewById(R.id.etStartDate);
         spent = (EditText) findViewById(R.id.spent);
         description = (EditText) findViewById(R.id.description);
 
         input_name.setText(event.getName());
         input_end_date.setText(event.getEndDate());
+        startDate.setText(event.getStartDate());
         spent.setText(String.valueOf(event.getSpent()));
         description.setText(event.getDescription());
 
         input_end_date.setShowSoftInputOnFocus(false);
+        startDate.setShowSoftInputOnFocus(false);
         spent.setFocusable(false);
     }
 
     private Event getValue() {
         String name = input_name.getText().toString();
         String end_date = input_end_date.getText().toString();
+        String start_date = startDate.getText().toString();
         int spent1 = event.getSpent();
         String desciption1 = description.getText().toString();
 
-        Event event = new Event(name, end_date, desciption1, spent1);
+        Event event = new Event(name, start_date, end_date, desciption1, spent1);
         return event;
     }
 
@@ -81,6 +85,20 @@ public class EventEdit extends AppCompatActivity {
         super.onStart();
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
         input_end_date.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            public void onFocusChange(View view, boolean hasfocus){
+                if(hasfocus){
+                    com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);
+                    android.app.FragmentTransaction ft =getFragmentManager().beginTransaction();
+                    InputMethodManager im = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    im.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    dialog.show(ft, "DatePicker");
+                }
+            }
+
+        });
+
+        startDate = (EditText) findViewById(R.id.etStartDate);
+        startDate.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){
                     com.hcmut.moneymanagement.activity.Transaction.DateDialog dialog=new com.hcmut.moneymanagement.activity.Transaction.DateDialog(view);

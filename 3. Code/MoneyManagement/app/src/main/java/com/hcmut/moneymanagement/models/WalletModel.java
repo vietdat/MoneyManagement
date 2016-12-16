@@ -124,6 +124,45 @@ public class WalletModel extends Model{
         });
     }
 
+//    public void totalAmount(final TextView amount,final Context ct){
+//        //Event Listenner
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                currentAmountOfWallet = 0;
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    Object objCureentAmount = snapshot.child(encrypt("currentAmount")).getValue();
+//                    if (objCureentAmount != null) {
+//                        int currentAmount = Integer.parseInt(objCureentAmount.toString());
+//                        currentAmountOfWallet += currentAmount;
+//                    }
+//                }
+//
+//                SharedPreferences pre= ct.getSharedPreferences("currency", 0);
+//                String lang = pre.getString("currency", "0");
+//                String currency;
+//                ChangeCurrency cc = new ChangeCurrency();
+//
+//                if (lang.equals("1")) {
+//                    currency = "đ"; // your language
+//                    amount.setText(cc.changeMoneyUSDToVND(String.valueOf(currentAmountOfWallet)) + currency);
+//                } else {
+//                    currency = "$"; // your language
+//                    if(currentAmountOfWallet < 0) {
+//                        amount.setText("-" + currency + String.valueOf(String.valueOf(-currentAmountOfWallet)));
+//                    } else {
+//                        amount.setText(currency + String.valueOf(String.valueOf(currentAmountOfWallet)));
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Log.w(TAG, "loadWallet:onCancelled", databaseError.toException());
+//            }
+//        });
+//    }
+
     // Update a wallet
     public void update(String key, Map<String, Object> data){
         reference.child(key).updateChildren(data);

@@ -11,6 +11,7 @@ public class Saving extends Object implements Serializable {
     public String startDate;
     public String endDate;
     public String current_amount;
+    public String startAmount;
     public String description;
 
     public Saving(){
@@ -21,6 +22,7 @@ public class Saving extends Object implements Serializable {
         this.name = name;
         this.goal = goal;
         this.current_amount = current_amount;
+        this.startAmount = current_amount;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
@@ -44,6 +46,14 @@ public class Saving extends Object implements Serializable {
 
     public String getTitle() {
         return name;
+    }
+
+    public void setStartAmount(String startAmount) {
+        this.startAmount = startAmount;
+    }
+
+    public String getStartAmount() {
+        return startAmount;
     }
 
     public void setTitle(String title) {

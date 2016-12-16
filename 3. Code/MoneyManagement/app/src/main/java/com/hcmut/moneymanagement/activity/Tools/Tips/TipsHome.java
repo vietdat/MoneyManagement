@@ -41,12 +41,12 @@ public class TipsHome extends AppCompatActivity {
     //add item to listview
     private void addItemToListView() {
         final ArrayList<ListViewModel> arr = new ArrayList<>();
-        ListViewModel tips1 = new ListViewModel("ic_profile", "6 mẹo đơn giản giúp bạn tiết kiệm tiền tốt nhất", "Thong tin ve thu nhap cua ban");
-        ListViewModel tips2 = new ListViewModel("ic_profile", "6 cách ở tiết kiệm nhất khi đi du lịch", "Thong tin ve chi tieu cua ban");
-        ListViewModel tips3 = new ListViewModel("ic_profile", "Lý do vợ chồng tôi đi vay dù không thiếu tiền", "Thong tin ve vi tien cua ban");
-        ListViewModel tips4 = new ListViewModel("ic_profile", "Thu nhập không nhiều, vợ chồng tôi vẫn có cách tiết kiệm\n", "Thong tin ve vi tien cua ban");
-        ListViewModel tips5 = new ListViewModel("ic_profile", "Cách chi tiêu thông minh của bà mẹ 7 con\n", "Thong tin ve vi tien cua ban");
-        ListViewModel tips6 = new ListViewModel("ic_profile", "Lên kế hoạch chi tiêu hàng tháng", "Thong tin ve vi tien cua ban");
+        ListViewModel tips1 = new ListViewModel("ic_news", "6 mẹo đơn giản giúp bạn tiết kiệm tiền tốt nhất", "Thong tin ve thu nhap cua ban");
+        ListViewModel tips2 = new ListViewModel("ic_news", "6 cách ở tiết kiệm nhất khi đi du lịch", "Thong tin ve chi tieu cua ban");
+        ListViewModel tips3 = new ListViewModel("ic_news", "Lý do vợ chồng tôi đi vay dù không thiếu tiền", "Thong tin ve vi tien cua ban");
+        ListViewModel tips4 = new ListViewModel("ic_news", "Thu nhập không nhiều, vợ chồng tôi vẫn có cách tiết kiệm\n", "Thong tin ve vi tien cua ban");
+        ListViewModel tips5 = new ListViewModel("ic_news", "Cách chi tiêu thông minh của bà mẹ 7 con\n", "Thong tin ve vi tien cua ban");
+        ListViewModel tips6 = new ListViewModel("ic_news", "Lên kế hoạch chi tiêu hàng tháng", "Thong tin ve vi tien cua ban");
 
         arr.add(tips1);
         arr.add(tips2);

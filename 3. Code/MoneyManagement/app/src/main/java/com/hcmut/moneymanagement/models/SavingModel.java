@@ -42,7 +42,7 @@ public class SavingModel extends Model {
         keyRunnings = new ArrayList<String>();
         keys = new ArrayList<String>();
         keyFinishs = new ArrayList<String>();
-        // Saving refecence
+        // saving refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("saving"));
         reference.keepSynced(true);
@@ -74,6 +74,10 @@ public class SavingModel extends Model {
                     //currency amount
                     Object objcurrent_amount = snapshot.child(encrypt("current_amount")).getValue();
                     saving.setCurrent_amount(decrypt(objcurrent_amount.toString()));
+
+                    //start amount
+                    Object objstart_amount = snapshot.child(encrypt("startAmount")).getValue();
+                    saving.setStartAmount(decrypt(objstart_amount.toString()));
 
                     //Satrt date
                     Object objStartDate = snapshot.child(encrypt("startDate")).getValue();
@@ -118,7 +122,7 @@ public class SavingModel extends Model {
     }
 
     public void initNameAdapter(Context context){
-        nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, names);
+        nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, names);
         //Event Listenner
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -44,7 +44,7 @@ public class WalletCategoryModel extends CategoryModel {
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     Object objWallet = categorySnapshot.child(encrypt("name")).getValue();
                     nameAdapter.add(decrypt(objWallet.toString()));
-                    //Log.w("Income category", decrypt(objWallet.toString()));
+                    //Log.w("income category", decrypt(objWallet.toString()));
                 }
                 nameAdapter.add("Create new");
                 nameAdapter.notifyDataSetChanged();

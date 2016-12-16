@@ -13,10 +13,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.NavDrawItem.Adapter.NavigationDrawerAdapter;
 import com.hcmut.moneymanagement.activity.NavDrawItem.model.NavDrawerItem;
+import com.hcmut.moneymanagement.models.UserNameModel;
 import com.hcmut.moneymanagement.models.WalletModel;
 
 import java.util.ArrayList;
@@ -36,6 +39,10 @@ public class FragmentDrawer extends Fragment {
     private static String[] icons = null;
     private FragmentDrawerListener drawerListener;
     private WalletModel walletModel;
+    private UserNameModel userNameModel;
+    private CircularImageView imageIcon, walletIcon;
+    private TextView userName, amountAllWallet;
+
 
     public FragmentDrawer() {
 
@@ -47,7 +54,6 @@ public class FragmentDrawer extends Fragment {
 
     public static List<NavDrawerItem> getData() {
         List<NavDrawerItem> data = new ArrayList<>();
-
 
         // preparing navigation drawer items
         for (int i = 0; i < titles.length; i++) {
@@ -64,18 +70,18 @@ public class FragmentDrawer extends Fragment {
         super.onCreate(savedInstanceState);
 
         walletModel = new WalletModel();
-        walletModel.initNameAdapter(getContext());
-        // drawer labels
-        titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
-        icons = getActivity().getResources().getStringArray(R.array.nav_drawer_icon);
+        userNameModel = new UserNameModel();
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflating view layout
-        View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+    public void onResume() {
+        super.onResume();
+
+
+        // drawer labels
+        titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
+        icons = getActivity().getResources().getStringArray(R.array.nav_drawer_icon);
 
         adapter = new NavigationDrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(adapter);
@@ -93,6 +99,20 @@ public class FragmentDrawer extends Fragment {
             }
         }));
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflating view layout
+        View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+
+        imageIcon = (CircularImageView) layout.findViewById(R.id.iconProfile);
+        userName = (TextView) layout.findViewById(R.id.text_username);
+        amountAllWallet = (TextView) layout.findViewById(R.id.amount);
+        userNameModel.initNameAdapter(userName);
+//        walletModel.totalAmount(amountAllWallet, getContext());
 
         return layout;
     }
@@ -100,6 +120,7 @@ public class FragmentDrawer extends Fragment {
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
         containerView = getActivity().findViewById(fragmentId);
+
         mDrawerLayout = drawerLayout;
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
@@ -128,7 +149,6 @@ public class FragmentDrawer extends Fragment {
                 mDrawerToggle.syncState();
             }
         });
-
     }
 
     public static interface ClickListener {

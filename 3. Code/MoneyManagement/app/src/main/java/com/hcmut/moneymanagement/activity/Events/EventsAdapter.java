@@ -1,6 +1,7 @@
 package com.hcmut.moneymanagement.activity.Events;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.models.ChangeCurrency;
 import com.hcmut.moneymanagement.objects.Event;
 
 import java.text.ParseException;
@@ -50,7 +52,18 @@ public class EventsAdapter extends ArrayAdapter<Event> {
 
         //Gán giá trị cho những control đó
         eventName.setText(event.getName());
-        spent.setText(String.valueOf(event.getSpent()));
+        SharedPreferences pre= getContext().getSharedPreferences("currency", 0);
+        String lang = pre.getString("currency", "0");
+        String currency;
+        ChangeCurrency cc = new ChangeCurrency();
+
+        if (lang.equals("1")) {
+            currency = "đ"; // your language
+            spent.setText(cc.changeMoneyUSDToVND(String.valueOf(event.getSpent())) + currency);
+        } else {
+            currency = "$"; // your language
+            spent.setText(currency + String.valueOf(event.getSpent()));
+        }
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         try {
@@ -63,8 +76,11 @@ public class EventsAdapter extends ArrayAdapter<Event> {
             if(i < 0) {
                 i = 0;
             }
-            left.setText(String.valueOf(i));
-
+            if (i < 2) {
+                left.setText(String.valueOf(i) + " day");
+            } else {
+                left.setText(String.valueOf(i) + " days");
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }

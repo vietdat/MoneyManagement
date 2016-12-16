@@ -23,7 +23,9 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.models.BudgetModel;
 import com.hcmut.moneymanagement.models.EventModel;
+import com.hcmut.moneymanagement.models.InputEditTextFormat;
 import com.hcmut.moneymanagement.models.TransactionModel;
 import com.hcmut.moneymanagement.objects.Transaction;
 
@@ -48,6 +50,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
     private TransactionModel transactionModel;
     private EventModel eventModel;
+    private BudgetModel budgetModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,10 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         transactionModel = new TransactionModel();
         eventModel = new EventModel();
         eventModel.initEventAdapter(AddTransactionActivity.this);
+        budgetModel = new BudgetModel();
+        budgetModel.initBudgetAdapter(AddTransactionActivity.this);
+        amouthOfMoney.addTextChangedListener(new InputEditTextFormat(amouthOfMoney, "#,###"));
+
     }
 
     // On Transaction type item selected
@@ -133,7 +140,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String selected = category.getSelectedItem().toString();
-            if(selected.equals(getResources().getString(R.string.create_new))){
+            if(selected.equals("Create new")){
                 // Create dialog
                 final EditText input = new EditText(AddTransactionActivity.this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddTransactionActivity.this);
@@ -224,7 +231,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
                         Toast.LENGTH_SHORT).show();
                 return false;
             }
-            int moneyAmount = Integer.parseInt(amouthOfMoney.getText().toString());
+            int moneyAmount = Integer.parseInt(amouthOfMoney.getText().toString().substring(1));
             String dateViewValue = dateView.getText().toString().trim();
             String descriptionValue = description.getText().toString().trim();
             String walletId = adapterController.walletModel.keys
@@ -261,6 +268,12 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
                     eventModel.increaseMoneyAmount(arr.get(i), -moneyAmount);
                 }
 
+                //Check budget. If budget is running => auto add transaction to budget
+                ArrayList<String> arrBudgets = budgetModel.keyRunnings;
+                for(int i = 0; i < arrBudgets.size(); i++) {
+                    budgetModel.decreaseMoneyAmount(arrBudgets.get(i), moneyAmount);
+                }
+
             } else if(typeOfTransactionValue.equals("Saving")){
                 String categoryId = adapterController.savingModel.keys.get(category.getSelectedItemPosition());
                 Transaction transaction =
@@ -282,9 +295,6 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
                 adapterController.walletModel.decreateMoneyAmount(walletId, moneyAmount);
                 adapterController.walletModel.increaseMoneyAmount(categoryId, moneyAmount);
             }
-
-
-
             return true;
         }
 
@@ -297,7 +307,6 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
 
     public void onStart(){
         super.onStart();
-
         dateView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             public void onFocusChange(View view, boolean hasfocus){
                 if(hasfocus){

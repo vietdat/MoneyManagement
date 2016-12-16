@@ -1,6 +1,7 @@
 package com.hcmut.moneymanagement.activity.Events;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.hcmut.moneymanagement.R;
+import com.hcmut.moneymanagement.models.ChangeCurrency;
 import com.hcmut.moneymanagement.models.EventModel;
 import com.hcmut.moneymanagement.objects.Event;
 
@@ -17,11 +19,10 @@ import java.io.Serializable;
 public class EventsDetail extends AppCompatActivity {
 
     private Toolbar mToolbar;
-    private EditText input_name, input_end_date, description, spent;
+    private EditText input_name, input_end_date, startDate, description, spent;
     private EventModel eventModel;
     private String key;
     Event event;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +50,32 @@ public class EventsDetail extends AppCompatActivity {
     private void initData() {
         input_name = (EditText) findViewById(R.id.input_name);
         input_end_date = (EditText) findViewById(R.id.etEndtDate);
+        startDate = (EditText) findViewById(R.id.etStartDate);
         spent = (EditText) findViewById(R.id.spent);
         description = (EditText) findViewById(R.id.description);
 
         input_name.setText(event.getName());
         input_end_date.setText(event.getEndDate());
-        spent.setText(String.valueOf(event.getSpent()));
+        startDate.setText(event.getStartDate());
+
+        SharedPreferences pre= getSharedPreferences("currency", 0);
+        String lang = pre.getString("currency", "0");
+        String currency;
+        ChangeCurrency cc = new ChangeCurrency();
+
+        if (lang.equals("1")) {
+            currency = "đ"; // your language
+            spent.setText(cc.changeMoneyUSDToVND(String.valueOf(event.getSpent())) + currency);
+        } else {
+            currency = "$"; // your language
+            spent.setText(currency + String.valueOf(event.getSpent()));
+        }
+
         description.setText(event.getDescription());
 
         input_name.setFocusable(false);
         input_end_date.setFocusable(false);
+        startDate.setFocusable(false);
         spent.setFocusable(false);
         description.setFocusable(false);
     }
@@ -66,7 +83,7 @@ public class EventsDetail extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_wallet_detai, menu);
+        getMenuInflater().inflate(R.menu.menu_wallet_his, menu);
         return true;
     }
 
@@ -76,6 +93,14 @@ public class EventsDetail extends AppCompatActivity {
 
         if (id == R.id.mnUpdate) {
             Intent intent = new Intent(this, EventEdit.class);
+            intent.putExtra("key", key);
+            intent.putExtra("event", (Serializable) event);
+            startActivity(intent);
+            EventsDetail.this.finish();
+            return true;
+        }
+        if (id == R.id.mnHis) {
+            Intent intent = new Intent(this, EventHis.class);
             intent.putExtra("key", key);
             intent.putExtra("event", (Serializable) event);
             startActivity(intent);

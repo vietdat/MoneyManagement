@@ -1,7 +1,5 @@
 package com.hcmut.moneymanagement.models;
 
-import android.util.Log;
-
 import com.google.firebase.database.FirebaseDatabase;
 import com.hcmut.moneymanagement.objects.Category;
 import com.hcmut.moneymanagement.objects.Wallet;
@@ -9,6 +7,7 @@ import com.hcmut.moneymanagement.objects.Wallet;
 
 public class UserModel extends Model {
     public UserModel(){
+        Utils.getDatabase();
         // Database reference of current user
         reference = FirebaseDatabase.getInstance().getReference().child(uidEncrypted);
         reference.keepSynced(true);
@@ -19,7 +18,8 @@ public class UserModel extends Model {
         incomeCategoryModel.add(new Category("Salary"));
         incomeCategoryModel.add(new Category("Gift"));
         incomeCategoryModel.add(new Category("Deposit interest"));
-        incomeCategoryModel.add(new Category("Selling things"));
+        incomeCategoryModel.add(new Category("Sellings"));
+        incomeCategoryModel.add(new Category("Others"));
 
         ExpenseCategoryModel expenseCategoryModel = new ExpenseCategoryModel();
         expenseCategoryModel.add(new Category("Bill & Utilities"));
@@ -30,7 +30,8 @@ public class UserModel extends Model {
         expenseCategoryModel.add(new Category("Health"));
         expenseCategoryModel.add(new Category("Education"));
         expenseCategoryModel.add(new Category("Insurance"));
-        Log.w("Uid", uidEncrypted);
+        expenseCategoryModel.add(new Category("Others"));
+
         WalletCategoryModel walletCategoryModel = new WalletCategoryModel();
         walletCategoryModel.add(new Category("Cash"));
         walletCategoryModel.add(new Category("Bank account"));

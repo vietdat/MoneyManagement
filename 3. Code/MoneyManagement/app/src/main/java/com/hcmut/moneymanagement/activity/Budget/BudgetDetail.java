@@ -1,6 +1,7 @@
 package com.hcmut.moneymanagement.activity.Budget;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.models.BudgetModel;
+import com.hcmut.moneymanagement.models.ChangeCurrency;
 import com.hcmut.moneymanagement.objects.Budget;
 
 import java.io.Serializable;
@@ -20,7 +22,7 @@ public class BudgetDetail extends AppCompatActivity {
     Budget budget;
     String key;
     BudgetModel budgetModel;
-    EditText nameOfBudget, initAmount, currentAmount, endDate, description, category;
+    EditText nameOfBudget, initAmount, currentAmount, endDate, description, category, startDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,30 +50,47 @@ public class BudgetDetail extends AppCompatActivity {
     private void initData() {
         nameOfBudget = (EditText) findViewById(R.id.input_name);
         endDate = (EditText) findViewById(R.id.endDate);
+        startDate = (EditText) findViewById(R.id.startDate);
         initAmount = (EditText) findViewById(R.id.initAmount);
         currentAmount = (EditText) findViewById(R.id.currentAmount);
         category = (EditText) findViewById(R.id.category);
         description = (EditText) findViewById(R.id.description);
 
         nameOfBudget.setText(budget.getName());
-        initAmount.setText(budget.getAmount());
-        currentAmount.setText(budget.getCurrentAmount());
+
         category.setText(budget.getCategory());
         endDate.setText(budget.getEndDate());
+        startDate.setText(budget.getStartDate());
         description.setText(budget.getDescription());
+
+        SharedPreferences pre= getSharedPreferences("currency", 0);
+        String lang = pre.getString("currency", "0");
+        String currency;
+        ChangeCurrency cc = new ChangeCurrency();
+
+        if (lang.equals("1")) {
+            currency = "đ"; // your language
+            initAmount.setText(cc.changeMoneyUSDToVND(budget.getAmount()) + currency);
+            currentAmount.setText(cc.changeMoneyUSDToVND(budget.getCurrentAmount()) + currency);
+        } else {
+            currency = "$"; // your language
+            initAmount.setText(currency + budget.getAmount());
+            currentAmount.setText(currency + budget.getCurrentAmount());
+        }
 
         nameOfBudget.setFocusable(false);
         initAmount.setFocusable(false);
         currentAmount.setFocusable(false);
         category.setFocusable(false);
         endDate.setFocusable(false);
+        startDate.setFocusable(false);
         description.setFocusable(false);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_wallet_detai, menu);
+        getMenuInflater().inflate(R.menu.menu_wallet_his, menu);
         return true;
     }
 
@@ -81,6 +100,15 @@ public class BudgetDetail extends AppCompatActivity {
 
         if (id == R.id.mnUpdate) {
             Intent intent = new Intent(this, BudgetEdit.class);
+            intent.putExtra("key", key);
+            intent.putExtra("budget", (Serializable) budget);
+            startActivity(intent);
+            BudgetDetail.this.finish();
+            return true;
+        }
+
+        if (id == R.id.mnHis) {
+            Intent intent = new Intent(this, BudgetHis.class);
             intent.putExtra("key", key);
             intent.putExtra("budget", (Serializable) budget);
             startActivity(intent);
