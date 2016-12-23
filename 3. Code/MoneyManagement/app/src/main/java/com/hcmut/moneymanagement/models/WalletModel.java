@@ -195,7 +195,6 @@ public class WalletModel extends Model{
         }
     }
 
-
     public ArrayAdapter<String> getNameAdapter(){
         if(nameAdapter != null) {
             return nameAdapter;
@@ -239,8 +238,6 @@ public class WalletModel extends Model{
             }
         });
     }
-
-
 
     public void decreateMoneyAmount(String key, int amount){
         this.increaseMoneyAmount(key, -amount);

@@ -66,7 +66,9 @@
         <activity android:name=".activity.Budget.BudgetHis" />
         <activity android:name=".activity.Savings.SavingHis" />
         <activity android:name=".activity.Events.EventHis" />
-        <activity android:name=".activity.Tools.AbousUs.AboutUs"></activity>
+        <activity android:name=".activity.Tools.AbousUs.AboutUs" />
+        <activity android:name=".activity.Tools.Tips.Article" />
+        <activity android:name=".activity.Transaction.TransactionDetail"></activity>
     </application>
 
 </manifest>

@@ -1,10 +1,12 @@
 package com.hcmut.moneymanagement.activity.IncomeAndExpense;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -14,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.CustomListView.Adapter.TransactionAdapter;
 import com.hcmut.moneymanagement.activity.CustomListView.Model.Transaction;
+import com.hcmut.moneymanagement.activity.Transaction.TransactionDetail;
 import com.hcmut.moneymanagement.models.ChangeCurrency;
 import com.hcmut.moneymanagement.models.ExpenseCategoryModel;
 import com.hcmut.moneymanagement.models.IncomeCategoryModel;
@@ -37,6 +40,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
 
     private String type; // Transaction types: {"income", "Expense", "saving"}
     private int month;  // month of the transaction
+    private ArrayList<String> keys;
 
     public FragmentIE(String type, int month) {
         this.type = type;
@@ -47,6 +51,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -55,12 +60,13 @@ public class FragmentIE extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_list_income_expense, container, false);
         lv = (ListView)rootView.findViewById(R.id.lv_income_expense);
-
+        keys = new ArrayList<String>();
         items = new ArrayList<>();
         transactions = new TransactionAdapter(getActivity(), R.layout.transaction_item, items);
         lv.setAdapter(transactions);
 
         addItemToListView();
+        selecteItemInListView();
 
         return rootView;
     }
@@ -72,6 +78,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot transactionSnapshot : dataSnapshot.getChildren()) {
                     Object objType = transactionSnapshot.child(transactionModel.encrypt("type")).getValue();
+                    final Object objKey = transactionSnapshot.getKey();
                     if (objType != null) {
                         if (objType.toString().equals(type)) {
                             final Object objAmount = transactionSnapshot.child(transactionModel.encrypt("money")).getValue();
@@ -116,6 +123,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                                                 final ChangeCurrency cc = new ChangeCurrency();
                                                 if (itemMonth == month) {
                                                     if (type.equals("Income")) {
+                                                        keys.add(objKey.toString());
                                                         if (lang.equals("1")) {
                                                             items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" +
                                                                     cc.changeMoneyUSDToVND(objAmount.toString()) + "đ"));
@@ -123,6 +131,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                                                             items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" + "$ " + objAmount.toString()));
                                                         }
                                                     } else if (type.equals("Expense")) {
+                                                        keys.add(objKey.toString());
                                                         if (lang.equals("1")) {
                                                             items.add(new Transaction(objCateName.toString(), objDate.toString(), "-" +
                                                                     cc.changeMoneyUSDToVND(objAmount.toString()) + "đ"));
@@ -130,6 +139,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                                                             items.add(new Transaction(objCateName.toString(), objDate.toString(), "-" + "$ " + objAmount.toString()));
                                                         }
                                                     } else if(type.equals("Saving")){
+                                                        keys.add(objKey.toString());
                                                         if (lang.equals("1")) {
                                                             items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" +
                                                                     cc.changeMoneyUSDToVND(objAmount.toString()) + "đ"));
@@ -137,6 +147,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                                                             items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" + "$" + objAmount.toString()));
                                                         }
                                                     } else {
+                                                        keys.add(objKey.toString());
                                                         DatabaseReference reference = walletModel.getReference().child(objWalletId.toString());
                                                         reference.addListenerForSingleValueEvent(new ValueEventListener() {
                                                              @Override
@@ -185,4 +196,14 @@ public class FragmentIE extends android.support.v4.app.Fragment {
         });
     }
 
+    private void selecteItemInListView() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getActivity(), TransactionDetail.class);
+                intent.putExtra("key", keys.get(position));
+                startActivity(intent);
+            }
+        });
+    }
 }

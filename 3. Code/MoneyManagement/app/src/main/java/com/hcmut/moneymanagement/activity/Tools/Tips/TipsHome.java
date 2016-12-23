@@ -82,12 +82,7 @@ public class TipsHome extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                Wallet wallet = walletModel.wallets.get(position);
-//                Intent intent = new Intent(getActivity(), WalletDetai.class);
-//                String key = walletModel.keys.get(position);
-//                intent.putExtra("key", key);
-//                intent.putExtra("wallet", (Serializable) wallet);
-//                startActivity(intent);
+               
             }
         });
     }
