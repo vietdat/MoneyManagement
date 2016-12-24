@@ -372,7 +372,10 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQ_CODE_SPEECH_INPUT && resultCode == RESULT_OK) {
-            Log.w("Your speed: ", data.toString());
+            ArrayList<String> result = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            String text = result.get(0);
+            Log.w("Your speed: ", text);
         }
     }
 }
