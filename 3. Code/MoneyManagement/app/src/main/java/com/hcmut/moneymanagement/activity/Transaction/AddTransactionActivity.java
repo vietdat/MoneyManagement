@@ -134,7 +134,6 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         }
     };
 
-
     // On Category item selected
     private AdapterView.OnItemSelectedListener onCategoryItemSelected = new AdapterView.OnItemSelectedListener() {
         @Override

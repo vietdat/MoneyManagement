@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,12 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.activity.Budget.BudgetHome;
 import com.hcmut.moneymanagement.activity.Category.CategoryHome;
 import com.hcmut.moneymanagement.activity.Events.EventsHome;
+import com.hcmut.moneymanagement.activity.FastInput.FastInputHome;
 import com.hcmut.moneymanagement.activity.Graph.GraphHome;
 import com.hcmut.moneymanagement.activity.NavDrawItem.activity.FragmentDrawer;
 import com.hcmut.moneymanagement.activity.Savings.SavingsHome;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private FragmentDrawer drawerFragment;
     private MenuItem mSearchAction;
     private WalletModel walletModel;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,24 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return super.onPrepareOptionsMenu(menu);
@@ -160,15 +182,19 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 title = getResources().getString(R.string.events);
                 break;
             case 6:
+                fragment = new FastInputHome();
+                title = getResources().getString(R.string.events);
+                break;
+            case 7:
                 fragment = new GraphHome();
                 title = getResources().getString(R.string.graphs);
                 break;
-            case 7:
+            case 8:
                 fragment = new ToolsHome();
                 title = getResources().getString(R.string.tools);
                 break;
             //Log out
-            case 8:
+            case 9:
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
                 finish();

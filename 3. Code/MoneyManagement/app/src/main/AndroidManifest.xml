@@ -69,7 +69,10 @@
         <activity android:name=".activity.Tools.AbousUs.AboutUs" />
         <activity android:name=".activity.Tools.Tips.Article" />
         <activity android:name=".activity.Transaction.TransactionDetail" />
-        <activity android:name=".activity.FastInput.FastInputHome"></activity>
+        <activity android:name=".activity.FastInput.FastInputHome" />
+        <activity android:name=".activity.FastInput.FastInputAdd" />
+        <activity android:name=".activity.FastInput.FastInputDetail" />
+        <activity android:name=".activity.FastInput.FastInputEdit"></activity>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@
         <item>Tiết kiệm</item>
         <item>Ngân quỹ</item>
         <item>Sự kiện</item>
+        <item>Nhập liệu nhanh</item>
         <item>Biểu đồ</item>
         <item>Công cụ</item>
         <item>Đăng xuất</item>
@@ -21,6 +22,7 @@
         <item>ic_saving</item>
         <item>ic_budget</item>
         <item>ic_event</item>
+        <item>ic_fast_input</item>
         <item>ic_graph</item>
         <item>ic_tool</item>
         <item>ic_logout</item>
@@ -175,4 +177,11 @@
 
     <string name="enter_username">Nhập user name</string>
     <string name="valid_name">Nhập name ít nhất 3 ký tự</string>
+    <string name="key">Từ khóa</string>
+    <string name="fast_input_title">Nhập liệu nhanh</string>
+    <string name="add_fastinput_successful">Thành công</string>
+    <string name="money">Số tiền</string>
+    <string name="detail_fast_input">Chi tiết</string>
+    <string name="edit_fast_input">Chỉnh sửa</string>
+
 </resources>
