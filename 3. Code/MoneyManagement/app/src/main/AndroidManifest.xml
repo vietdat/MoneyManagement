@@ -68,7 +68,8 @@
         <activity android:name=".activity.Events.EventHis" />
         <activity android:name=".activity.Tools.AbousUs.AboutUs" />
         <activity android:name=".activity.Tools.Tips.Article" />
-        <activity android:name=".activity.Transaction.TransactionDetail"></activity>
+        <activity android:name=".activity.Transaction.TransactionDetail" />
+        <activity android:name=".activity.FastInput.FastInputHome"></activity>
     </application>
 
 </manifest>
