@@ -47,10 +47,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/tvTransactionType" />
-                    <Spinner
-                        android:id="@+id/typeTransaction"
+                    <EditText android:id="@+id/typeOfTransaction"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp" />
+                        android:layout_height="wrap_content"
+                        android:enabled="false" />
                 </LinearLayout>
 
                 <!-- Enter amount Label -->
@@ -63,7 +63,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:hint="@string/amount" />
+                        android:hint="@string/amount"
+                        android:enabled="false" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -74,7 +75,8 @@
                     <EditText android:id="@+id/input_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/date" />
+                        android:hint="@string/date"
+                        android:enabled="false" />
                 </android.support.design.widget.TextInputLayout>
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -90,10 +92,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/tvWallet" />
-                    <Spinner
-                        android:id="@+id/wallet"
+                    <EditText android:id="@+id/wallet"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content"
+                        android:enabled="false" />
                 </LinearLayout>
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -110,10 +112,11 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/tvCategory" />
 
-                    <Spinner
-                        android:id="@+id/category"
+                    <EditText android:id="@id/category"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp" />
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        />
                 </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -129,6 +132,7 @@
                         android:inputType="textShortMessage"
                         android:gravity="top|left"
                         android:scrollbars="vertical"
+                        android:enabled="false"
                         android:hint="@string/description" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
