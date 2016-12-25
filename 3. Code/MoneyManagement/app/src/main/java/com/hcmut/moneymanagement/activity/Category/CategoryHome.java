@@ -176,11 +176,11 @@ public class CategoryHome extends Fragment{
             if(selectedPosition != -1){
                 final EditText input = new EditText(getActivity());
                 if(tabHost.getCurrentTab() == 0) {
-                    input.setText(incomeCategoryModel.getNameAdapter().getItem(selectedPosition));
+                    input.setText(incomeCategoryModel.getCustomAdapter().getItem(selectedPosition).getTitle());
                 }else if(tabHost.getCurrentTab() == 1){
-                    input.setText(expenseCategoryModel.getNameAdapter().getItem(selectedPosition));
+                    input.setText(expenseCategoryModel.getCustomAdapter().getItem(selectedPosition).getTitle());
                 }else{
-                    input.setText(walletCategoryModel.getNameAdapter().getItem(selectedPosition));
+                    input.setText(walletCategoryModel.getCustomAdapter().getItem(selectedPosition).getTitle());
                 }
 
                 input.requestFocus();
