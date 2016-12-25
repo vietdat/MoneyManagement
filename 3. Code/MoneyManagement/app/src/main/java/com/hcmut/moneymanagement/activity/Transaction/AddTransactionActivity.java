@@ -329,7 +329,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
                 startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
 
             }else{
-                Toast.makeText(getApplicationContext(), "Plese Connect to Internet", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Please connect to the Internet", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -374,8 +374,15 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         if (requestCode == REQ_CODE_SPEECH_INPUT && resultCode == RESULT_OK) {
             ArrayList<String> result = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            String text = result.get(0);
-            Log.w("Your speed: ", text);
+            String amount = result.get(0);
+            //Log.w("Your speed: ", text);
+            // is numberic
+            if( amount.matches("-?\\d+(\\.\\d+)?") ){
+                amouthOfMoney.setText(amount);
+            }else{
+                Toast.makeText(AddTransactionActivity.this, "Your input is not numeric. Please try again.",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
