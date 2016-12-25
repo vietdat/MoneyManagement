@@ -4,14 +4,14 @@
     <string name="feedback_forgotpassword_message">You will receive an email with instructions on how to reset your password in a few minutes. Please check your email and follow the instructions to reset your password.</string>
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
-        <item>Activitys</item>
+        <item>Transactions</item>
         <item>Wallets</item>
         <item>Categories</item>
         <item>Savings</item>
         <item>Budgets</item>
         <item>Events</item>
-        <item>Fast Input</item>
-        <item>Visualaztion graphs</item>
+        <item>Fast input</item>
+        <item>Visualization graphs</item>
         <item>Tools</item>
         <item>Logout</item>
     </string-array>
@@ -90,7 +90,7 @@
     <string name="saving">Saving</string>
     <string name="transfer">Transfer</string>
     <string name="events">Events</string>
-    <string name="graphs">Visualaztion graphs</string>
+    <string name="graphs">Visualization graphs</string>
     <string name="tools">Tools</string>
     <string name="please_input_name">You must fill name field</string>
     <string name="please_input_amount">You must fill amount field</string>
@@ -186,7 +186,7 @@
     <string name="enter_username">Enter user name</string>
     <string name="valid_name">Please input name has greater than 3 character</string>
     <string name="key">Key word</string>
-    <string name="fast_input_title">Fast Input</string>
+    <string name="fast_input_title">Fast input</string>
     <string name="add_fastinput_successful">Fast input has been added successfully</string>
     <string name="money">Money</string>
     <string name="detail_fast_input">Fast input detail</string>

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.R;
@@ -27,6 +28,8 @@ public class FastInputModel extends Model{
     public ArrayList<FastInput> fastInputs;
     public ArrayList<String> key;
     private FastInputAdapter fastInputAdapter;
+    private WalletModel walletModel;
+    private Model categoryModel;
 
     public FastInputModel(){
         names = new ArrayList<String>();
@@ -36,6 +39,9 @@ public class FastInputModel extends Model{
         // saving refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("fastinput"));
+        walletModel = new WalletModel();
+
+        // Wallets refecence
         reference.keepSynced(true);
     }
 
@@ -49,8 +55,8 @@ public class FastInputModel extends Model{
                 fastInputs.clear();
                 key.clear();
                 // [START_EXCLUDE]
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    FastInput fastInput = new FastInput();
+                for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    final FastInput fastInput = new FastInput();
                     //get name
                     Object obj = snapshot.child(encrypt("key")).getValue();
                     fastInput.setKey(decrypt(obj.toString()));
@@ -65,18 +71,54 @@ public class FastInputModel extends Model{
 
                     //wallet
                     Object objWallet = snapshot.child(encrypt("wallet")).getValue();
-                    fastInput.setWallet(decrypt(objWallet.toString()));
+                    DatabaseReference reference = walletModel.getReference().child(objWallet.toString());
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Object objWalletName = dataSnapshot.child(walletModel.encrypt("name")).getValue();
+                            fastInput.setWallet(objWalletName.toString());
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
                     //Satrt date
                     Object objCategory = snapshot.child(encrypt("category")).getValue();
-                    fastInput.setCategory(decrypt(objCategory.toString()));
+                    if( objType.equals("Income") ){
+                        categoryModel = new IncomeCategoryModel();
+                    }else if( objType.equals("Expense") ){
+                        categoryModel = new ExpenseCategoryModel();
+                    }else if( objType.equals("Saving") ){
+                        categoryModel = new SavingModel();
+                    } else {
+                        categoryModel = new WalletModel();
+                    }
 
                     //End date
                     Object objDescription = snapshot.child(encrypt("description")).getValue();
                     fastInput.setDescription(decrypt(objDescription.toString()));
 
-                    fastInputs.add(fastInput);
-                    key.add(snapshot.getKey());
+                    DatabaseReference itemReference = categoryModel.getReference().child(objCategory.toString());
+                    itemReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Object objCategoryName = dataSnapshot.child(categoryModel.encrypt("name")).getValue();
+                            fastInput.setCategory(decrypt(objCategoryName.toString()));
+                            System.out.println("name of category " + fastInput.getMoney());
+
+                            fastInputs.add(fastInput);
+                            key.add(snapshot.getKey());
+                            fastInputAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
                 }
                 fastInputAdapter.notifyDataSetChanged();
             }

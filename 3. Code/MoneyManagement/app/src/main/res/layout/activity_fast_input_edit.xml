@@ -46,23 +46,16 @@
                         android:hint="@string/key" />
                 </android.support.design.widget.TextInputLayout>
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:text="@string/transaction_type"
+                    android:layout_marginBottom="8dp">
+                    <EditText android:id="@+id/typeTransaction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tvTransactionType" />
-                    <Spinner
-                        android:id="@+id/typeTransaction"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-                </LinearLayout>
+                        android:hint="@string/transaction_type" />
+                </android.support.design.widget.TextInputLayout>
 
                 <!-- Enter amount Label -->
                 <android.support.design.widget.TextInputLayout
@@ -77,44 +70,31 @@
                         android:hint="@string/amount" />
                 </android.support.design.widget.TextInputLayout>
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <!-- Enter amount Label -->
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:text="@string/wallet"
+                    android:layout_marginBottom="8dp">
+                    <EditText android:id="@+id/wallet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tvWallet" />
-                    <Spinner
-                        android:id="@+id/wallet"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
+                        android:inputType="numberDecimal"
+                        android:hint="@string/wallet" />
+                </android.support.design.widget.TextInputLayout>
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <!-- Enter amount Label -->
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:text="@string/category"
+                    android:layout_marginBottom="8dp">
+                    <EditText android:id="@+id/category"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/tvCategory" />
-
-                    <Spinner
-                        android:id="@+id/category"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp" />
-                </LinearLayout>
+                        android:inputType="numberDecimal"
+                        android:hint="@string/category" />
+                </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
