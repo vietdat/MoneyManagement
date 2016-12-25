@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.hcmut.moneymanagement.R;
-import com.hcmut.moneymanagement.activity.Savings.SavingEdit;
 import com.hcmut.moneymanagement.models.ChangeCurrency;
 import com.hcmut.moneymanagement.models.FastInputModel;
 import com.hcmut.moneymanagement.objects.FastInput;
@@ -83,7 +82,7 @@ public class FastInputDetail extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_wallet_his, menu);
+        getMenuInflater().inflate(R.menu.menu_wallet_detai, menu);
         return true;
     }
 

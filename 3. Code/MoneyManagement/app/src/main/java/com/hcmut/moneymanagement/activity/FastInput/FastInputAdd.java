@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -145,6 +146,14 @@ public class FastInputAdd extends AppCompatActivity {
         }
     };
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_wallet_add, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -156,7 +165,8 @@ public class FastInputAdd extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 return false;
             }
-            String moneyAmount = amouthOfMoney.getText().toString();
+
+            String moneyAmount = amouthOfMoney.getText().toString().substring(1);
             String key = edKey.getText().toString();
             String descriptionValue = description.getText().toString().trim();
             String walletId = adapterController.walletModel.keys

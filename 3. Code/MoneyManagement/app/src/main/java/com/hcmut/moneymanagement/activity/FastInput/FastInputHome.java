@@ -35,6 +35,9 @@ public class FastInputHome  extends Fragment implements View.OnClickListener {
         View rootView = inflater.inflate(R.layout.activity_fast_input_home, container, false);
 
         lv = (ListView) rootView.findViewById(R.id.lv);
+        addButton = (FloatingActionButton) rootView.findViewById(R.id.addNewFastInput);
+        addButton.setOnClickListener(this);
+        selecteItemInListView();
 
         return rootView;
     }

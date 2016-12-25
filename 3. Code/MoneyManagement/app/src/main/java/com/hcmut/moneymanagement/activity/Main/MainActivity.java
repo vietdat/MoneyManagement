@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
             case 6:
                 fragment = new FastInputHome();
-                title = getResources().getString(R.string.events);
+                title = getResources().getString(R.string.fast_input_title);
                 break;
             case 7:
                 fragment = new GraphHome();

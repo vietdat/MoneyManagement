@@ -50,7 +50,7 @@ public class FastInputAdapter extends ArrayAdapter<FastInput> {
 //            TextView currentAmount = (TextView) convertView.findViewById(R.id.current);
 
             //Gán giá trị cho những control đó
-            fastInputName.setText(fastInput.getName());
+            fastInputName.setText(fastInput.getKey());
             category.setText(fastInput.getCategory());
 
             SharedPreferences pre= context.getSharedPreferences("currency", 0);

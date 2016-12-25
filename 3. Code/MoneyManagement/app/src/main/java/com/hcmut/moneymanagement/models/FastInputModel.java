@@ -120,7 +120,9 @@ public class FastInputModel extends Model{
         }
     }
 
-
+    public void remove(String key){
+        reference.child(key).removeValue();
+    }
 //
 //    public void initNameAdapter(Context context){
 //        nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, names);
