@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.materialtheme.AdddNewWalletActivity" >
+
+    <item
+        android:id="@+id/mnMicrophone"
+        android:icon="@drawable/icon_microphone"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mnDone"
+        android:icon="@drawable/ic_done"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" />
+</menu>

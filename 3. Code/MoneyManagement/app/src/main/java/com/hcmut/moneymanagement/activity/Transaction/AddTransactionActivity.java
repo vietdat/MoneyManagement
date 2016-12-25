@@ -3,21 +3,29 @@ package com.hcmut.moneymanagement.activity.Transaction;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.hcmut.moneymanagement.models.InternetModel;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +40,7 @@ import com.hcmut.moneymanagement.objects.Transaction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class AddTransactionActivity extends AppCompatActivity implements OnClickListener {
 
@@ -51,6 +60,9 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     private TransactionModel transactionModel;
     private EventModel eventModel;
     private BudgetModel budgetModel;
+
+    /* Speech recognition */
+    private static final int REQ_CODE_SPEECH_INPUT = 1234;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,7 +227,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_wallet_add, menu);
+        getMenuInflater().inflate(R.menu.menu_transaction_add, menu);
         return true;
     }
 
@@ -297,6 +309,29 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
             return true;
         }
 
+        if(id == R.id.mnMicrophone){
+            // Check internet connection
+            if( InternetModel.isConnected(this)) {
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                SharedPreferences mPrefs = getSharedPreferences("language", MODE_PRIVATE);
+                String lang = mPrefs.getString("language", "0");
+
+                String language = "en-US";
+                if (lang.equals("1")) {
+                    language = "vi-VN";
+                }
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, language);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, language);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, language);
+                intent.putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, language);
+
+                startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+
+            }else{
+                Toast.makeText(getApplicationContext(), "Please connect to the Internet", Toast.LENGTH_LONG).show();
+            }
+        }
+
         if(id == android.R.id.home) {
             AddTransactionActivity.this.finish();
             return true;
@@ -333,4 +368,20 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQ_CODE_SPEECH_INPUT && resultCode == RESULT_OK) {
+            ArrayList<String> result = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            String amount = result.get(0);
+            //Log.w("Your speed: ", text);
+            // is numberic
+            if( amount.matches("-?\\d+(\\.\\d+)?") ){
+                amouthOfMoney.setText(amount);
+            }else{
+                Toast.makeText(AddTransactionActivity.this, "Your input is not numeric. Please try again.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
