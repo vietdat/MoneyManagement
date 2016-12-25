@@ -4,6 +4,12 @@
     tools:context="com.example.materialtheme.AdddNewWalletActivity" >
 
     <item
+        android:id="@+id/mnFastInput"
+        android:icon="@drawable/icon_fast_input_white"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/mnMicrophone"
         android:icon="@drawable/icon_microphone"
         android:title="@string/action_settings"

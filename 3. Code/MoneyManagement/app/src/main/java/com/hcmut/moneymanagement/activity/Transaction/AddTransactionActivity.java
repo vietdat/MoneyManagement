@@ -11,36 +11,38 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.hcmut.moneymanagement.models.InternetModel;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.models.BudgetModel;
 import com.hcmut.moneymanagement.models.EventModel;
+import com.hcmut.moneymanagement.models.ExpenseCategoryModel;
+import com.hcmut.moneymanagement.models.FastInputModel;
+import com.hcmut.moneymanagement.models.IncomeCategoryModel;
 import com.hcmut.moneymanagement.models.InputEditTextFormat;
+import com.hcmut.moneymanagement.models.InternetModel;
+import com.hcmut.moneymanagement.models.Model;
 import com.hcmut.moneymanagement.models.TransactionModel;
+import com.hcmut.moneymanagement.models.WalletModel;
 import com.hcmut.moneymanagement.objects.Transaction;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class AddTransactionActivity extends AppCompatActivity implements OnClickListener {
 
@@ -330,6 +332,122 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
             }else{
                 Toast.makeText(getApplicationContext(), "Please connect to the Internet", Toast.LENGTH_LONG).show();
             }
+        }
+
+        if(id == R.id.mnFastInput) {
+            //show dialog
+            final Spinner input = new Spinner(AddTransactionActivity.this);
+            //input.setAdapter();
+            input.setAdapter(adapterController.getFastInputAdapter());
+            final AlertDialog.Builder builder = new AlertDialog.Builder(AddTransactionActivity.this);
+            builder.setTitle(getResources().getString(R.string.fast_input_title));
+            builder.setView(input);
+
+            input.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    final FastInputModel fastInputModel = new FastInputModel();
+                    final WalletModel walletModel = new WalletModel();
+
+                    DatabaseReference reference = fastInputModel.getReference();
+                    String key = adapterController.keyFastInput.get(i);
+                    reference.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Object objMoney = dataSnapshot.child(fastInputModel.encrypt("money")).getValue();
+                            amouthOfMoney.setText(objMoney.toString());
+
+                            Object objDescription = dataSnapshot.child(fastInputModel.encrypt("description")).getValue();
+                            description.setText(objDescription.toString());
+
+                            final Object objType = dataSnapshot.child(fastInputModel.encrypt("type")).getValue();
+                            for(int i = 0; i < adapterController.getTransactionTypesAdapter().getCount(); i++) {
+                                if(objType.toString().equals(adapterController.getTransactionTypesAdapter().getItem(i))){
+                                    typeTransaction.setSelection(i);
+                                }
+                            }
+
+                            Object objWallet = dataSnapshot.child(fastInputModel.encrypt("wallet")).getValue();
+                            DatabaseReference reference = walletModel.getReference();
+                            reference.child(objWallet.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Object objWalletName = dataSnapshot.child(walletModel.encrypt("name")).getValue();
+                                    for(int i = 0; i < adapterController.getWalletAdapter().getCount(); i++) {
+                                        if (objWalletName.toString().equals(adapterController.getWalletAdapter().getItem(i))) {
+                                            wallet.setSelection(i);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+                            Model categoryModel;
+                            Object objCategory = dataSnapshot.child(fastInputModel.encrypt("category")).getValue();
+                            if(objType.toString().equals("Income")) {
+                                categoryModel = new IncomeCategoryModel();
+                            }
+                            else {
+                                categoryModel = new ExpenseCategoryModel();
+                            }
+
+                            DatabaseReference reference2 = categoryModel.getReference();
+                            reference2.child(objCategory.toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Object objCategoryName = dataSnapshot.child(walletModel.encrypt("name")).getValue();
+                                    if(objType.toString().equals("Income")) {
+                                        for(int i = 0; i < adapterController.getIncomeCategoryAdapter().getCount(); i++) {
+                                            if (objCategoryName.toString().equals(adapterController.getIncomeCategoryAdapter().getItem(i))) {
+                                                category.setSelection(i);
+                                            }
+                                        }
+                                    }
+                                    else if (objType.toString().equals("Expense")) {
+                                        for(int i = 0; i < adapterController.getExpenseCategoryAdapter().getCount(); i++) {
+                                            if (objCategoryName.toString().equals(adapterController.getExpenseCategoryAdapter().getItem(i))) {
+                                                category.setSelection(i);
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+            builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+
+                }
+            });
+
+            // Create the AlertDialog
+            Dialog dialog = builder.create();
+
+            dialog.show();
         }
 
         if(id == android.R.id.home) {

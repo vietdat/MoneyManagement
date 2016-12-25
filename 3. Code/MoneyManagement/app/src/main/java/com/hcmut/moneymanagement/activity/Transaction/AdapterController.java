@@ -5,22 +5,28 @@ import android.widget.ArrayAdapter;
 
 import com.hcmut.moneymanagement.R;
 import com.hcmut.moneymanagement.models.ExpenseCategoryModel;
+import com.hcmut.moneymanagement.models.FastInputModel;
 import com.hcmut.moneymanagement.models.IncomeCategoryModel;
 import com.hcmut.moneymanagement.models.SavingModel;
 import com.hcmut.moneymanagement.models.WalletModel;
 import com.hcmut.moneymanagement.objects.Category;
+
+import java.util.ArrayList;
 
 public class AdapterController {
 
     private Context context;
 
     public WalletModel walletModel;
+    public FastInputModel fastInputModel;
     public IncomeCategoryModel incomeCategoryModel;
     public ExpenseCategoryModel expenseCategoryModel;
     public SavingModel savingModel;
+    public ArrayList<String> keyFastInput;
 
     private ArrayAdapter<String> transactionTypeAdapter;
     private ArrayAdapter<String> walletAdapter;
+    private ArrayAdapter<String> fastInputAdapter;
     private ArrayAdapter<String> incomeAdapter;
     private ArrayAdapter<String> expenseAdapter;
     private ArrayAdapter<String> savingNameAdapter;
@@ -37,8 +43,12 @@ public class AdapterController {
 
         // Wallet Adapter
         walletModel = new WalletModel();
+        fastInputModel = new FastInputModel();
         walletModel.initNameAdapter(context);
+        keyFastInput = fastInputModel.keys;
+        fastInputModel.initNameAdapter(context);
         walletAdapter = walletModel.getNameAdapter();
+        fastInputAdapter = fastInputModel.getNameAdapter();
 
         // income Category Adapter
         incomeCategoryModel = new IncomeCategoryModel();
@@ -63,6 +73,10 @@ public class AdapterController {
 
     public ArrayAdapter getWalletAdapter(){
         return  walletAdapter;
+    }
+
+    public ArrayAdapter getFastInputAdapter(){
+        return  fastInputAdapter;
     }
 
     public ArrayAdapter getIncomeCategoryAdapter(){

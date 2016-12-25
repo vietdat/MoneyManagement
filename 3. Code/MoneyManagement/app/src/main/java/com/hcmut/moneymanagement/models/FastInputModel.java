@@ -3,6 +3,7 @@ package com.hcmut.moneymanagement.models;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,13 +28,16 @@ public class FastInputModel extends Model{
     private ArrayList<String> names;
     public ArrayList<FastInput> fastInputs;
     public ArrayList<String> key;
+    public ArrayList<String> keys;
     private FastInputAdapter fastInputAdapter;
     private WalletModel walletModel;
+    private ArrayAdapter<String> nameAdapter;
     private Model categoryModel;
 
     public FastInputModel(){
         names = new ArrayList<String>();
         key = new ArrayList<>();
+        keys = new ArrayList<>();
         fastInputs = new ArrayList<FastInput>();
 
         // saving refecence
@@ -129,6 +133,39 @@ public class FastInputModel extends Model{
             }
         });
     }
+
+    public void initNameAdapter(Context context){
+        nameAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, names);
+
+        //Event Listenner
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                keys.clear();
+                names.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Object objKey = snapshot.child(encrypt("key")).getValue();
+                    names.add(decrypt(objKey.toString()));
+                    keys.add(snapshot.getKey());
+                    nameAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "loadWallet:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+
+    public ArrayAdapter<String> getNameAdapter(){
+        if(nameAdapter != null) {
+            return nameAdapter;
+        }
+        return  null;
+    }
+
 
     // Update a saving
     public void update(String key, Map<String, Object> data){

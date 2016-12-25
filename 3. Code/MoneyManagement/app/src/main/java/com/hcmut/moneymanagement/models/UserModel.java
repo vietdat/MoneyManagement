@@ -23,7 +23,7 @@ public class UserModel extends Model {
 
         ExpenseCategoryModel expenseCategoryModel = new ExpenseCategoryModel();
         expenseCategoryModel.add(new Category("Bill & Utilities"));
-        expenseCategoryModel.add(new Category("Traffic"));
+        expenseCategoryModel.add(new Category("Transportation"));
         expenseCategoryModel.add(new Category("Shopping"));
         expenseCategoryModel.add(new Category("Entertainment"));;
         expenseCategoryModel.add(new Category("Travel"));
@@ -35,10 +35,10 @@ public class UserModel extends Model {
         WalletCategoryModel walletCategoryModel = new WalletCategoryModel();
         walletCategoryModel.add(new Category("Cash"));
         walletCategoryModel.add(new Category("Bank account"));
-        walletCategoryModel.add(new Category("Other"));
+        walletCategoryModel.add(new Category("Others"));
 
         Wallet cash = new Wallet("Cash", "Cash", "My cash");
-        Wallet bank  = new Wallet("Vietcombank", "Bank account", "My Vietcombank account");
+        Wallet bank  = new Wallet("Bank account", "Bank account", "My bank account");
         WalletModel walletModel = new WalletModel();
         walletModel.add(cash);
         walletModel.add(bank);
