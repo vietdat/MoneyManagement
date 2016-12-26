@@ -70,11 +70,12 @@ public class CategoryHome extends Fragment{
 
         // Init Models
         incomeCategoryModel = new IncomeCategoryModel();
-        incomeCategoryModel.initListViewAdapter(getActivity());
+        incomeCategoryModel.initCustomAdapter(getActivity());
+
         expenseCategoryModel = new ExpenseCategoryModel();
-        expenseCategoryModel.initListViewAdapter(getActivity());
+        expenseCategoryModel.initCustomAdapter(getActivity());
         walletCategoryModel = new WalletCategoryModel();
-        walletCategoryModel.initListViewAdapter(getActivity());
+        walletCategoryModel.initCustomAdapter(getActivity());
 
         // init selected posstion
         selectedPosition = -1;
@@ -88,7 +89,7 @@ public class CategoryHome extends Fragment{
 
         // income category Listview init
         lvIncome = (ListView) rootView.findViewById(R.id.lvIncomeCategories);
-        lvIncome.setAdapter(incomeCategoryModel.getNameAdapter());
+        lvIncome.setAdapter(incomeCategoryModel.getCustomAdapter());
         lvIncome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -97,7 +98,7 @@ public class CategoryHome extends Fragment{
         });
 
         lvExpense = (ListView) rootView.findViewById(R.id.lvExpenseCategories);
-        lvExpense.setAdapter(expenseCategoryModel.getNameAdapter());
+        lvExpense.setAdapter(expenseCategoryModel.getCustomAdapter());
         lvExpense.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -106,7 +107,7 @@ public class CategoryHome extends Fragment{
         });
 
         lvWallet = (ListView) rootView.findViewById(R.id.lvWalletCategories);
-        lvWallet.setAdapter(walletCategoryModel.getNameAdapter());
+        lvWallet.setAdapter(walletCategoryModel.getCustomAdapter());
         lvWallet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -175,11 +176,11 @@ public class CategoryHome extends Fragment{
             if(selectedPosition != -1){
                 final EditText input = new EditText(getActivity());
                 if(tabHost.getCurrentTab() == 0) {
-                    input.setText(incomeCategoryModel.getNameAdapter().getItem(selectedPosition));
+                    input.setText(incomeCategoryModel.getCustomAdapter().getItem(selectedPosition).getTitle());
                 }else if(tabHost.getCurrentTab() == 1){
-                    input.setText(expenseCategoryModel.getNameAdapter().getItem(selectedPosition));
+                    input.setText(expenseCategoryModel.getCustomAdapter().getItem(selectedPosition).getTitle());
                 }else{
-                    input.setText(walletCategoryModel.getNameAdapter().getItem(selectedPosition));
+                    input.setText(walletCategoryModel.getCustomAdapter().getItem(selectedPosition).getTitle());
                 }
 
                 input.requestFocus();

@@ -184,4 +184,6 @@
     <string name="detail_fast_input">Chi tiết</string>
     <string name="edit_fast_input">Chỉnh sửa</string>
 
+    <string name="is_internet_connection">Phải kết nối Internet để sử dụng tính năng này.</string>
+    <string name="is_numberic">Bạn phải nhập dạng số</string>
 </resources>

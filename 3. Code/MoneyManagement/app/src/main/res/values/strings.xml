@@ -191,4 +191,7 @@
     <string name="money">Money</string>
     <string name="detail_fast_input">Fast input detail</string>
     <string name="edit_fast_input">Fast input edit</string>
+
+    <string name="is_internet_connection">Please connect to the Internet</string>
+    <string name="is_numberic">Your input is not numeric. Please try again.</string>
 </resources>

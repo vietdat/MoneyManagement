@@ -22,6 +22,11 @@ public class WalletCategoryModel extends CategoryModel {
         // Wallets refecence
         reference = FirebaseDatabase.getInstance().getReference()
                 .child(uidEncrypted).child(encrypt("walletCategoryModel"));
+
+        icons.add("icon_cash");
+        icons.add("icon_bank_cards");
+        icons.add("icon_cardboard_box");
+
     }
     public WalletCategoryModel(Context context){
         this.context = context;

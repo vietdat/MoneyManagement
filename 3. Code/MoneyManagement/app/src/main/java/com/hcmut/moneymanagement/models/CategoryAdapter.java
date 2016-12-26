@@ -1,4 +1,4 @@
-package com.hcmut.moneymanagement.activity.Tools;
+package com.hcmut.moneymanagement.models;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
@@ -14,12 +14,12 @@ import com.hcmut.moneymanagement.activity.CustomListView.Model.ListViewModel;
 
 import java.util.ArrayList;
 
-public class ToolsAdapter extends ArrayAdapter<ListViewModel> {
+public class CategoryAdapter extends ArrayAdapter<ListViewModel> {
     Activity context = null;
     ArrayList<ListViewModel> tools = null;
     int layoutId;
 
-    public ToolsAdapter(Activity context, int layoutId, ArrayList<ListViewModel>arr){
+    public CategoryAdapter(Activity context, int layoutId, ArrayList<ListViewModel>arr){
         super(context, layoutId, arr);
         this.context=context;
         this.layoutId=layoutId;

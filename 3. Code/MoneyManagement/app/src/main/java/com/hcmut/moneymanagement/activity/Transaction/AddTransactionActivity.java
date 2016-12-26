@@ -330,7 +330,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
                 startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
 
             }else{
-                Toast.makeText(getApplicationContext(), "Please connect to the Internet", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.is_internet_connection), Toast.LENGTH_LONG).show();
             }
         }
 
@@ -497,7 +497,7 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
             if( amount.matches("-?\\d+(\\.\\d+)?") ){
                 amouthOfMoney.setText(amount);
             }else{
-                Toast.makeText(AddTransactionActivity.this, "Your input is not numeric. Please try again.",
+                Toast.makeText(AddTransactionActivity.this, getResources().getString(R.string.is_numberic),
                         Toast.LENGTH_SHORT).show();
             }
         }
