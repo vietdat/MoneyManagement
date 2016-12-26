@@ -194,8 +194,8 @@ public class AddTransactionActivity extends AppCompatActivity implements OnClick
     private ChildEventListener onTransactionChildListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Toast.makeText(AddTransactionActivity.this,getResources().getString(R.string.add_transaction_successful),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(AddTransactionActivity.this,getResources().getString(R.string.add_transaction_successful),
+//                    Toast.LENGTH_SHORT).show();
             AddTransactionActivity.this.finish();
         }
 

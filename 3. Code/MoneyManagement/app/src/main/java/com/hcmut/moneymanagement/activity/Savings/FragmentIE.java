@@ -70,7 +70,7 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                     Object objType = transactionSnapshot.child(transactionModel.encrypt("type")).getValue();
                     Object objCateId = transactionSnapshot.child(transactionModel.encrypt("category")).getValue();
                     if (objType != null) {
-                        if (objType.toString().equals("saving")) {
+                        if (objType.toString().equals("Saving")) {
                             final Model categoryModel = new SavingModel();
                             DatabaseReference itemReference;
                             itemReference = categoryModel.getReference().child(objCateId.toString());
@@ -94,9 +94,9 @@ public class FragmentIE extends android.support.v4.app.Fragment {
                                             SharedPreferences pre= getContext().getSharedPreferences("currency", 0);
                                             String lang = pre.getString("currency", "0");
                                             if (lang.equals("1")) {
-                                                items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" + cc.changeMoneyUSDToVND(objAmount.toString()) + "đ"));
+                                                items.add(new Transaction(objCateName.toString(), objDate.toString(), cc.changeMoneyUSDToVND(objAmount.toString()) + "đ"));
                                             } else {
-                                                items.add(new Transaction(objCateName.toString(), objDate.toString(), "+" + "$" + objAmount.toString()));
+                                                items.add(new Transaction(objCateName.toString(), objDate.toString(), "$" + objAmount.toString()));
                                             }
                                             transactions.notifyDataSetChanged();
                                         } catch (ParseException ex) {

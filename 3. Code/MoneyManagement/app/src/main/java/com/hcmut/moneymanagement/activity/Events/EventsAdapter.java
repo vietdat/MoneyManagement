@@ -62,7 +62,11 @@ public class EventsAdapter extends ArrayAdapter<Event> {
             spent.setText(cc.changeMoneyUSDToVND(String.valueOf(event.getSpent())) + currency);
         } else {
             currency = "$"; // your language
-            spent.setText(currency + String.valueOf(event.getSpent()));
+            if(event.getSpent() < 0) {
+                spent.setText("-"+currency + String.valueOf(-event.getSpent()));
+            } else {
+                spent.setText(currency + String.valueOf(event.getSpent()));
+            }
         }
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");

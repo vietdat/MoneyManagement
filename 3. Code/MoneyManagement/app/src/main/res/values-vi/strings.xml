@@ -186,4 +186,5 @@
 
     <string name="is_internet_connection">Phải kết nối Internet để sử dụng tính năng này.</string>
     <string name="is_numberic">Bạn phải nhập dạng số</string>
+    <string name="his_saving">Lịch sử</string>
 </resources>

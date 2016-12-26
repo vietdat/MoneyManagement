@@ -29,7 +29,6 @@ import java.util.List;
 
          Bundle extras = getIntent().getExtras();
          keyOfSaving = extras.getString("key");
-
          init();
      }
 
@@ -37,6 +36,9 @@ import java.util.List;
          toolbar = (Toolbar) findViewById(R.id.toolbar);
          setSupportActionBar(toolbar);
          getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+         String title = getString(R.string.his_saving);
+         getSupportActionBar().setTitle(title);
 
          viewPager = (ViewPager) findViewById(R.id.viewpager);
          setupViewPager(viewPager, 1);
@@ -53,6 +55,10 @@ import java.util.List;
                  c.add(Calendar.MONTH, -i);
                  String str_month = format.format(c.getTime());
                  int month = c.get(Calendar.MONTH) + 1;
+
+                 System.err.println("=======================================");
+                 System.err.println("Month " + month );
+                 System.err.println("=======================================");
 
                  adapter.addFrag(new com.hcmut.moneymanagement.activity.Savings.FragmentIE(keyOfSaving, month), str_month);
              }

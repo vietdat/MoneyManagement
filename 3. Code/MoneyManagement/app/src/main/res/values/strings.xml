@@ -194,4 +194,5 @@
 
     <string name="is_internet_connection">Please connect to the Internet</string>
     <string name="is_numberic">Your input is not numeric. Please try again.</string>
+    <string name="his_saving">History</string>
 </resources>
