@@ -37,18 +37,9 @@ public class TransactionModel extends Model{
         }
     }
 
-//    public Transaction getTransaction() {
-//        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        }
-//    }
+    public void remove(String key){
+        reference.child(key).removeValue();
+    }
+
 }
 

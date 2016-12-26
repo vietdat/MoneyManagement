@@ -24,7 +24,7 @@ import java.util.concurrent.Semaphore;
 
 import static com.google.android.gms.internal.zzs.TAG;
 
-public abstract class CategoryModel extends Model{
+public class CategoryModel extends Model{
     protected Context context;
     public ArrayList<String> names;
     public  ArrayList<String> keys;
